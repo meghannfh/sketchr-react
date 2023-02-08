@@ -24,13 +24,6 @@ module.exports = {
         }catch(err){
             res.status(400).json({error: err})
         }
-        // try{
-        //     const posts = await Post.find().sort({ createdAt: 'desc' }).lean()
-        //     res.json(posts)
-        //     // res.render('feed.ejs', { posts: posts, user: req.user })
-        // }catch(err){
-        //     console.log(err)
-        // }
     },
     getPost: async (req, res) => {
         try{
@@ -53,13 +46,15 @@ module.exports = {
                 image: result.secure_url,
                 cloudinaryId: result.public_id,
                 description: req.body.description,
-                user: req.user.id,
+                // user: req.user.id,
             });
-            res.redirect('/profile')
+            res.status(200).json(newPost)
+            // res.redirect('/feed')
         }catch(err){
+            res.status(400).json({err: err.message})
             if (req.fileValidationError) {
                 console.log(err)
-                res.redirect('/profile')
+                // res.redirect('/profile')
            }
         }
     },
