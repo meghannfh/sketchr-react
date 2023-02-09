@@ -1,5 +1,5 @@
 import Post from '../components/Post'
-import AddPostForm from '../components/AddPostForm';
+// import AddPostForm from '../components/AddPostForm';
 import { Link } from 'react-router-dom';
 
 const Feed = ({ posts }) => {
@@ -12,7 +12,7 @@ const Feed = ({ posts }) => {
                     ))}
                 </div>
             </Link>
-            <AddPostForm />
+            {/* <AddPostForm /> */}
         </>
     )
 }

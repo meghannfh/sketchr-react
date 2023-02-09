@@ -1,23 +1,24 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import axios from 'axios'
 //pages & components
 import Home from './pages/Home'
 import Navbar from './components/Navbar'
 import Feed from './pages/Feed'
+axios.defaults.baseURL = 'http://127.0.0.1:8002'
 
 function App() {
   const [posts, setPosts] = useState([])
 
+  console.log(posts)
     useEffect(()=> {
         const fetchPosts = async () => {
-            const res = await fetch('/feed')
-            const data = await res.json()
-
-            if (res.ok){
-                setPosts(data)
-            }
+          const res = await axios.get('/feed')
+            // const res = await fetch('/feed')
+            // const data = await res.json()
+            console.log(res.data)
+            setPosts(res.data)
         }
-
         fetchPosts()
     }, [])
     //empty dependencies arr means compnent only renders once

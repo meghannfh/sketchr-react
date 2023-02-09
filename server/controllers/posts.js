@@ -35,17 +35,27 @@ module.exports = {
         }
     },
     addPost: async (req, res) => {
+        //welcome to this shit show
+        //you can have a little destructuring as a treat:
+        const { prompt, media, size, canvas, image, description } = req.body
+
         try{
-            const result = await cloudinary.uploader.upload(req.file.path)
-            console.log(result)
+            //originally we took care of the cloudinary stuff here
+            //now we're doing that in the client AddPostForm component
+            // const result = await cloudinary.uploader.upload(req.file.path)
+            // console.log(result)
             let newPost = await Post.create({
-                prompt: req.body.prompt,
-                media: req.body.media,
-                size: req.body.size,
-                canvas: req.body.canvas,
-                image: result.secure_url,
-                cloudinaryId: result.public_id,
-                description: req.body.description,
+                // prompt: req.body.prompt, // we don't need to define them like this now thanks
+                //to the above destructuring. just take off 'req.body'
+                prompt: prompt,
+                media: media,
+                size: size,
+                canvas: canvas,
+                image: image,
+                // image: result.secure_url,
+                // cloudinaryId: result.public_id,
+                description: description,
+                //I also had a user at first... idk how I'm gonna add that back in with auth
                 // user: req.user.id,
             });
             res.status(200).json(newPost)

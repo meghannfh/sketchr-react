@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+var cors = require('cors')
 const mongoose = require("mongoose");
 const passport = require("passport");
 const session = require("express-session");
@@ -30,7 +31,7 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + '/public'))
 
 // //Handle cors error
-// app.use(cors())
+app.use(cors())
 
 //Body parsing
 app.use(express.urlencoded({ extended: true }))
