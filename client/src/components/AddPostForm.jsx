@@ -13,42 +13,43 @@ const AddPostForm = () => {
   const [image, setImage] = useState(null)
   const [error, setError] = useState(null)
 
-  //so file input is touchy and needs to be handled with care
-  //I have to give her her own onChange function to set the image file path
+  /*file input is touchy and needs to be handled with care
+  I have to give her her own onChange function to set the image file path*/
   const handleImageUrl = e => {
     e.preventDefault()
     //dunno why this needs an idx of 0 but apparently it's standard practice.
-    //whateva
     setImage(e.target.files[0])
   }
 
-  //I had to rearrange the addPost controller in teh server
-  //pls head to the post controller in server to check out that mess
+  /*I had to rearrange the addPost controller in teh server
+  pls head to the post controller in server to check out that mess*/
 
   //i need to do something with this
   const post = { prompt, media, size, canvas, image, description }
 
-  //so now I need to handle uploading the image file we got from
-  // handleImgUrl to cloudinary and getting whatever it is back
-  //and THEN add that to the body of my post
+  /*so now I need to handle uploading the image file we got from
+  handleImgUrl to cloudinary and getting whatever it is back
+  and THEN add that to the body of my post*/
   const handleImageUpload = async () => {
-    //idk in what situations this is necessary but apparently
-    //uploading to cloudinary is one
+    /*idk in what situations new FormData() is necessary 
+    but apparently uploading to cloudinary is one*/
     const formData = new formData()
     formData.append('file', image);
     formData.append('upload_preset', preset)
 
-    //for the fetch endpoint you need to grab the upload endpoint
-    //by default, the cloudinary API endpoints use this format:
-    //https://api.cloudinary.com/v1_1/:cloud_name/:action
-    //POST request example: https://api.cloudinary.com/v1_1/demo/image/upload
-    //your cloud name is on the dashboard of your cloudinary acct
+    /*for the fetch endpoint you need to grab the upload endpoint
+    by default, the cloudinary API endpoints use this format:
+    https://api.cloudinary.com/v1_1/:cloud_name/:action
+    POST request example: https://api.cloudinary.com/v1_1/demo/image/upload
+    your cloud name is on the dashboard of your cloudinary acct*/
     const res = await fetch(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, {
         //send post request with formData
+        //and get what comes back
         method: 'POST',
         body: formData
     })
 
+    //make it json, duh
     const data = await res.json()
 
     // const res = await fetch('/post/addPost', {
