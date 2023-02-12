@@ -37,7 +37,7 @@ module.exports = {
     addPost: async (req, res) => {
         //welcome to this shit show
         //you can have a little destructuring as a treat:
-        const { prompt, media, size, canvas, image, description } = req.body
+        const { prompt, media, size, canvas, cloudinaryUrl, description } = req.body
 
         try{
             //originally we took care of the cloudinary stuff here
@@ -51,7 +51,7 @@ module.exports = {
                 media: media,
                 size: size,
                 canvas: canvas,
-                image: image,
+                image: cloudinaryUrl,
                 // image: result.secure_url,
                 // cloudinaryId: result.public_id,
                 description: description,

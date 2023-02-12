@@ -9,50 +9,79 @@ const AddPostForm = () => {
   const [media, setMedia] = useState('')
   const [size, setSize] = useState('')
   const [canvas, setCanvas] = useState('')
+  const [image, setImage] = useState('')
+  const [cloudinaryUrl, setCloudinaryUrl] = useState('')
   const [description, setDescription] = useState('')
-  const [image, setImage] = useState(null)
   const [error, setError] = useState(null)
 
-  /*file input is touchy and needs to be handled with care
-  I have to give her her own onChange function to set the image file path*/
+  console.log(preset)
+  console.log(cloud_name)
+
+/*file input is touchy and needs to be handled with care
+  I have to give her her own function to set the image file path*/
   const handleImageUrl = e => {
     e.preventDefault()
     //dunno why this needs an idx of 0 but apparently it's standard practice.
     setImage(e.target.files[0])
-  }
+    }
+
 
   /*I had to rearrange the addPost controller in teh server
   pls head to the post controller in server to check out that mess*/
 
-  //i need to do something with this
-  const post = { prompt, media, size, canvas, image, description }
-
   /*so now I need to handle uploading the image file we got from
   handleImgUrl to cloudinary and getting whatever it is back
   and THEN add that to the body of my post*/
-  const handleImageUpload = async () => {
-    /*idk in what situations new FormData() is necessary 
-    but apparently uploading to cloudinary is one*/
-    const formData = new formData()
-    formData.append('file', image);
-    formData.append('upload_preset', preset)
+  const handleAddPost = async () => {
+    //check if there's even a value in image
+    if(!image) {
+        setError(error => "Please select a file!")
+    } else {
+      /*idk in what situations new FormData() is necessary 
+      but apparently uploading to cloudinary is one*/
+      const formData = new formData()
+      formData.append('file', image);
+      formData.append('upload_preset', preset)
+      try{
+      /*for the fetch endpoint you need to grab the upload endpoint
+      by default, the cloudinary API endpoints use this format:
+      https://api.cloudinary.com/v1_1/:cloud_name/:action
+      POST request example: https://api.cloudinary.com/v1_1/demo/image/upload
+      your cloud name is on the dashboard of your cloudinary acct*/
+      const res = await axios.post(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, formData)
+      //when using axios you don't need to declare the method again
 
-    /*for the fetch endpoint you need to grab the upload endpoint
-    by default, the cloudinary API endpoints use this format:
-    https://api.cloudinary.com/v1_1/:cloud_name/:action
-    POST request example: https://api.cloudinary.com/v1_1/demo/image/upload
-    your cloud name is on the dashboard of your cloudinary acct*/
-    const res = await fetch(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, {
-        //send post request with formData
-        //and get what comes back
-        method: 'POST',
-        body: formData
-    })
+      //now we get the data back from cloudinary and always gotta add .data and then append the
+      //.secure_url to get the correct cloudinary URL and we set that info as new cloudinaryUrl value
+      setCloudinaryUrl(res.data.secure_url)
+      console.log(`cloudinary data: ${cloudinaryUrl}`)
 
-    //make it json, duh
-    const data = await res.json()
 
-    // const res = await fetch('/post/addPost', {
+      
+      const newPost = await axios.post('/addPost', {
+        prompt,
+        media,
+        size,
+        canvas,
+        cloudinaryUrl,
+        description
+      })
+      console.log(newPost)
+
+      setPrompt('')
+      setMedia('')
+      setCanvas('')
+      setSize('')
+      setDescription('')
+      setImage('')
+      setError(null)
+      }catch(err){
+
+      }
+    }
+  }
+
+   // const res = await fetch('/post/addPost', {
     //   method: 'POST',
     //   body: JSON.stringify(post),
     //   headers: {
@@ -70,14 +99,11 @@ const AddPostForm = () => {
     //   setCanvas('')
     //   setSize('')
     //   setDescription('')
-    //   setFile('')
+    //   setImage('')
     //   setError(null)
     //   console.log('new post added')
     // }
-  }
 
-
-  //e.preventDefault()
     const mediaList = [
         'graphite',
         'ballpoint pen',
@@ -191,11 +217,15 @@ const AddPostForm = () => {
                   <input 
                     type="file" 
                     onChange={handleImageUrl}
-                    name='file'
+                    name='image'
                     />
                 </div>
 
-                <button>submit</button>
+                <button
+                  onClick={handleAddPost}
+                  >
+                    submit
+                </button>
             </form>
             {error && <div>{error}</div>}
         </div>
