@@ -14,10 +14,9 @@ const AddPostForm = () => {
   const [description, setDescription] = useState('')
   const [error, setError] = useState(null)
 
-  console.log(preset)
-  console.log(cloud_name)
-
-/*file input is touchy and needs to be handled with care
+  console.log(`cloudinary data: ${cloudinaryUrl}`)
+  console.log(image)
+/*file input is touchy and thinks that she's special
   I have to give her her own function to set the image file path*/
   const handleImageUrl = e => {
     e.preventDefault()
@@ -25,25 +24,22 @@ const AddPostForm = () => {
     setImage(e.target.files[0])
     }
 
-
-  /*I had to rearrange the addPost controller in teh server
-  pls head to the post controller in server to check out that mess*/
-
   /*so now I need to handle uploading the image file we got from
   handleImgUrl to cloudinary and getting whatever it is back
   and THEN add that to the body of my post*/
-  const handleAddPost = async () => {
+  const handleAddPost = async (e) => {
+    e.preventDefault()
     //check if there's even a value in image
     if(!image) {
-        setError(error => "Please select a file!")
+        setError("Please select a file!")
     } else {
       /*idk in what situations new FormData() is necessary 
       but apparently uploading to cloudinary is one*/
-      const formData = new formData()
+      const formData = new FormData() //if you don't capitalize Form in FormData() here you'll get an error
       formData.append('file', image);
       formData.append('upload_preset', preset)
       try{
-      /*for the fetch endpoint you need to grab the upload endpoint
+      /*you need to grab the upload endpoint from cloudinary
       by default, the cloudinary API endpoints use this format:
       https://api.cloudinary.com/v1_1/:cloud_name/:action
       POST request example: https://api.cloudinary.com/v1_1/demo/image/upload
@@ -54,27 +50,27 @@ const AddPostForm = () => {
       //now we get the data back from cloudinary and always gotta add .data and then append the
       //.secure_url to get the correct cloudinary URL and we set that info as new cloudinaryUrl value
       setCloudinaryUrl(res.data.secure_url)
-      console.log(`cloudinary data: ${cloudinaryUrl}`)
+      
 
 
       
-      const newPost = await axios.post('/addPost', {
-        prompt,
-        media,
-        size,
-        canvas,
-        cloudinaryUrl,
-        description
-      })
-      console.log(newPost)
+      // const newPost = await axios.post('/addPost', {
+      //   prompt,
+      //   media,
+      //   size,
+      //   canvas,
+      //   cloudinaryUrl,
+      //   description
+      // })
+      // console.log(newPost)
 
-      setPrompt('')
-      setMedia('')
-      setCanvas('')
-      setSize('')
-      setDescription('')
-      setImage('')
-      setError(null)
+      // setPrompt('')
+      // setMedia('')
+      // setCanvas('')
+      // setSize('')
+      // setDescription('')
+      // setImage('')
+      // setError(null)
       }catch(err){
 
       }
@@ -149,8 +145,8 @@ const AddPostForm = () => {
 
     return(
         <div>
-            <form onSubmit={handleSubmit}>
-                <div>
+            <form>
+                {/* <div>
                   <label htmlFor="name">prompt</label>
                   <input 
                     type="text" 
@@ -210,7 +206,7 @@ const AddPostForm = () => {
                     onChange={(e) => setDescription(e.target.value)}
                     value={description}
                     ></textarea>
-                </div>
+                </div> */}
 
                 <div>
                   <label htmlFor="cloudinaryId">upload image</label>
@@ -218,6 +214,7 @@ const AddPostForm = () => {
                     type="file" 
                     onChange={handleImageUrl}
                     name='image'
+                    valur={''}
                     />
                 </div>
 
