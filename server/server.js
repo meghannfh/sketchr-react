@@ -34,7 +34,7 @@ app.use(express.static(__dirname + '/public'))
 app.use(cors())
 
 //Body parsing
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 //Logging

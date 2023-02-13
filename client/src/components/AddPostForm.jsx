@@ -1,21 +1,21 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import axios from 'axios'
 //dotenv files names in react need to start with REACT_APP_
 const preset = process.env.REACT_APP_CLOUDINARY_PRESET
 const cloud_name = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME
+axios.defaults.baseURL = 'http://127.0.0.1:8002'
 
 const AddPostForm = () => {
+  const [newPost, setNewPost] = useState({})
   const [prompt, setPrompt] = useState('')
   const [media, setMedia] = useState('')
   const [size, setSize] = useState('')
   const [canvas, setCanvas] = useState('')
   const [image, setImage] = useState('')
-  const [cloudinaryUrl, setCloudinaryUrl] = useState('')
+  // const [cloudinaryUrl, setCloudinaryUrl] = useState('')
   const [description, setDescription] = useState('')
   const [error, setError] = useState(null)
 
-  console.log(`cloudinary data: ${cloudinaryUrl}`)
-  console.log(image)
 /*file input is touchy and thinks that she's special
   I have to give her her own function to set the image file path*/
   const handleImageUrl = e => {
@@ -38,6 +38,7 @@ const AddPostForm = () => {
       const formData = new FormData() //if you don't capitalize Form in FormData() here you'll get an error
       formData.append('file', image);
       formData.append('upload_preset', preset)
+      console.log(formData)
       try{
       /*you need to grab the upload endpoint from cloudinary
       by default, the cloudinary API endpoints use this format:
@@ -49,20 +50,11 @@ const AddPostForm = () => {
 
       //now we get the data back from cloudinary and always gotta add .data and then append the
       //.secure_url to get the correct cloudinary URL and we set that info as new cloudinaryUrl value
-      setCloudinaryUrl(res.data.secure_url)
+      // setCloudinaryUrl(res.data.secure_url)
+      const imageUrl = res.data.secure_url
       
-
-
-      
-      // const newPost = await axios.post('/addPost', {
-      //   prompt,
-      //   media,
-      //   size,
-      //   canvas,
-      //   cloudinaryUrl,
-      //   description
-      // })
-      // console.log(newPost)
+      await axios.post('/post/addPost', newPost)
+      console.log(newPost)
 
       // setPrompt('')
       // setMedia('')
@@ -72,33 +64,10 @@ const AddPostForm = () => {
       // setImage('')
       // setError(null)
       }catch(err){
-
+        console.error(err)
       }
     }
   }
-
-   // const res = await fetch('/post/addPost', {
-    //   method: 'POST',
-    //   body: JSON.stringify(post),
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   }
-    // })
-    // const json = await res.json()
-
-    // if(!res.ok){
-    //   setError(json.error)
-    // }
-    // if(res.ok){
-    //   setPrompt('')
-    //   setMedia('')
-    //   setCanvas('')
-    //   setSize('')
-    //   setDescription('')
-    //   setImage('')
-    //   setError(null)
-    //   console.log('new post added')
-    // }
 
     const mediaList = [
         'graphite',
@@ -146,7 +115,7 @@ const AddPostForm = () => {
     return(
         <div>
             <form>
-                {/* <div>
+                <div>
                   <label htmlFor="name">prompt</label>
                   <input 
                     type="text" 
@@ -206,15 +175,14 @@ const AddPostForm = () => {
                     onChange={(e) => setDescription(e.target.value)}
                     value={description}
                     ></textarea>
-                </div> */}
+                </div>
 
                 <div>
-                  <label htmlFor="cloudinaryId">upload image</label>
+                  <label htmlFor="image">upload image</label>
                   <input 
                     type="file" 
                     onChange={handleImageUrl}
                     name='image'
-                    valur={''}
                     />
                 </div>
 
