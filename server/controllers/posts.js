@@ -35,25 +35,54 @@ module.exports = {
         }
     },
     addPost: async (req, res) => {
-
-        const { prompt, media, size, canvas, imageUrl, description } = req.body
         console.log(req.body)
+        console.log(req.files)
 
         try{
-            //originally we took care of the cloudinary stuff here
-            //now we're doing that in the client AddPostForm component
-            let newPost = await Post.create({
-                prompt: prompt,
-                media: media,
-                size: size,
-                canvas: canvas,
-                image: imageUrl,
-                description: description,
-            })
+            // const result = await cloudinary.uploader.upload(req.file.path)
+            // console.log(result)
+            // let newPost = await Post.create({
+            //     prompt: req.body.prompt,
+            //     media: req.body.media,
+            //     size: req.body.size,
+            //     canvas: req.body.canvas,
+            //     image: result.secure_url,
+            //     description: req.body.description,
+            // });
             // res.status(200).json(newPost)
         }catch(err){
             res.status(400).json({err: err.message})
+            console.error(err)
         }
+
+        // const { prompt, media, size, canvas, image, description } = req.body
+        // console.log(req.body)
+
+        // try{
+
+        //     let newPost = await Post.create({
+        //         prompt: prompt,
+        //         media: media,
+        //         size: size,
+        //         canvas: canvas,
+        //         image: image,
+        //         description: description,
+        //     })
+            //originally we took care of the cloudinary stuff here
+            //now we're doing that in the client AddPostForm component
+            // let newPost = await Post.create({
+            //     prompt: prompt,
+            //     media: media,
+            //     size: size,
+            //     canvas: canvas,
+            //     image: imageUrl,
+            //     description: description,
+            // })
+        //     res.status(200).json(newPost)
+        // }catch(err){
+        //     res.status(400).json({err: err.message})
+        //     console.error(err)
+        // }
 
             //I also had a user at first... idk how I'm gonna add that back in with auth
             // user: req.user.id,

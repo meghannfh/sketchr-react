@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 var cors = require('cors')
+const bodyParser = require("body-parser")
 const mongoose = require("mongoose");
 const passport = require("passport");
 const session = require("express-session");
@@ -34,8 +35,13 @@ app.use(express.static(__dirname + '/public'))
 app.use(cors())
 
 //Body parsing
-app.use(express.urlencoded({extended: true}));
-app.use(express.json());
+// app.use(express.urlencoded({extended: true}));
+// app.use(express.json());
+app.use(bodyParser.json()); 
+
+// for parsing application/xwww-
+app.use(bodyParser.urlencoded({ extended: true })); 
+//form-urlencoded
 
 //Logging
 app.use(logger('dev'))
