@@ -1,12 +1,14 @@
 import { useState, useRef } from 'react'
 import axios from 'axios'
 //dotenv files names in react need to start with REACT_APP_
-// const preset = process.env.REACT_APP_CLOUDINARY_PRESET
-// const cloud_name = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME
+const preset = process.env.REACT_APP_CLOUDINARY_PRESET
+const cloud_name = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME
 axios.defaults.baseURL = 'http://127.0.0.1:8002'
 
 const AddPostForm = () => {
   //set reference to form element
+  const [file, setFile] = useState('')
+  const [error, setError] = useState(null)
   const formRef = useRef()
   // const [postData, setPostData] = useState(
   //   {
@@ -20,80 +22,76 @@ const AddPostForm = () => {
   // )
 
   /*file input is touchy and thinks that she's special
-  I have to give her her own function to set the image file path
-  idk if I should do this seperately and then somehow add it to
-  the value of image in postData after i get the clourdinary URL*/
-  // const handleFilePath = e => {
-  //   e.preventDefault()
-
-  //   setFilePath(e.target.files[0]);
-  // }
-
-  /*so now I need to handle uploading the image file we got from
-  handleImgUrl to cloudinary and getting whatever it is back
-  and THEN add that to the body of my post somehow*/
-  // const handleCloudinaryUrl = async () => {
-  //   if(!filePath){
-  //     setError("Please select a file!")
-  //   }
-
-  //   /*idk in what situations new FormData() is necessary 
-  //   but apparently uploading to cloudinary is one*/
-  //     const formData = new FormData() //if you don't capitalize Form in FormData() here you'll get an error
-  //     formData.append('file', file);
-  //     formData.append('upload_preset', preset)
-  //     try {
-  //       /*you need to grab the upload endpoint from cloudinary
-  //       by default, the cloudinary API endpoints use this format: 
-  //       https://api.cloudinary.com/v1_1/:cloud_name/:action 
-  //       POST request example: https://api.cloudinary.com/v1_1/demo/image/upload
-  //       your cloud name is on the dashboard of your cloudinary acct*/
-  //       const res = await axios.post(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, formData)
-  //     }catch(err){
-  //       console.error(err)
-  //     }
-  // }
-
-
-  // console.log(postData)
-  
-  // const handleOnChange = (e) => {
-  //   const {name, value, type } = e.target
-    
-  //   setPostData(prevPostData => {
-  //     return {
-  //       ...prevPostData,
-  //       [name]: value
-  //     }
-  //   })
-  // }
-
-  const handleSubmit = (e) => {
+ so I'm handling it on its own and then adding it to my postData*/
+  const handleOnChange = e => {
     e.preventDefault()
-    const formData = new FormData(formRef.current)
+    //grab the file as soon as the user selects it
+    setFile(e.target.files[0]);
+  }
+
+  /*This will run as soon as the user hits submit
+  passing in the file saved in file's state*/
+  const handleCloudinaryUrl = async (file) => {
+    if(!file){
+      setError("Please select a file!") 
+    }
+
+    /*idk in what situations new FormData() is necessary 
+    but apparently uploading to cloudinary is one*/
+      const formData = new FormData() //if you don't capitalize Form in FormData() here you'll get an error
+      formData.append('file', file);
+      formData.append('upload_preset', preset)
+      try {
+        /*you need to grab the upload endpoint from cloudinary
+        by default, the cloudinary API endpoints use this format: 
+        https://api.cloudinary.com/v1_1/:cloud_name/:action 
+        POST request example: https://api.cloudinary.com/v1_1/demo/image/upload
+        your cloud name is on the dashboard of your cloudinary acct*/
+        const res = await axios.post(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, formData)
+        return res.data.secure_url//need to append .secure_url
+      }catch(err){
+        console.error(err)
+      }
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault() //idk if I need this. I actually want the page to immediate refresh with the new data
+    try {
+      const cloudinaryUrl = await handleCloudinaryUrl(file) //wait for cloudinary to return the generated url
+      const formData = new FormData(formRef.current)//grab the form data using useRef
+      const body = {} //we're going to organize our formdata into body and return that
+      formData.forEach((value, key) => {
+        if(key === "image"){
+          body[key] = cloudinaryUrl // setting the cloudinaryURL for image
+        } else {
+          body[key] = value
+        }
+      }, {})
+
+      const res = await axios.post('/post/addPost', body)//send the body we put together
+      console.log(body)
+      console.log(res.data)
+    }catch (err){
+      console.error(err)
+    }
+    
 
     // formData.append("prompt", formRef.current.elements.prompt.value)
     // formData.append("image", formRef.current.elements.image.files[0])
 
-    console.dir(formRef.current.elements.image)
+    // console.dir(formRef.current.elements.image)
 
     // for(const pair of formData.entries()){
     //   console.log(pair[0])
     //   console.log(pair[1])
     // }
-    // console.log(formData)
-    axios.post('/post/addPost', formData, {
-      headers: {
-        "content-type": "multipart/form-data"
-      }
-    })
-    .then(response => {
-      console.log(response)        
-    }).catch(error => {
-       console.log("this is error", error);
-    });
 
-    //getting current value of the ref
+    // axios.post('/post/addPost', body)
+    // .then(response => {
+    //   console.log(response)        
+    // }).catch(error => {
+    //    console.log("this is error", error);
+    // });
   }
 
     const mediaList = [
@@ -211,6 +209,7 @@ const AddPostForm = () => {
                   <input 
                     type="file" 
                     name="image"
+                    onChange={handleOnChange}
               
                     />
                 </div>
