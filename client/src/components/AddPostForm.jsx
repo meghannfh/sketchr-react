@@ -10,16 +10,6 @@ const AddPostForm = () => {
   const [file, setFile] = useState('')
   const [error, setError] = useState(null)
   const formRef = useRef()
-  // const [postData, setPostData] = useState(
-  //   {
-  //     prompt: "",
-  //     media: "",
-  //     size: "",
-  //     canvas: "",
-  //     image: "",
-  //     description: ""
-  //   }
-  // )
 
   /*file input is touchy and thinks that she's special
  so I'm handling it on its own and then adding it to my postData*/
