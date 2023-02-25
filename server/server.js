@@ -35,13 +35,8 @@ app.use(express.static(__dirname + '/public'))
 app.use(cors())
 
 //Body parsing
-// app.use(express.urlencoded({extended: true}));
-// app.use(express.json());
-app.use(bodyParser.json()); 
-
-// for parsing application/xwww-
-app.use(bodyParser.urlencoded({ extended: true })); 
-//form-urlencoded
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
 
 //Logging
 app.use(logger('dev'))

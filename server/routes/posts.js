@@ -11,7 +11,7 @@ const postsController =  require('../controllers/posts')
 
 
 router.get('/:id', postsController.getPost)
-router.post("/addPost", postsController.addPost)
+router.post("/addPost", upload.single("image"), postsController.addPost)
 // router.post("/addPost", postsController.addPost)
 router.delete("/deletePost/:id", postsController.deletePost);
 router.put("/updatePost/:id", postsController.updatePost)

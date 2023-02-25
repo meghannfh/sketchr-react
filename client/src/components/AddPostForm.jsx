@@ -1,81 +1,100 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import axios from 'axios'
 //dotenv files names in react need to start with REACT_APP_
-const preset = process.env.REACT_APP_CLOUDINARY_PRESET
-const cloud_name = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME
+// const preset = process.env.REACT_APP_CLOUDINARY_PRESET
+// const cloud_name = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME
 axios.defaults.baseURL = 'http://127.0.0.1:8002'
 
 const AddPostForm = () => {
-  const [cloudinaryUrl, setCloudinaryUrl] = useState('')
-  const [postData, setPostData] = useState(
-    {
-      prompt: "",
-      media: "",
-      size: "",
-      canvas: "",
-      image: "",
-      description: ""
-    }
-  )
-
-  console.log(postData)
-  const handleOnChange = (e) => {
-    const {name, value, type } = e.target
-    
-    setPostData(prevPostData => {
-      return {
-        ...prevPostData,
-        [name]: value
-      }
-    })
-  }
-
-/*file input is touchy and thinks that she's special
-  I have to give her her own function to set the image file path*/
-  // const handleImageUrl = e => {
-  //   e.preventDefault()
-  //   //dunno why this needs an idx of 0 but apparently it's standard practice.
-  //   setImage(e.target.files[0])
+  //set reference to form element
+  const formRef = useRef()
+  // const [postData, setPostData] = useState(
+  //   {
+  //     prompt: "",
+  //     media: "",
+  //     size: "",
+  //     canvas: "",
+  //     image: "",
+  //     description: ""
   //   }
+  // )
+
+  /*file input is touchy and thinks that she's special
+  I have to give her her own function to set the image file path
+  idk if I should do this seperately and then somehow add it to
+  the value of image in postData after i get the clourdinary URL*/
+  // const handleFilePath = e => {
+  //   e.preventDefault()
+
+  //   setFilePath(e.target.files[0]);
+  // }
 
   /*so now I need to handle uploading the image file we got from
   handleImgUrl to cloudinary and getting whatever it is back
-  and THEN add that to the body of my post*/
-  // const handleSomething = async (e) => {
-  //   e.preventDefault()
-  //   //check if there's even a value in image
-  //   if(!image) {
-  //       setError("Please select a file!")
-  //   } else {
-  //     /*idk in what situations new FormData() is necessary 
-  //     but apparently uploading to cloudinary is one*/
-  //     const formData = new FormData() //if you don't capitalize Form in FormData() here you'll get an error
-  //     formData.append('file', image);
-  //     formData.append('upload_preset', preset)
-  //     console.log(formData)
-  //     try{
-  //     /*you need to grab the upload endpoint from cloudinary
-  //     by default, the cloudinary API endpoints use this format:
-  //     https://api.cloudinary.com/v1_1/:cloud_name/:action
-  //     POST request example: https://api.cloudinary.com/v1_1/demo/image/upload
-  //     your cloud name is on the dashboard of your cloudinary acct*/
-  //     const res = await axios.post(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, formData)
-  //     //when using axios you don't need to declare the method again
+  and THEN add that to the body of my post somehow*/
+  // const handleCloudinaryUrl = async () => {
+  //   if(!filePath){
+  //     setError("Please select a file!")
+  //   }
 
-  //     //now we get the data back from cloudinary and always gotta add .data and then append the
-  //     //.secure_url to get the correct cloudinary URL and we set that info as new cloudinaryUrl value
-  //     // setCloudinaryUrl(res.data.secure_url)
-  //     setCloudinaryUrl(res.data.secure_url)
-  //     handleAddPost()
+  //   /*idk in what situations new FormData() is necessary 
+  //   but apparently uploading to cloudinary is one*/
+  //     const formData = new FormData() //if you don't capitalize Form in FormData() here you'll get an error
+  //     formData.append('file', file);
+  //     formData.append('upload_preset', preset)
+  //     try {
+  //       /*you need to grab the upload endpoint from cloudinary
+  //       by default, the cloudinary API endpoints use this format: 
+  //       https://api.cloudinary.com/v1_1/:cloud_name/:action 
+  //       POST request example: https://api.cloudinary.com/v1_1/demo/image/upload
+  //       your cloud name is on the dashboard of your cloudinary acct*/
+  //       const res = await axios.post(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, formData)
   //     }catch(err){
   //       console.error(err)
   //     }
-  //   }
   // }
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault()
+
+  // console.log(postData)
+  
+  // const handleOnChange = (e) => {
+  //   const {name, value, type } = e.target
+    
+  //   setPostData(prevPostData => {
+  //     return {
+  //       ...prevPostData,
+  //       [name]: value
+  //     }
+  //   })
   // }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const formData = new FormData(formRef.current)
+
+    // formData.append("prompt", formRef.current.elements.prompt.value)
+    // formData.append("image", formRef.current.elements.image.files[0])
+
+    console.dir(formRef.current.elements.image)
+
+    // for(const pair of formData.entries()){
+    //   console.log(pair[0])
+    //   console.log(pair[1])
+    // }
+    // console.log(formData)
+    axios.post('/post/addPost', formData, {
+      headers: {
+        "content-type": "multipart/form-data"
+      }
+    })
+    .then(response => {
+      console.log(response)        
+    }).catch(error => {
+       console.log("this is error", error);
+    });
+
+    //getting current value of the ref
+  }
 
     const mediaList = [
         'graphite',
@@ -122,13 +141,12 @@ const AddPostForm = () => {
 
     return(
         <div>
-            <form>
+            <form onSubmit={handleSubmit} ref={formRef} encType="multipart/form-data">
                 <div>
                   <label htmlFor="name">prompt</label>
                   <input 
                     type="text" 
-                    onChange={handleOnChange}
-                    value={postData.prompt}
+                   
                     name="prompt"  
                     placeholder="prompt" 
                   />
@@ -139,8 +157,8 @@ const AddPostForm = () => {
                   <div>
                     <select 
                       name="media"
-                      onChange={handleOnChange}
-                      value={postData.media}
+                   
+                   
                       >
                         {mediaList.map((medium, idx) => (
                           <option key={idx} value={medium}>{medium}</option>
@@ -154,8 +172,8 @@ const AddPostForm = () => {
                   <div>
                     <select 
                       name="size"
-                      onChange={handleOnChange}
-                      value={postData.size}
+                 
+             
                       >
                         {sizesList.map((size, idx) => (
                           <option key={idx} value={size}>{size}</option>
@@ -169,8 +187,8 @@ const AddPostForm = () => {
                   <div>
                     <select
                       name="canvas"
-                      onChange={handleOnChange}
-                      value={postData.canvas}
+                 
+   
                       >
                       {canvasList.map((canvas, idx) => (
                         <option key={idx} value={canvas}>{canvas}</option>
@@ -184,8 +202,7 @@ const AddPostForm = () => {
                   <textarea
                     type="textarea"
                     name="description"
-                    onChange={handleOnChange}
-                    value={postData.description}
+                
                     ></textarea>
                 </div>
 
@@ -193,9 +210,8 @@ const AddPostForm = () => {
                   <label htmlFor="image">upload image</label>
                   <input 
                     type="file" 
-                    onChange={handleOnChange}
-                    name='image'
-                    value={postData.image}
+                    name="image"
+              
                     />
                 </div>
 
