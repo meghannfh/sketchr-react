@@ -58,7 +58,7 @@ const AddPostForm = () => {
         }
       }, {})
 
-      const res = await axios.post('/post/addPost', body)//send the body we put together
+      const res = await axios.post('/post/addPost', body)//send our curated body
       console.log(body)
       console.log(res.data)
     }catch (err){
@@ -206,7 +206,7 @@ const AddPostForm = () => {
 
                 <button>submit</button>
             </form>
-            {/* {error && <div>{error}</div>} */}
+            {error && <div>{error}</div>}
         </div>
     )
 }
