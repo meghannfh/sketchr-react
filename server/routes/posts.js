@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const upload = require('../middleware/multer')
+// const upload = require('../middleware/multer') ended up not using multer
 const postsController =  require('../controllers/posts')
 //remember controller functions were wrapped in object
 //to access each attach the name to the variable postsController
@@ -11,8 +11,7 @@ const postsController =  require('../controllers/posts')
 
 
 router.get('/:id', postsController.getPost)
-router.post("/addPost", upload.single("image"), postsController.addPost)
-// router.post("/addPost", postsController.addPost)
+router.post("/addPost", postsController.addPost) //removed multer's upload.single("image")
 router.delete("/deletePost/:id", postsController.deletePost);
 router.put("/updatePost/:id", postsController.updatePost)
 
