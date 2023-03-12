@@ -1,10 +1,11 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { useEffect, useState } from 'react'
-import axios from 'axios'
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 //pages & components
 import Home from './pages/Home'
 import Navbar from './components/Navbar'
 import Feed from './pages/Feed'
+import Post from './pages/Post'
 axios.defaults.baseURL = 'http://127.0.0.1:8002'
 
 function App() {
@@ -41,6 +42,10 @@ function App() {
                 {posts.length > 0 ? <Feed posts={posts} /> : 'no posts to show'}
                 </>
               }
+            />
+            <Route
+              path="/post/:id"
+              element={<Post />}
             />
           </Routes>  
         </div>

@@ -1,17 +1,17 @@
-import Post from '../components/Post'
+import PostCard from '../components/PostCard'
 import AddPostForm from '../components/AddPostForm';
 import { Link } from 'react-router-dom';
 
 const Feed = ({ posts }) => {
     return (
         <>
-            <Link to="/:id">
-                <div className="post-container">
-                    {posts.map((post) => (
-                        <Post key={post._id} title={post.prompt} image={post.image}/>
-                    ))}
-                </div>
-            </Link>
+            <div className="post-container">
+                {posts.map((post) => (
+                    <Link to={`/post/${post._id}`}>
+                        <PostCard key={post._id} prompt={post.prompt} image={post.image}/>
+                    </Link>
+                ))}
+            </div>
             <AddPostForm />
         </>
     )

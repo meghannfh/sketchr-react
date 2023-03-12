@@ -28,8 +28,10 @@ module.exports = {
     getPost: async (req, res) => {
         try{
             const post = await Post.findById(req.params.id);
-            const artist = await User.findById({ _id: post.user})
-        res.render('post.ejs', { post: post, user: req.user, artist: artist })
+            console.log()
+            // const artist = await User.findById({ _id: post.user})
+        // res.render('post.ejs', { post: post, user: req.user, artist: artist })
+        res.status(200).json(post)
         }catch(err){
             console.error(err)
         }
