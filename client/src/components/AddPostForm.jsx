@@ -128,9 +128,9 @@ const AddPostForm = () => {
     ]
 
     return(
-        <div>
+        <div className="border-2 w-96 p-4">
             <form onSubmit={handleSubmit} ref={formRef} encType="multipart/form-data">
-                <div>
+                <div className="form-layout">
                   <label htmlFor="name">prompt</label>
                   <input 
                     type="text" 
@@ -140,7 +140,7 @@ const AddPostForm = () => {
                   />
                 </div>
                 
-                <div>
+                <div className="form-layout">
                   <label htmlFor="media">media</label>
                   <div>
                     <select 
@@ -155,7 +155,7 @@ const AddPostForm = () => {
                   </div>
                 </div>
                 
-                <div>
+                <div className="form-layout">
                   <label htmlFor="size">size</label>
                   <div>
                     <select 
@@ -170,7 +170,7 @@ const AddPostForm = () => {
                   </div>
                 </div>
 
-                <div>
+                <div className="form-layout">
                   <label htmlFor="canvas">canvas</label>
                   <div>
                     <select
@@ -185,7 +185,7 @@ const AddPostForm = () => {
                   </div>
                 </div>
 
-                <div>
+                <div className="form-layout">
                   <label htmlFor="description">description</label>
                   <textarea
                     type="textarea"
@@ -194,7 +194,7 @@ const AddPostForm = () => {
                     ></textarea>
                 </div>
 
-                <div>
+                <div className="form-layout">
                   <label htmlFor="image">upload image</label>
                   <input 
                     type="file" 
