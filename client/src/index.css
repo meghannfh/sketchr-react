@@ -22,6 +22,8 @@ code {
 }
 
 .form-layout {
+  text-transform: uppercase;
+  font-weight: 700;
   display: flex;
   flex-direction: column;
 }
@@ -29,4 +31,10 @@ code {
 a {
   text-decoration: none;
   color:rgb(38, 38, 38);
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: .5rem;
+  border-radius: 6px;
 }

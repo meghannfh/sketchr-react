@@ -1,10 +1,9 @@
 import { Link } from 'react-router-dom';
-import Button from '@mui/material/Button';
 
 const Navbar = () => {
     return(
         <header>
-            <div className="flex flex-row justify-between bg-slate-300 p-4">
+            <div className="flex flex-row justify-between bg-orange-300 p-4">
                 <Link to="/">
                     <h1 className="title ">
                         Sketchr.io

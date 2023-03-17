@@ -2,11 +2,11 @@ const express = require('express')
 const router = express.Router()
 const upload = require('../middleware/multer')
 const authController = require("../controllers/auth");
-const homeController = require('../controllers/home')
+// const homeController = require('../controllers/home')
 const postsController =  require('../controllers/posts')
 // const { ensureAuth, ensureGuest } = require("../middleware/auth");
 //Main Routes
-router.get('/', homeController.getIndex)
+// router.get('/', homeController.getIndex)
 //router.get('/feed', ensureAuth, postsController.getFeed)
 //removed ensureAuth to try and get feed
 router.get('/feed', postsController.getFeed)

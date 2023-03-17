@@ -128,15 +128,15 @@ const AddPostForm = () => {
     ]
 
     return(
-        <div className="border-2 w-96 p-4">
-            <form onSubmit={handleSubmit} ref={formRef} encType="multipart/form-data">
+        <div className="p-6 border-4 bg-orange-200 border-orange-200 w-96 rounded-lg">
+            <form className="flex flex-col gap-2" onSubmit={handleSubmit} ref={formRef} encType="multipart/form-data">
                 <div className="form-layout">
-                  <label htmlFor="name">prompt</label>
+                <label htmlFor="prompt">title</label>
                   <input 
                     type="text" 
                    
                     name="prompt"  
-                    placeholder="prompt" 
+                    placeholder="title..." 
                   />
                 </div>
                 
@@ -186,16 +186,15 @@ const AddPostForm = () => {
                 </div>
 
                 <div className="form-layout">
-                  <label htmlFor="description">description</label>
+                <label htmlFor="description">description</label>
                   <textarea
                     type="textarea"
                     name="description"
-                
+                    placeholder='Tell us about this piece.'
                     ></textarea>
                 </div>
 
                 <div className="form-layout">
-                  <label htmlFor="image">upload image</label>
                   <input 
                     type="file" 
                     name="image"
@@ -204,7 +203,7 @@ const AddPostForm = () => {
                     />
                 </div>
 
-                <button>submit</button>
+                <button className='transition-color bg-yellow-600 hover:bg-orange-500 p-2 rounded-md font-bold uppercase text-white'>submit</button>
             </form>
             {error && <div>{error}</div>}
         </div>
