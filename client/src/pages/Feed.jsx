@@ -10,9 +10,9 @@ const Feed = ({ posts }) => {
     return (
         <>
             <div className="border-2 flex flex-row flex-wrap gap-2 p-3">
-                {posts.map((post, idx) => (
-                    <Link to={`/post/${post._id}`}>
-                        <PostCard key={post._id} prompt={post.prompt} image={post.image}/>
+                {posts.map((post) => (
+                    <Link to={`/post/${post._id}`} key={post._id}>
+                        <PostCard prompt={post.prompt} image={post.image}/>
                     </Link>
                 ))}
             </div>

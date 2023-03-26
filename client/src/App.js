@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { usePostsContext } from './hooks/usePostsContext';
 import axios from 'axios';
 //pages & components
 import Home from './pages/Home'
@@ -9,20 +11,20 @@ import Post from './pages/Post'
 axios.defaults.baseURL = 'http://127.0.0.1:8002'
 
 function App() {
-  const [posts, setPosts] = useState([])
+  // const [posts, setPosts] = useState([])
 
-  console.log(posts)
-    useEffect(()=> {
-        const fetchPosts = async () => {
-          const res = await axios.get('/feed')
-            // const res = await fetch('/feed')
-            // const data = await res.json()
-            console.log(res.data)
-            setPosts(res.data)
-        }
-        fetchPosts()
-    }, [])
-    //empty dependencies arr means compnent only renders once
+  const {posts, dispatch} = usePostsContext();
+  // console.log(posts)
+  useEffect(()=> {
+    const fetchPosts = async () => {
+      const res = await axios.get('/feed')
+      console.log(res.data)
+      dispatch({type: 'SET_POSTS', payload: res.data})
+    }
+
+    fetchPosts()
+  }, [])
+  //empty dependencies arr means compnent only renders once
 
   return (
     <div>
