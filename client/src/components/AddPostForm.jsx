@@ -15,6 +15,7 @@ const AddPostForm = () => {
   const [emptyFields, setEmptyFields] = useState([])
   const formRef = useRef()
 
+
   /*file input is touchy and thinks that she's special
   so I'm handling it on its own and then adding it to my postData*/
   const handleOnChange = e => {
@@ -75,13 +76,11 @@ const AddPostForm = () => {
 
 
       //reset the emptyFields arr
-      setEmptyFields([]);
-
       dispatch({type: 'CREATE_POST', payload: res.data})
     }catch (err){
-      setError(res.data.error);
-      setEmptyFields(res.data.emptyFields);
-      console.error(err);
+      setEmptyFields(err.response.data.emptyFields)
+      setError(err.response.data.err)
+      console.log(err)
     }
   }
 
@@ -129,14 +128,14 @@ const AddPostForm = () => {
     ]
 
     return(
-      <div className="p-6 border-4 bg-orange-200 border-orange-200 w-96 rounded-lg">
+      <div className="p-6 border-2 border-orange-500 w-96 rounded-lg">
         <form className="flex flex-col gap-2" onSubmit={handleSubmit} ref={formRef} encType="multipart/form-data">
           <div className="form-layout">
             <label htmlFor="prompt">title</label>
             <input 
               type="text" 
               name="prompt"
-              className={emptyFields.includes('prompt') ? 'error' : ''}  
+              className={emptyFields.includes('title') ? 'error' : 'border-2'}  
               placeholder="title..." 
             />
           </div>
@@ -144,7 +143,10 @@ const AddPostForm = () => {
           <div className="form-layout">
             <label htmlFor="media">media</label>
             <div>
-              <select name="media">
+              <select 
+                name="media"
+                className='border-2'
+                >
                 {mediaList.map((medium, idx) => (
                   <option key={idx} value={medium}>{medium}</option>
                 ))}
@@ -155,7 +157,10 @@ const AddPostForm = () => {
           <div className="form-layout">
             <label htmlFor="size">size</label>
             <div>
-              <select name="size">
+              <select
+                className='border-2'
+                name="size"
+                >
                 {sizesList.map((size, idx) => (
                   <option key={idx} value={size}>{size}</option>
                 ))}
@@ -165,7 +170,10 @@ const AddPostForm = () => {
           <div className="form-layout">
             <label htmlFor="canvas">canvas</label>
             <div>
-              <select name="canvas">
+              <select
+                className="border-2"
+                name="canvas"
+                >
                 {canvasList.map((canvas, idx) => (
                   <option key={idx} value={canvas}>{canvas}</option>
                 ))}
@@ -177,6 +185,7 @@ const AddPostForm = () => {
             <textarea
               type="textarea"
               name="description"
+              className={emptyFields.includes('description') ? 'error' : 'border-2'}
               placeholder='Tell us about this piece.'
               ></textarea>
           </div>
@@ -184,12 +193,13 @@ const AddPostForm = () => {
             <input 
               type="file" 
               name="image"
+              className={emptyFields.includes('image') ? 'error' : 'border-2'}
               onChange={handleOnChange}
               />
           </div>
-          <button className='transition-color bg-yellow-600 hover:bg-orange-500 p-2 rounded-md font-bold uppercase text-white'>submit</button>
+          <button className='transition-color ease-in-out border-2 p-2 rounded-md font-bold uppercase hover:outline-none'>submit</button>
         </form>
-        {error && <div>{error}</div>}
+        {error && <div className='border-2 border-red-600 rounded-md p-4 mt-3 bg-red-300/25 text-red-600 text-center'>{error}</div>}
       </div>
     )
 }
