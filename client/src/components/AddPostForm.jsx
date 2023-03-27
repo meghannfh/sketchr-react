@@ -12,6 +12,7 @@ const AddPostForm = () => {
   //set reference to form element
   const [file, setFile] = useState('')
   const [error, setError] = useState(null)
+  const [emptyFields, setEmptyFields] = useState([])
   const formRef = useRef()
 
   /*file input is touchy and thinks that she's special
@@ -32,7 +33,9 @@ const AddPostForm = () => {
     /*idk in what situations new FormData() is necessary 
     but apparently uploading to cloudinary is one*/
     const formData = new FormData() //if you don't capitalize Form in FormData() here you'll get an error
+
     formData.append('file', file);
+
     formData.append('upload_preset', preset)
     try {
       /*you need to grab the upload endpoint from cloudinary
@@ -41,6 +44,7 @@ const AddPostForm = () => {
       POST request example: https://api.cloudinary.com/v1_1/demo/image/upload
       your cloud name is on the dashboard of your cloudinary acct*/
       const res = await axios.post(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, formData)
+
       return res.data.secure_url//need to append .secure_url
     }catch(err){
       console.error(err)
@@ -48,11 +52,15 @@ const AddPostForm = () => {
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault() //idk if I need this. I actually want the page to immediate refresh with the new data
+    e.preventDefault()
+
     try {
       const cloudinaryUrl = await handleCloudinaryUrl(file) //wait for cloudinary to return the generated url
+
       const formData = new FormData(formRef.current)//grab the form data using useRef
+
       const body = {} //we're going to organize our formdata into body and return that
+
       formData.forEach((value, key) => {
         if(key === "image"){
           body[key] = cloudinaryUrl // setting the cloudinaryURL for image
@@ -65,9 +73,15 @@ const AddPostForm = () => {
       console.log(body)
       console.log(res.data)
 
+
+      //reset the emptyFields arr
+      setEmptyFields([]);
+
       dispatch({type: 'CREATE_POST', payload: res.data})
     }catch (err){
-      console.error(err)
+      setError(res.data.error);
+      setEmptyFields(res.data.emptyFields);
+      console.error(err);
     }
   }
 
@@ -121,8 +135,8 @@ const AddPostForm = () => {
             <label htmlFor="prompt">title</label>
             <input 
               type="text" 
-             
-              name="prompt"  
+              name="prompt"
+              className={emptyFields.includes('prompt') ? 'error' : ''}  
               placeholder="title..." 
             />
           </div>

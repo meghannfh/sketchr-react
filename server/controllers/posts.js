@@ -8,14 +8,14 @@ const multer = require('multer')
 //we need to use dot notation to access each individual function
 //in their respective routes
 module.exports = {
-    getProfile: async (req, res) => {
-        try {
-            const posts = await Post.find({ user: req.user.id }).sort({ createdAt: 'desc' }).lean();
-            res.render('profile.ejs', { posts: posts, user: req.user })
-        } catch (err) {
-            console.log(err)
-        }
-    },
+    // getProfile: async (req, res) => {
+    //     try {
+    //         const posts = await Post.find({ user: req.user.id }).sort({ createdAt: 'desc' }).lean();
+    //         res.render('profile.ejs', { posts: posts, user: req.user })
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+    // },
     getFeed: async (req, res) => {
         try{
             const posts = await Post.find({}).sort({ createdAt: 'desc' }).lean()
@@ -41,6 +41,27 @@ module.exports = {
          //took care of generating cloudinaryURL in frontend.
          //heard it's not the best for security but it's the only way I could
          //get it to work
+
+         let emptyFields = [];
+
+         if (!prompt) {
+            emptyFields.push('prompt')
+         } else if (!media){
+            emptyFields.push('media')
+         } else if (!size) {
+            emptyFields.push('size')
+         } else if (!canvas) {
+            emptyFields.push('canvas')
+         } else if (!image){
+            emptyFields.push('image')
+         } else if (!description) {
+            emptyFields.push('description')
+         }
+
+         if (emptyFields.length > 0) {
+            return res.status(400).json({ error: 'Please fill in all the fields.', emptyFields })
+         }
+
         try{
             let newPost = await Post.create({
                 prompt: prompt,
@@ -51,37 +72,37 @@ module.exports = {
                 description: description,
             });
             res.status(200).json(newPost)
-        }catch(err){
-            res.status(400).json({err: err.message})
+        }catch(error){
+            res.status(400).json({error: error.message})
             console.error(err)
         }
     },
-    deletePost: async (req, res) => {
-        try{
-            let post = await Post.findById({ _id: req.params.id })
-            await cloudinary.uploader.destroy(post.cloudinaryId)
-            await Post.deleteOne({ _id: req.params.id })
-            console.log('Post Deleted')
-            res.redirect('/profile')
-        }catch(err){
-            res.redirect('/profile')
-        }
-    },
-    updatePost: async (req, res) => {
-        try{
-            await Post.findOneAndUpdate(
-                { _id: req.params.id },
-                { 
-                    media: req.body.media,
-                    size: req.body.size,
-                    canvas: req.body.canvas,
-                    description: req.body.description,
-                 }
-              );
-            console.log('Post updated')
-            res.redirect(`/post/${req.params.id}`)
-        }catch(err){
-            res.redirect('/profile')
-        }
-    },
+    // deletePost: async (req, res) => {
+    //     try{
+    //         let post = await Post.findById({ _id: req.params.id })
+    //         await cloudinary.uploader.destroy(post.cloudinaryId)
+    //         await Post.deleteOne({ _id: req.params.id })
+    //         console.log('Post Deleted')
+    //         res.redirect('/profile')
+    //     }catch(err){
+    //         res.redirect('/profile')
+    //     }
+    // },
+    // updatePost: async (req, res) => {
+    //     try{
+    //         await Post.findOneAndUpdate(
+    //             { _id: req.params.id },
+    //             { 
+    //                 media: req.body.media,
+    //                 size: req.body.size,
+    //                 canvas: req.body.canvas,
+    //                 description: req.body.description,
+    //              }
+    //           );
+    //         console.log('Post updated')
+    //         res.redirect(`/post/${req.params.id}`)
+    //     }catch(err){
+    //         res.redirect('/profile')
+    //     }
+    // },
 }
