@@ -1,7 +1,5 @@
-const cloudinary = require("../middleware/cloudinary");
-const Post = require('../models/Post')
-const User = require('../models/User')
-const multer = require('multer')
+const Post = require('../models/Post');
+const User = require('../models/User');
 
 //we're wrapping all of our functions in an object so
 //when we import these functions in our routers

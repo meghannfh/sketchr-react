@@ -10,7 +10,7 @@ const methodOverride = require("method-override");// allows us to override the m
 const flash = require("express-flash");
 const logger = require("morgan");
 const connectDB = require("./config/database");
-const mainRoutes = require("./routes/main");
+const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/posts");
 
 //https://www.youtube.com/watch?v=VsUzmlZfYNg use for reference
@@ -63,7 +63,7 @@ app.use(
 app.use(flash())
 
 //Set up routes for which server is listening
-app.use('/', mainRoutes)
+app.use('/user', userRoutes)
 app.use('/post', postRoutes)
 // app.use('/profilepic', profilepicRoutes)
 
