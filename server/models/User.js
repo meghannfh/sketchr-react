@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const mongoose = require('mongoose')
 
 const UserSchema = new mongoose.Schema({
-    userName: { 
+    username: { 
         type: String, 
         unique: true 
     },
@@ -11,18 +11,13 @@ const UserSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    password: {
+        type: String, 
+        required: true
+    },
     joined: {
         type: Date,
         default: new Date,
-    },
-    password: String,
-    profileImage: {
-        type: String,
-        default: '',
-    },
-    profileCloudinaryId: {
-        type: String,
-        default: '',
     },
 });
 

@@ -1,21 +1,20 @@
-const passport = require("passport");
-const cloudinary = require("../middleware/cloudinary");
 const validator = require("validator");
 const User = require("../models/User");
 
 module.exports = {
   getLogin: async (req, res) => {
-    res.json({msg: 'login user'});
+    
   },
   //login user
   postLogin: async (req, res, next) => {
+    res.json({msg: 'login user'});
   },
   //logout
   getLogout: async (req, res, next) => {
    
   },
   //get signup
-  getSignup: async (req, res) => {
+  getSignup: async (req, res, next) => {
     
   },
   //signup user
