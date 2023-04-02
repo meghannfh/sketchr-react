@@ -1,56 +1,63 @@
 const bcrypt = require('bcrypt');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const validator = require('validator');
 
 const UserSchema = new mongoose.Schema({
-    username: { 
-        type: String, 
-        unique: true 
-    },
-    email: { 
-        type: String, 
-        required: true,
-        unique: true
-    },
-    password: {
-        type: String, 
-        required: true
-    },
-    joined: {
-        type: Date,
-        default: new Date,
-    },
+  email: { 
+    type: String, 
+    required: true,
+    unique: true
+  },
+  username: { 
+    type: String, 
+    required: true,
+    unique: true
+  },
+  password: {
+    type: String, 
+    required: true
+  }
 });
+ 
+//Static signup method
+UserSchema.statics.signup = async function(email, username, password) {
+  
+  //validation
+  if (!email || !password || !username) {
+    throw Error('all fields must be filled')
+  }
 
-//Password hash middleware
+  if (!validator.isEmail(email)) {
+    throw Error('Email is not valid');
+  }
 
-UserSchema.pre('save', function save(next) {
-    const user = this;
-    if (!user.isModified('password')) {
-        return next();
-    }
-    bcrypt.genSalt(10, (err, salt) => {
-        if (err) {
-            return next(err);
-        }
-        bcrypt.hash(user.password, salt, (err, hash) => {
-            if (err) {
-                return next(err);
-            }
-            user.password = hash;
-            next()
-        });
-    });
-});
+  if(!validator.isStrongPassword(password)) {
+    throw Error('Password is too weak')
+  }
 
-//Helper method for valudating user's password
+  //we don't have access to the User model so we can invoke this to refer
+  //to the UserSchema and using this required a regular function and not 
+  //an arrow function
+  const emailExists = await this.findOne({ email })
+  const usernameExists = await this.findOne({ username })
+  if(emailExists) {
+    throw Error('Email already in use')
+  }
 
-UserSchema.methods.comparePassword = function comparePassword(
-    candidatePassword,
-    cb
-) {
-    bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
-        cb(err, isMatch)
-    });
-};
+  if(usernameExists) {
+    throw Error('Username is already in use')
+  }
+
+  //we use await because this step takes time to complete
+  //the argument is the number of rounds default val is 10
+  const salt = await bcrypt.genSalt(10)
+
+  //this allows bcrypt to hash the password
+  const hash = await bcrypt.hash(password, salt)
+
+  const user = await this.create({ email, username, password: hash })
+
+  return user
+}
 
 module.exports = mongoose.model('User', UserSchema)

@@ -51,7 +51,7 @@ app.use(
       saveUninitialized: false,
       resave: false,
       // cookie: { secure: true },
-      store: MongoStore.create({ mongoUrl: process.env.DB_STRING }),
+      store: MongoStore.create({ mongoUrl: process.env.DB_STRING_2 }),
     })
   );
   
