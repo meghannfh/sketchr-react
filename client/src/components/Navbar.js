@@ -9,9 +9,17 @@ const Navbar = () => {
                         Sketchr.io
                     </h1>
                 </Link>
-                <Link to="/feed">
-                    <h3>Feed</h3>
-                </Link>
+                <nav className="flex flex-row justify-evenly">
+                    <Link to="/feed">
+                        <h3>Feed</h3>
+                    </Link>
+                    <Link to="/login">
+                        <h3>Login</h3>
+                    </Link>
+                    <Link to="/signup">
+                        <h3>Signup</h3>
+                    </Link>
+                </nav>
             </div>
         </header>
     )

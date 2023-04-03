@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef } from 'react';
 import { usePostsContext } from '../hooks/usePostsContext';
 import axios from 'axios'
 //dotenv files names in react need to start with REACT_APP_
@@ -9,10 +9,10 @@ axios.defaults.baseURL = 'http://127.0.0.1:8002'
 const AddPostForm = () => {
   const { dispatch } = usePostsContext();
 
-  //set reference to form element
   const [file, setFile] = useState('')
   const [error, setError] = useState(null)
   const [emptyFields, setEmptyFields] = useState([])
+  //set reference to form element
   const formRef = useRef()
 
 
@@ -39,7 +39,7 @@ const AddPostForm = () => {
 
     formData.append('upload_preset', preset)
     try {
-      /*you need to grab the upload endpoint from cloudinary
+      /*you need to grab the upload endpoint from cloudinary.
       by default, the cloudinary API endpoints use this format: 
       https://api.cloudinary.com/v1_1/:cloud_name/:action 
       POST request example: https://api.cloudinary.com/v1_1/demo/image/upload

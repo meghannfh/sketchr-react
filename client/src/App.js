@@ -4,10 +4,12 @@ import { useEffect } from 'react';
 import { usePostsContext } from './hooks/usePostsContext';
 import axios from 'axios';
 //pages & components
-import Home from './pages/Home'
-import Navbar from './components/Navbar'
-import Feed from './pages/Feed'
-import Post from './pages/Post'
+import Home from './pages/Home';
+import Navbar from './components/Navbar';
+import Feed from './pages/Feed';
+import Post from './pages/Post';
+import Signup from './pages/Signup';
+import Login from './pages/Login';
 axios.defaults.baseURL = 'http://127.0.0.1:8002'
 
 function App() {
@@ -42,12 +44,21 @@ function App() {
               element={
                 <>
                 {posts.length > 0 ? <Feed posts={posts} /> : 'no posts to show'}
-                </>
+                </>//change this and move the conditional to the Feed component itself overwise it wont
+                //show the addpost form
               }
             />
             <Route
               path="/post/:id"
               element={<Post />}
+            />
+            <Route
+              path="/signup"
+              element={<Signup />}
+            />
+            <Route
+              path="/login"
+              element={<Login />}
             />
           </Routes>  
         </div>
