@@ -1,22 +1,44 @@
-const validator = require("validator");
 const User = require("../models/User");
+const jwt = require('jsonwebtoken');
+
+
+//create a function that we can reuse to generate
+//token for us in the login and signup controller
+const createToken = (_id, ) => {
+  //take _id from mongo and it needs to be passed in because it is part of the payload that is necessary for the server to generate a unique key
+
+  /*CREATING THE TOKEN */
+  /* takes 3 arguments: first is an object which represents the payload on the token that we want to create. We want the id property. 2nd argument is the secret that's only known to the server. This should be hidden in the .env file. It can be anything.then last one are options. in this case we make the token expire in 3 days*/
+  return jwt.sign(
+    {_id, }, 
+    process.env.SECRET, 
+    { expiresIn: '3d' }
+    )
+
+}
 
 module.exports = {
-  getLogin: async (req, res) => {
-    
-  },
   //login user
   postLogin: async (req, res, next) => {
-    res.json({msg: 'login user'});
+    /*grab the email and password from the request coming in from the
+    login form */
+    const { email, password } = req.body
+
+    try{
+
+      const user = await User.login(email, password)
+
+      //create token
+      const token = createToken(user._id)
+
+      res.status(200).json({email, token})
+
+    } catch(error) {
+
+      res.status(400).json({error: error.message})
+    }
   },
-  //logout
-  getLogout: async (req, res, next) => {
-   
-  },
-  //get signup
-  getSignup: async (req, res, next) => {
-    
-  },
+
   //signup user
   postSignup: async (req, res, next) => {
     const { email, username, password } = req.body
@@ -24,9 +46,11 @@ module.exports = {
     try {
       const user = await User.signup(email, username, password)
 
-      res.status(200).json({ email, user})
-    } catch(error) {
+      //create a token using the function we created
+      const token = createToken(user._id) //need the id of the user
 
+      res.status(200).json({ email, token })
+    } catch(error) {
       res.status(400).json({ error: error.message })
     }
   },
