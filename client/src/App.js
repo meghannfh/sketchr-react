@@ -41,12 +41,7 @@ function App() {
             />
             <Route 
               path="/feed"
-              element={
-                <>
-                {posts.length > 0 ? <Feed posts={posts} /> : 'no posts to show'}
-                </>//change this and move the conditional to the Feed component itself overwise it wont
-                //show the addpost form
-              }
+              element={<Feed posts={posts} />}
             />
             <Route
               path="/post/:id"

@@ -1,5 +1,4 @@
 import { useState, useRef } from 'react';
-import axios from 'axios';
 
 const LoginForm = () => {
   //set reference to form element
@@ -11,27 +10,36 @@ const LoginForm = () => {
     e.preventDefault();
 
     const formData = new FormData(formRef.current)//grab the form data using useRef
-    try{
+    const body = {};
+    formData.forEach((value, key) => {
+      body[key] = value
+    }, {})
 
-      const body = {} //we're going to organize our formdata into body and return that
+    console.log(body)
 
-      formData.forEach((value, key) => {
-        body[key] = value
-      }, {})
 
-      const res = await axios.post('/user/login', body)
-      console.log(body)
-      console.log(res.data)
+    // try{
 
-    }catch(err){
-      setError(err.response.data.err)
-      console.log(err)
-    };
+    //   const body = {} //we're going to organize our formdata into body and return that
+
+    //   formData.forEach((value, key) => {
+    //     body[key] = value
+    //   }, {})
+
+    //   const res = await axios.post('/user/login', body)
+    //   console.log(body)
+    //   console.log(res.data)
+
+    // }catch(err){
+    //   setError(err.response.data.err)
+    //   console.log(err)
+    // };
   };
     return (
-      <div>
+      <div className="grid ">
+      <div className="forms-styles">
         <form className="flex flex-col gap-2" onSubmit={handleSubmit} ref={formRef} encType="multipart/form-data">
-          <h3>Login</h3>
+          <h3 className="font-bold text-xl">Login</h3>
           <div className="form-layout">
             <input 
               type="text" 
@@ -49,9 +57,10 @@ const LoginForm = () => {
             />
           </div>
 
-          <button>login</button>
+          <button className='transition-color ease-in-out border-2 p-2 rounded-md font-bold uppercase hover:outline-none'>login</button>
         </form>
         {error && <div className='border-2 border-red-600 rounded-md p-4 mt-3 bg-red-300/25 text-red-600 text-center'>{error}</div>}
+      </div>
       </div>
     )
 }

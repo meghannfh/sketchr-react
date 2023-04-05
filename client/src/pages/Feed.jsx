@@ -10,11 +10,11 @@ const Feed = ({ posts }) => {
     return (
         <>
             <div className="border-2 flex flex-row flex-wrap gap-2 p-3">
-                {posts.map((post) => (
+                {posts.length > 0 ? posts.map((post) => (
                     <Link to={`/post/${post._id}`} key={post._id}>
                         <PostCard prompt={post.prompt} image={post.image}/>
                     </Link>
-                ))}
+                )) : 'no posts to show'}
             </div>
             <AddPostBtn />
             <AddPostForm />

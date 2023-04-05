@@ -29,9 +29,9 @@ const SignupForm = () => {
     };
   };
     return (
-      <div>
+      <div className="forms-styles">
         <form className="flex flex-col gap-2" onSubmit={handleSubmit} ref={formRef} encType="multipart/form-data">
-          <h3>Sign Up</h3>
+          <h3 className="font-bold text-xl">Sign Up</h3>
           <div className="form-layout">
             <input 
               type="text" 
@@ -57,7 +57,7 @@ const SignupForm = () => {
             />
           </div>
 
-          <button>sign up</button>
+          <button className='transition-color ease-in-out border-2 p-2 rounded-md font-bold uppercase hover:outline-none'>sign up</button>
         </form>
         {error && <div className='border-2 border-red-600 rounded-md p-4 mt-3 bg-red-300/25 text-red-600 text-center'>{error}</div>}
       </div>

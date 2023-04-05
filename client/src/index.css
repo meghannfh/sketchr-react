@@ -44,3 +44,8 @@ input, select, textarea {
 .error {
   border: 2px solid rgb(226, 50, 50);
 }
+
+/*login and signup form*/
+.forms-styles {
+  width: 400px;
+}
