@@ -5,7 +5,9 @@ import axios from 'axios';
 export const useSignup = () => {
   const [error, setError] = useState(null);
   const [isloading, setIsloading] = useState(null);
-  const signup = async (email, password, username) =>  {
+  const { dispatch } = useAuthContext()
+
+  const signup = async (body) =>  {
     setIsloading(true)
     setError(null)
     try {
@@ -13,7 +15,11 @@ export const useSignup = () => {
       const data = await res.data
 
       //save the user to local storage
+      localStorage.setItem('user', JSON.stringify(data))
 
+      //update the auth context
+      dispatch({type: 'LOGIN', payload: data})
+      setIsloading(false)
     } catch(err){
       setIsloading(false)
       setError(err.response.data.err)
@@ -22,4 +28,6 @@ export const useSignup = () => {
 
 
   }
+
+  return { signup, isloading, error }
 }

@@ -1,11 +1,11 @@
 import { useState, useRef } from 'react';
+import { useSignup } from '../hooks/useSignup';
 import axios from 'axios';
 
 const SignupForm = () => {
   //set reference to form element
   const formRef = useRef();
-  const [error, setError] = useState(null)
-  const [emptyFields, setEmptyFields] = useState([])
+  const { signup, error, isLoading } = useSignup();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
