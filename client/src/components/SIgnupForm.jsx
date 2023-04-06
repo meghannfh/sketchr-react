@@ -11,22 +11,29 @@ const SignupForm = () => {
     e.preventDefault();
 
     const formData = new FormData(formRef.current)//grab the form data using useRef
-    try{
 
-      const body = {} //we're going to organize our formdata into body and return that
+    const body = {};
+    formData.forEach((value, key) => {
+      body[key] = value
+    }, {})
 
-      formData.forEach((value, key) => {
-        body[key] = value
-      }, {})
+    console.log(body)
+    // try{
 
-      const res = await axios.post('/user/signup', body)
-      console.log(body)
-      console.log(res.data)
+    //   const body = {} //we're going to organize our formdata into body and return that
 
-    }catch(err){
-      setError(err.response.data.err)
-      console.log(err)
-    };
+    //   formData.forEach((value, key) => {
+    //     body[key] = value
+    //   }, {})
+
+    //   const res = await axios.post('/user/signup', body)
+    //   console.log(body)
+    //   console.log(res.data)
+
+    // }catch(err){
+    //   setError(err.response.data.err)
+    //   console.log(err)
+    // };
   };
     return (
       <div className="forms-styles">
