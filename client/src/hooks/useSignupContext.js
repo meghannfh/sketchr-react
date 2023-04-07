@@ -24,7 +24,9 @@ export const useSignupContext = () => {
       //update the auth context
       dispatch({type: 'LOGIN', payload: output})
       setIsloading(false)
+      
     } catch(err){
+
       setIsloading(false)
       console.log(err)
       setError(err.response.data.error)

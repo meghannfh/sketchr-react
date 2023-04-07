@@ -18,15 +18,17 @@ const Navbar = () => {
           </h1>
         </Link>
         <nav className="w-[40%] flex flex-row justify-evenly items-center">
-          <div className="w-1/2 flex flex-row justify-around items-center">
-            <Link to="/logout">
-              <button className="rounded-full py-1 px-4 border-2 border-black bg-white text-orange-600" onClick={handleClick}>Logout</button>
-            </Link>
-            <Link to="/feed">
-              <h3>Feed</h3>
-            </Link>
-          </div>
-          <div className="w-1/2 flex flex-row justify-around items-center">
+            <div className="w-1/2 flex flex-row justify-around items-center">
+              <Link to="/">
+                <span></span>
+                <button className="rounded-full py-1 px-4 border-2 border-black bg-white text-orange-600" onClick={handleClick}>Logout</button>
+              </Link>
+              <Link to="/feed">
+                <h3>Feed</h3>
+              </Link>
+            </div>
+            
+            <div className="w-1/2 flex flex-row justify-around items-center">
             <Link to="/login">
               <h3>Login</h3>
             </Link>
@@ -34,6 +36,7 @@ const Navbar = () => {
               <h3>Signup</h3>
             </Link>
           </div>
+
         </nav>
       </div>
     </header>
