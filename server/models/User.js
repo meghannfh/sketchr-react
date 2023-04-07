@@ -20,7 +20,7 @@ const UserSchema = new mongoose.Schema({
 });
  
 //Static signup method
-UserSchema.statics.signup = async function(email, username, password) {
+UserSchema.statics.signup = async function(username, email, password) {
   
   //validation
   if (!email || !password || !username) {
@@ -55,7 +55,8 @@ UserSchema.statics.signup = async function(email, username, password) {
   //this allows bcrypt to hash the password
   const hash = await bcrypt.hash(password, salt)
 
-  const user = await this.create({ email, username, password: hash })
+  const user = await this.create({ username, email, password: hash })
+  console.log(`this is the user sent to the db after hashing pw`, user)
 
   return user
 }

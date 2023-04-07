@@ -42,16 +42,19 @@ module.exports = {
   //signup user
   postSignup: async (req, res, next) => {
     const { email, username, password } = req.body
+    console.log(req.body)
 
     try {
-      const user = await User.signup(email, username, password)
+      const user = await User.signup(username, email, password)
+      console.log(`this is the user data returned in the controller`, user)
 
       //create a token using the function we created
       const token = createToken(user._id) //need the id of the user
 
-      res.status(200).json({ email, token })
+      res.status(200).json({ username, email, token })
     } catch(error) {
       res.status(400).json({ error: error.message })
+      console.log(error)
     }
   },
 }

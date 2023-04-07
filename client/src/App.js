@@ -19,7 +19,7 @@ function App() {
   // console.log(posts)
   useEffect(()=> {
     const fetchPosts = async () => {
-      const res = await axios.get('/feed')
+      const res = await axios.get('/post/feed')
       console.log(res.data)
       dispatch({type: 'SET_POSTS', payload: res.data})
     }

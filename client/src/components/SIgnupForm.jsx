@@ -1,39 +1,26 @@
-import { useState, useRef } from 'react';
-import { useSignup } from '../hooks/useSignup';
-import axios from 'axios';
+import { useRef } from 'react';
+import { useSignupContext } from '../hooks/useSignupContext';
 
 const SignupForm = () => {
   //set reference to form element
   const formRef = useRef();
-  const { signup, error, isLoading } = useSignup();
+  const { signup, error, isLoading } = useSignupContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData(formRef.current)//grab the form data using useRef
+    const body = {} //we're going to organize our formdata into body and return that
+    console.log(formData)
 
-    const body = {};
     formData.forEach((value, key) => {
       body[key] = value
     }, {})
 
     console.log(body)
-    // try{
 
-    //   const body = {} //we're going to organize our formdata into body and return that
+    await signup(body)
 
-    //   formData.forEach((value, key) => {
-    //     body[key] = value
-    //   }, {})
-
-    //   const res = await axios.post('/user/signup', body)
-    //   console.log(body)
-    //   console.log(res.data)
-
-    // }catch(err){
-    //   setError(err.response.data.err)
-    //   console.log(err)
-    // };
   };
     return (
       <div className="forms-styles">
@@ -43,7 +30,7 @@ const SignupForm = () => {
             <input 
               type="text" 
               name="username"
-              className={emptyFields.includes('username') ? 'error' : 'border-2'}
+              className='border-2'
               placeholder="choose a username" 
             />
           </div>
@@ -51,20 +38,20 @@ const SignupForm = () => {
             <input 
               type="text" 
               name="email"
-              className={emptyFields.includes('email') ? 'error' : 'border-2'}
+              className='border-2'
               placeholder="email" 
             />
           </div>
           <div className="form-layout">
             <input 
-              type="text" 
+              type="password" 
               name="password"
-              className={emptyFields.includes('password') ? 'error' : 'border-2'}
+              className='border-2'
               placeholder="password" 
             />
           </div>
 
-          <button className='transition-color ease-in-out border-2 p-2 rounded-md font-bold uppercase hover:outline-none'>sign up</button>
+          <button disabled={isLoading} className='transition-color ease-in-out border-2 p-2 rounded-md font-bold uppercase hover:outline-none'>sign up</button>
         </form>
         {error && <div className='border-2 border-red-600 rounded-md p-4 mt-3 bg-red-300/25 text-red-600 text-center'>{error}</div>}
       </div>
