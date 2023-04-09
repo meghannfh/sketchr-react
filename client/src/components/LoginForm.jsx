@@ -1,12 +1,10 @@
 import { useRef } from 'react';
 import { useLogin } from '../hooks/useLogin';
-import { useAuthContext } from '../hooks/useAuthContext';
 
 const LoginForm = () => {
   //set reference to form element
   const formRef = useRef();
   const { login, error, isLoading } = useLogin();
-  const { user } = useAuthContext();
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,8 +16,6 @@ const LoginForm = () => {
     }, {})
 
     await login(body)
-
-    console.log(user.email)
 
   };
     return (
