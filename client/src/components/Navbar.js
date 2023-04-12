@@ -13,31 +13,31 @@ const Navbar = () => {
 
   return(
     <header>
-      <div className="flex flex-row justify-between bg-orange-300 p-4">
+      <div className="flex flex-row items-center justify-between bg-orange-300 p-4">
         <Link to="/">
-          <h1 className="title ">
+          <h1 className="title">
             Sketchr.io
           </h1>
         </Link>
-        <nav className="w-[40%] flex flex-row justify-evenly items-center">
-            <div className="w-1/2 flex flex-row justify-around items-center">
+        <nav className="w-[70%] flex flex-row justfy-end items-center">
+            {user && <div className="w-full flex flex-row justify-end gap-10 items-center">
+              <span>{user && user.email}</span>
               <Link to="/">
-                <span></span>
                 <button className="rounded-full py-1 px-4 border-2 border-black bg-white text-orange-600" onClick={handleClick}>Logout</button>
               </Link>
               <Link to="/feed">
                 <h3>Feed</h3>
               </Link>
-            </div>
+            </div>}
             
-            <div className="w-1/2 flex flex-row justify-around items-center">
+            {!user && <div className="w-full flex flex-row justify-end gap-10 items-center">
             <Link to="/login">
               <h3>Login</h3>
             </Link>
             <Link to="/signup">
               <h3>Signup</h3>
             </Link>
-          </div>
+          </div>}
 
         </nav>
       </div>
