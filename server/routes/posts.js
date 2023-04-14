@@ -1,19 +1,27 @@
 const express = require("express");
 const router = express.Router();
-// const upload = require('../middleware/multer') ended up not using multer
 const postsController =  require('../controllers/posts')
-//remember controller functions were wrapped in object
-//to access each attach the name to the variable postsController
-//using dot notation
+const auth = require('../middleware/auth')
 
-//Ive seen these routes written as async functions like so:
-//router.get('/:id', async(req, res) => postsController.getPost)
+//require auth for all post routes
+router.use(auth);
 
+//added route to frontend
 router.get('/feed', postsController.getFeed)
+
+//haven't added this yet
 router.get('/profile', postsController.getProfile)
+
+//added route to frontend
 router.get('/:id', postsController.getPost)
+
+//added route to frontend
 router.post("/addPost", postsController.addPost) //removed multer's upload.single("image")
+
+//not yet added route
 router.delete("/deletePost/:id", postsController.deletePost);
+
+//not yet added route
 router.put("/updatePost/:id", postsController.updatePost)
 
 module.exports = router;

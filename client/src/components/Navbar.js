@@ -21,7 +21,7 @@ const Navbar = () => {
         </Link>
         <nav className="w-[70%] flex flex-row justfy-end items-center">
             {user && <div className="w-full flex flex-row justify-end gap-10 items-center">
-              <span>{user && user.email}</span>
+              <span>{user.email}</span>
               <Link to="/">
                 <button className="rounded-full py-1 px-4 border-2 border-black bg-white text-orange-600" onClick={handleClick}>Logout</button>
               </Link>

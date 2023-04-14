@@ -19,7 +19,7 @@ const LoginForm = () => {
 
   };
     return (
-      <div className="grid ">
+      <div className="grid h-screen place-content-center">
       <div className="forms-styles">
         <form className="flex flex-col gap-2" onSubmit={handleSubmit} ref={formRef} encType="multipart/form-data">
           <h3 className="font-bold text-xl">Login</h3>
