@@ -15,7 +15,6 @@ const AddPostForm = () => {
   //set reference to form element
   const formRef = useRef()
 
-
   /*file input is touchy and thinks that she's special
   so I'm handling it on its own and then adding it to my postData*/
   const handleOnChange = e => {

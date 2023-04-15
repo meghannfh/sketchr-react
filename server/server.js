@@ -7,7 +7,6 @@ const passport = require("passport");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const methodOverride = require("method-override");// allows us to override the method from POST to PUT or DELETE
-const flash = require("express-flash");
 const logger = require("morgan");
 const connectDB = require("./config/database");
 const userRoutes = require("./routes/user");
@@ -19,17 +18,10 @@ const postRoutes = require("./routes/posts");
 require('dotenv').config({ path: './config/.env' });
 
 // Passport config
-require("./config/passport")(passport);
+// require("./config/passport")(passport);
 
 //connect to Database
 connectDB()
-
-//Using EJS for views
-app.set('views', './views');
-app.set("view engine", "ejs");
-
-//Static folder
-app.use(express.static(__dirname + '/public'))
 
 // //Handle cors error
 app.use(cors())
@@ -60,7 +52,7 @@ app.use(
   app.use(passport.session());
 
 //Use flash messages for errors, info, etc
-app.use(flash())
+// app.use(flash())
 
 //Set up routes for which server is listening
 app.use('/user', userRoutes)
