@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import { usePostsContext } from '../hooks/usePostsContext';
+import { useAuthContext } from '../hooks/useAuthContext';
 import axios from 'axios'
 //dotenv files names in react need to start with REACT_APP_
 const preset = process.env.REACT_APP_CLOUDINARY_PRESET
@@ -8,6 +9,13 @@ axios.defaults.baseURL = 'http://127.0.0.1:8002'
 
 const AddPostForm = () => {
   const { dispatch } = usePostsContext();
+  const { user } = useAuthContext();
+
+  const headerConfig = {
+    headers: {
+      Authorization: `Bearer ${user && user.token}` 
+   }
+  }
 
   const [file, setFile] = useState('')
   const [error, setError] = useState(null)
@@ -54,32 +62,35 @@ const AddPostForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    try {
-      const cloudinaryUrl = await handleCloudinaryUrl(file) //wait for cloudinary to return the generated url
+    if(user){
+      try {
+        const cloudinaryUrl = await handleCloudinaryUrl(file) //wait for cloudinary to return the generated url
 
-      const formData = new FormData(formRef.current)//grab the form data using useRef
+        const formData = new FormData(formRef.current)//grab the form data using useRef
 
-      const body = {} //we're going to organize our formdata into body and return that
+        const body = {} //we're going to organize our formdata into body and return that
 
-      formData.forEach((value, key) => {
-        if(key === "image"){
-          body[key] = cloudinaryUrl // setting the cloudinaryURL for image
-        } else {
-          body[key] = value
-        }
-      }, {})
+        formData.forEach((value, key) => {
+          if(key === "image"){
+            body[key] = cloudinaryUrl // setting the cloudinaryURL for image
+          } else {
+            body[key] = value
+          }
+        }, {})
 
-      const res = await axios.post('/post/addPost', body)
-      console.log(body)
-      console.log(res.data)
+        const res = await axios.post('/post/addPost', body, headerConfig)
+        console.log(body)
+        console.log(res.data)
 
 
-      //reset the emptyFields arr
-      dispatch({type: 'CREATE_POST', payload: res.data})
-    }catch (err){
-      setEmptyFields(err.response.data.emptyFields)
-      setError(err.response.data.err)
-      console.log(err)
+        //reset the emptyFields arr
+        dispatch({type: 'CREATE_POST', payload: res.data})
+      }catch (err){
+        setEmptyFields(err.response.data.emptyFields)
+        setError(err.response.data.err)
+        console.log(err)
+      }
+    
     }
   }
 
@@ -134,7 +145,7 @@ const AddPostForm = () => {
             <input 
               type="text" 
               name="prompt"
-              className={emptyFields.includes('title') ? 'error' : 'border-2'}  
+              className={emptyFields && emptyFields.includes('title') ? 'error' : 'border-2'}  
               placeholder="title..." 
             />
           </div>
@@ -184,7 +195,7 @@ const AddPostForm = () => {
             <textarea
               type="textarea"
               name="description"
-              className={emptyFields.includes('description') ? 'error' : 'border-2'}
+              className={emptyFields && emptyFields.includes('description') ? 'error' : 'border-2'}
               placeholder='Tell us about this piece.'
               ></textarea>
           </div>
@@ -192,7 +203,7 @@ const AddPostForm = () => {
             <input 
               type="file" 
               name="image"
-              className={emptyFields.includes('image') ? 'error' : 'border-2'}
+              className={emptyFields && emptyFields.includes('image') ? 'error' : 'border-2'}
               onChange={handleOnChange}
               />
           </div>

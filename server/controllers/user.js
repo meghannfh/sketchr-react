@@ -22,6 +22,7 @@ module.exports = {
   postLogin: async (req, res, next) => {
     /*grab the email and password from the request coming in from the
     login form */
+    console.log(req.body)
     const { email, password } = req.body
 
     try{

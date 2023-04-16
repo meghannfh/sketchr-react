@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { redirect } from 'react-router-dom';
 import { useLogin } from '../hooks/useLogin';
 
 const LoginForm = () => {
@@ -39,7 +40,7 @@ const LoginForm = () => {
               placeholder="password" 
             />
           </div>
-          <button disabled={isLoading} className='transition-color ease-in-out border-2 p-2 rounded-md font-bold uppercase hover:outline-none'>login</button>
+          <button disabled={isLoading} className='w-full transition-color ease-in-out border-2 p-2 rounded-md font-bold uppercase hover:outline-none'>login</button>
         </form>
         {error && <div className='border-2 border-red-600 rounded-md p-4 mt-3 bg-red-300/25 text-red-600 text-center'>{error}</div>}
       </div>

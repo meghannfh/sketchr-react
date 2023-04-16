@@ -17,8 +17,8 @@ const auth = async (req, res, next) => {
     req.user = await User.findOne({ _id }).select('_id');
     next()
 
+
   }catch{
-    console.log(error)
     res.status(401).json({ error: 'Request is not authorized' })
   }
 }
