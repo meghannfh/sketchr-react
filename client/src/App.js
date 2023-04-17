@@ -46,9 +46,11 @@ function App() {
   //empty dependencies arr means compnent only renders once
 
   return (
-    <div>
+    <div className='h-screen w-screen border-4 grid relative place-content-center'>
       <BrowserRouter>
-      <Navbar />
+      <div className='absolute left-0 top-0 w-full'>
+        <Navbar />
+      </div>
         <div className="p-4">
           <Routes>
             <Route

@@ -138,7 +138,7 @@ const AddPostForm = () => {
     ]
 
     return(
-      <div className="p-6 border-2 border-orange-500 w-96 rounded-lg">
+      <div className="p-6 border-2 border-orange-500 w-96 rounded-lg bg-white">
         <form className="flex flex-col gap-2" onSubmit={handleSubmit} ref={formRef} encType="multipart/form-data">
           <div className="form-layout">
             <label htmlFor="prompt">title</label>
