@@ -1,11 +1,23 @@
 //this is the post component for the feed
 import { BsChevronDoubleDown } from 'react-icons/bs';
+import { useState } from 'react';
 
-export default function PostCard ({ prompt, image }) {
+export default function PostCard ({ prompt, image, description }) {
+
+    const [isExpanded, setIsExpanded] = useState(false)
+
+    const handleClick = () => {
+        setIsExpanded(prevIsExpanded => !prevIsExpanded)
+    }
+
     return (
-        <div className="relative border-4 border-orange-200 w-96 h-48 rounded-lg overflow-hidden">
-            <img className="transition object-none object-center brightness-50 sepia hover:sepia-0 hover:brightness-100 ease-in-out" src={image} alt={prompt}/>
-            <div className="absolute bottom-0 right-0 p-2 text-6xl transition-color text-white hover:text-orange-500 ease"><BsChevronDoubleDown /></div>
+        <div className={isExpanded ? 'postcard expand' : 'postcard'}>
+            <div className={isExpanded ? 'chevron up' : 'chevron'} onClick={handleClick}><BsChevronDoubleDown /></div>
+            <div className='absolute top-0 left-0 w-full h-full z-10 bg-gradient-to-t from-black'>
+                <p className="text-gray-300 absolute left-0 bottom-0 p-2">{description}</p>
+            </div>
+            <img className="transition object-none object-center" src={image} alt={prompt}/>
+            
         </div>
     )
 };

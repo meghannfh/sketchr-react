@@ -46,3 +46,53 @@ input, select, textarea {
 .forms-styles {
   width: 400px;
 }
+
+/*POST CARD ANIMATION*/
+.postcard {
+  position: relative;
+  border: 3px solid black;
+  overflow:hidden;
+  height: 200px;
+  border-radius: .5rem;
+  width: 24rem;
+  transition: height .5s ease;
+}
+
+.postcard.expand {
+  height: 300px;
+}
+
+/*CHEVRON ANIMATION*/
+.chevron {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 2px;
+  font-size: 4rem;
+  color: white;
+  z-index: 20;
+  transition: transform 0.3s ease-in-out;
+}
+
+.chevron:hover {
+  cursor: pointer;
+}
+
+.chevron.up {
+  transform: rotate(180deg);
+}
+
+
+/*ADDPOST FORM ANIMATION*/
+
+.addpost-form {
+  position: absolute;
+  bottom: -600px;
+  right: 50%;
+  z-index: 30;
+  transition: bottom .3s ease-in-out;
+}
+
+.addpost-form.show {
+  bottom: 30px;
+}
