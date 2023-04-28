@@ -2,7 +2,7 @@ import SignupForm from "../components/SignupForm";
 
 const Signup = () => {
     return (
-        <div>
+        <div className="home-login-signup-w-h grid relative place-content-center">
             <SignupForm/>
         </div>
     )

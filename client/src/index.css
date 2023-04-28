@@ -11,6 +11,11 @@
 
 body {
   min-height: 100vh;
+  min-width: 100vw;
+}
+
+.home-login-signup-w-h {
+  min-height: 100vh;
 }
 
 code {
@@ -87,12 +92,14 @@ input, select, textarea {
 
 .addpost-form {
   position: absolute;
-  bottom: -600px;
-  right: 50%;
+  bottom: 0;
+  right: -30rem;
+  margin-bottom: 1rem;
+  margin-right:1rem;
   z-index: 30;
-  transition: bottom .3s ease-in-out;
+  transition: right .3s ease-in-out;
 }
 
 .addpost-form.show {
-  bottom: 30px;
+  right: 0;
 }

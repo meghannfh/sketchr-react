@@ -46,9 +46,9 @@ function App() {
   //empty dependencies arr means compnent only renders once
 
   return (
-    <div className='h-screen w-screen grid relative place-content-center'>
+    <div>
       <BrowserRouter>
-      <div className='fixed left-0 top-0 w-full z-20'>
+      <div className='fixed left-0 top-0 z-20 border-2 border-red-500'>
         <Navbar />
       </div>
         <div className="p-4">
@@ -58,14 +58,6 @@ function App() {
               //the element is what we want to render
               element={<Home />}
             />
-            <Route 
-              path="/feed"
-              element={<Feed posts={posts} />}
-            />
-            <Route
-              path="/post/:id"
-              element={<Post />}
-            />
             <Route
               path="/signup"
               element={<Signup />}
@@ -73,6 +65,14 @@ function App() {
             <Route
               path="/login"
               element={<Login />}
+            />
+            <Route 
+              path="/feed"
+              element={<Feed posts={posts} />}
+            />
+            <Route
+              path="/post/:id"
+              element={<Post />}
             />
           </Routes>  
         </div>

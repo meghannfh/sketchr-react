@@ -13,7 +13,7 @@ const Navbar = () => {
 
   return(
     <header>
-      <div className="flex flex-row items-center justify-between p-4 relative">
+      <div className="flex flex-row items-center justify-between w-screen p-4">
         <Link to="/">
           <h1 className="title font-lobster text-lg">
             Sketchr.io
