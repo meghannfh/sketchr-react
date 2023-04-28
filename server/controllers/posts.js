@@ -16,7 +16,9 @@ module.exports = {
     },
     getFeed: async (req, res) => {
         try{
-            const posts = await Post.find({}).sort({ createdAt: 'desc' }).lean()
+            // const posts = await Post.find({}).sort({ createdAt: 'desc' }).lean()
+
+            const posts = await Post.find({ user: req.user.id }).sort({ createdAt: 'desc' }).lean();
 
             res.json(posts)
         }catch(err){
@@ -63,6 +65,7 @@ module.exports = {
                 canvas: canvas,
                 image: image,
                 description: description,
+                user: req.user.id,
             });
             res.status(200).json(newPost)
         }catch(err){

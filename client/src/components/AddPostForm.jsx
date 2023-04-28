@@ -54,6 +54,7 @@ const AddPostForm = () => {
       const res = await axios.post(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, formData)
 
       return res.data.secure_url//need to append .secure_url
+
     }catch(err){
       console.error(err)
     }
@@ -85,6 +86,9 @@ const AddPostForm = () => {
 
         //reset the emptyFields arr
         dispatch({type: 'CREATE_POST', payload: res.data})
+
+        //reset the input fields
+        formRef.current.reset();
       }catch (err){
         setEmptyFields(err.response.data.emptyFields)
         setError(err.response.data.err)
