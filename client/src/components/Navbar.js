@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
+import AddPostBtn from './AddPostBtn';
 
 const Navbar = () => {
 
@@ -23,8 +24,9 @@ const Navbar = () => {
             {user && <div className="w-full flex flex-row justify-end gap-10 items-center">
               <span>{user.email}</span>
               <Link to="/">
-                <button className="rounded-full py-1 px-4 border-2 border-black bg-white text-orange-600" onClick={handleClick}>Logout</button>
+                <button className="rounded-full py-1 px-4 border-2 border-black bg-white text-pink-500" onClick={handleClick}>Logout</button>
               </Link>
+              <AddPostBtn />
               <Link to="/feed">
                 <h3>Feed</h3>
               </Link>

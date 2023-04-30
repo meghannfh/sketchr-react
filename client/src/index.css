@@ -12,6 +12,7 @@
 body {
   min-height: 100vh;
   min-width: 100vw;
+  overflow: hidden;
 }
 
 .home-login-signup-w-h {
@@ -54,12 +55,14 @@ input, select, textarea {
 
 /*POST CARD ANIMATION*/
 .postcard {
+  color: #262626;
+  display: flex;
   position: relative;
-  border: 3px solid black;
-  overflow:hidden;
+  overflow: hidden;
   height: 200px;
+  width: 49%;
   border-radius: .5rem;
-  width: 24rem;
+  border: .5px solid #262626;
   transition: height .5s ease;
 }
 
@@ -69,13 +72,11 @@ input, select, textarea {
 
 /*CHEVRON ANIMATION*/
 .chevron {
-  position: absolute;
-  bottom: 0;
-  right: 0;
   padding: 2px;
-  font-size: 4rem;
-  color: white;
+  font-size: 2rem;
+  color: black;
   z-index: 20;
+  width: fit-content;
   transition: transform 0.3s ease-in-out;
 }
 
@@ -92,7 +93,7 @@ input, select, textarea {
 
 .addpost-form {
   position: absolute;
-  bottom: 0;
+  top: 0;
   right: -30rem;
   margin-bottom: 1rem;
   margin-right:1rem;

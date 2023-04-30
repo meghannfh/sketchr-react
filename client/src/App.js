@@ -45,10 +45,14 @@ function App() {
   }, [dispatch, user])
   //empty dependencies arr means compnent only renders once
 
+  //figure out where I need to put state for the add posst form
+  //if I add the state at this lvl and pass it thru the navbar
+  //component will I be able to get the info for the state back
+  //and then pass it into the feed page as well?
   return (
     <div>
       <BrowserRouter>
-      <div className='fixed left-0 top-0 z-20 border-2 border-red-500'>
+      <div className='fixed left-0 top-0 z-20'>
         <Navbar />
       </div>
         <div className="p-4">

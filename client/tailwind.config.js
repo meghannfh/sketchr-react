@@ -8,7 +8,8 @@ module.exports = {
     extend: {
       fontFamily: {
         lobster: ['"Lobster"', ...defaultTheme.fontFamily.sans],
-        poppins: ['"Poppins"', ...defaultTheme.fontFamily.sans]
+        poppins: ['"Poppins"', ...defaultTheme.fontFamily.sans],
+        raleway: ['"Raleway"', ...defaultTheme.fontFamily.sans]
       }
     },
   },
