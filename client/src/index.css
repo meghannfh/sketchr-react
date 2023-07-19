@@ -60,7 +60,8 @@ input, select, textarea {
   position: relative;
   overflow: hidden;
   height: 200px;
-  width: 49%;
+  width: 40%;
+  padding: .3rem;
   border-radius: .5rem;
   border: .5px solid #262626;
   transition: height .5s ease;

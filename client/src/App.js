@@ -8,7 +8,7 @@ import Login from './pages/Login';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 // import { useEffect, useState } from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { usePostsContext } from './hooks/usePostsContext';
 import { useAuthContext } from './hooks/useAuthContext';
 
@@ -21,6 +21,12 @@ axios.defaults.baseURL = 'http://127.0.0.1:8002'
 function App() {
   const { posts, dispatch } = usePostsContext();
   const { user } = useAuthContext();
+  const [showForm, setShowForm] = useState(false);
+
+  console.log(showForm)
+  const handleShowForm = () => {
+      setShowForm(preveShowForm => !preveShowForm)
+  }
 
   //adding authorization to headers in the request
   //we need this in order for the request to check if a user is logged in
@@ -53,7 +59,7 @@ function App() {
     <div>
       <BrowserRouter>
       <div className='fixed left-0 top-0 z-20'>
-        <Navbar />
+        <Navbar handleShowForm={handleShowForm}/>
       </div>
         <div className="p-4">
           <Routes>
@@ -72,7 +78,7 @@ function App() {
             />
             <Route 
               path="/feed"
-              element={<Feed posts={posts} />}
+              element={<Feed posts={posts} showForm={showForm} handleShowForm={handleShowForm}/>}
             />
             <Route
               path="/post/:id"

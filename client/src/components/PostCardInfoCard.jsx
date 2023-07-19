@@ -1,6 +1,10 @@
 //this is the individual post component on the Post page
+import { usePostsContext } from '../hooks/usePostsContext';
+import { useAuthContext } from '../hooks/useAuthContext';
+import axios from 'axios'
 
 export default function PostCardInfoCard({ post }) {
+    
     return (
         <div>
             <h1>{post.prompt}</h1>

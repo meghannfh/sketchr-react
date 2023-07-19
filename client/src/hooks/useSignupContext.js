@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useAuthContext } from '../hooks/useAuthContext';
+//trying to redirect to /feed after login
 import axios from 'axios';
 axios.defaults.baseURL = 'http://127.0.0.1:8002'
 
@@ -22,8 +23,8 @@ export const useSignupContext = () => {
       localStorage.setItem('user', JSON.stringify(output))
 
       //update the auth context
-      dispatch({type: 'LOGIN', payload: output})
-      setIsloading(false)
+      dispatch({type: 'LOGIN', payload: output});
+      setIsloading(false);
       
     } catch(err){
 

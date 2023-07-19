@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useAuthContext } from './useAuthContext';
+//trying to redirect to /feed after login
 import axios from 'axios';
 
 export const useLogin = () => {
@@ -20,6 +21,7 @@ export const useLogin = () => {
       //update the auth context
       dispatch({type: 'LOGIN', payload: output})
       setIsloading(false)
+      //trying to redirect to feed
 
     } catch(err){
       

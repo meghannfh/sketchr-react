@@ -3,7 +3,7 @@ import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
 import AddPostBtn from './AddPostBtn';
 
-const Navbar = () => {
+const Navbar = ({ handleShowForm }) => {
 
   const { logout } = useLogout();
   const { user } = useAuthContext();
@@ -26,7 +26,7 @@ const Navbar = () => {
               <Link to="/">
                 <button className="rounded-full py-1 px-4 border-2 border-black bg-white text-pink-500" onClick={handleClick}>Logout</button>
               </Link>
-              <AddPostBtn />
+              <AddPostBtn handleShowForm={handleShowForm}/>
               <Link to="/feed">
                 <h3>Feed</h3>
               </Link>

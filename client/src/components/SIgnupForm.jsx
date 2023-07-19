@@ -4,12 +4,19 @@ import { BsEyeSlash, BsEye } from 'react-icons/bs'
 
 const SignupForm = () => {
   const [eye, setEye] = useState(<BsEyeSlash />)
+  const [passwordType, setPasswordType] = useState("password")
   //set reference to form element
   const formRef = useRef();
   const { signup, error, isLoading } = useSignupContext();
 
   const handleToggleEye = (e) => {
-    
+    setEye(prevEye => {
+      if(prevEye === <BsEyeSlash/>){
+        return <BsEye/>
+      }else{
+        return <BsEyeSlash/>
+      }
+    })
   }
 
   const handleSubmit = async (e) => {
@@ -51,7 +58,7 @@ const SignupForm = () => {
           </div>
           <div className="form-layout relative">
             <input 
-              type="password" 
+              type={passwordType} 
               name="password"
               className='border-2'
               placeholder="password" 
