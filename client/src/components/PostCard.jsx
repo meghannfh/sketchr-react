@@ -1,6 +1,6 @@
 //this is the post component for the feed
 import { BsChevronDoubleDown, BsTrash, BsPencilSquare } from 'react-icons/bs';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { usePostsContext } from '../hooks/usePostsContext';
 
@@ -12,7 +12,7 @@ import axios from 'axios';
 export default function PostCard ({ prompt, image, description, title, createdAt }) {
   const { dispatch } = usePostsContext();
   const { user } = useAuthContext();
-	const { id } = useParams();
+	// const { id } = useParams();
 
   const headerConfig = {
     headers: {

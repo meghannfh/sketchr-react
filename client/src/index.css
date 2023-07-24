@@ -12,7 +12,8 @@
 body {
   min-height: 100vh;
   min-width: 100vw;
-  overflow: hidden;
+  background-color: #FFDEE9;
+  background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
 }
 
 .home-login-signup-w-h {
@@ -56,6 +57,7 @@ input, select, textarea {
 /*POST CARD ANIMATION*/
 .postcard {
   color: #262626;
+  background-color: white;
   display: flex;
   position: relative;
   overflow: hidden;

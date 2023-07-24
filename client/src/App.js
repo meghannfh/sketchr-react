@@ -23,7 +23,7 @@ function App() {
   const { user } = useAuthContext();
   const [showForm, setShowForm] = useState(false);
 
-  console.log(showForm)
+
   const handleShowForm = () => {
       setShowForm(preveShowForm => !preveShowForm)
   }
@@ -47,6 +47,7 @@ function App() {
 
     if(user){
       fetchPosts()
+      handleShowForm(false);
     }
   }, [dispatch, user])
   //empty dependencies arr means compnent only renders once
@@ -78,7 +79,7 @@ function App() {
             />
             <Route 
               path="/feed"
-              element={<Feed posts={posts} showForm={showForm} handleShowForm={handleShowForm}/>}
+              element={<Feed posts={posts} showForm={showForm}/>}
             />
             <Route
               path="/post/:id"

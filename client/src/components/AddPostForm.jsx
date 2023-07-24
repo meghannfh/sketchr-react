@@ -89,11 +89,9 @@ const AddPostForm = ({ handleShowForm }) => {
 
         //reset the input fields
         formRef.current.reset();
-        handleShowForm();
       }catch (err){
         setEmptyFields(err.response.data.emptyFields)
         setError(err.response.data.err)
-        console.log(err)
       }
     
     }
