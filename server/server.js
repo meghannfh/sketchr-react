@@ -60,6 +60,6 @@ app.use('/post', postRoutes)
 // app.use('/profilepic', profilepicRoutes)
 
 app.listen(process.env.PORT || PORT, () => {
-    console.log(`The server is running`)
+    console.log(`The server is running on ${process.env.PORT || PORT}`)
 })
 

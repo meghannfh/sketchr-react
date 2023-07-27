@@ -1,5 +1,7 @@
 const Post = require('../models/Post');
 const User = require('../models/User');
+const mongoose = require('mongoose');
+const cloudinary = require('../middleware/cloudinary');
 
 //we're wrapping all of our functions in an object so
 //when we import these functions in our routers
@@ -27,6 +29,10 @@ module.exports = {
     },
     getPost: async (req, res) => {
         const { id } = req.params;
+
+        if(!mongoose.Types.ObjectId.isValid(id)){
+            return res.status(404).json({error: 'no such workout'})
+        }
         try{
             const post = await Post.findById(id);
             // const artist = await User.findById({ _id: post.user})
@@ -76,6 +82,11 @@ module.exports = {
     },
     deletePost: async (req, res) => {
         const { id } = req.params;
+
+        if(!mongoose.Types.ObjectId.isValid(id)){
+            return res.status(404).json({error: 'no such workout'})
+        }
+
         try{
             let post = await Post.findById({ _id: id })
             await cloudinary.uploader.destroy(post.cloudinaryId)
