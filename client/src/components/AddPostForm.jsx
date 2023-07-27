@@ -7,7 +7,7 @@ const preset = process.env.REACT_APP_CLOUDINARY_PRESET
 const cloud_name = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME
 axios.defaults.baseURL = 'http://127.0.0.1:8002'
 
-const AddPostForm = ({ handleShowForm }) => {
+const AddPostForm = () => {
   const { dispatch } = usePostsContext();
   const { user } = useAuthContext();
 

@@ -6,14 +6,14 @@ const User = require('../models/User');
 //we need to use dot notation to access each individual function
 //in their respective routes
 module.exports = {
-    getProfile: async (req, res) => {
-        try {
-            const posts = await Post.find({ user: req.user.id }).sort({ createdAt: 'desc' }).lean();
-            res.render('profile.ejs', { posts: posts, user: req.user })
-        } catch (err) {
-            console.log(err)
-        }
-    },
+    // getProfile: async (req, res) => {
+    //     try {
+    //         const posts = await Post.find({ user: req.user.id }).sort({ createdAt: 'desc' }).lean();
+    //         res.render('profile.ejs', { posts: posts, user: req.user })
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+    // },
     getFeed: async (req, res) => {
         try{
             // const posts = await Post.find({}).sort({ createdAt: 'desc' }).lean()
@@ -26,14 +26,14 @@ module.exports = {
         }
     },
     getPost: async (req, res) => {
+        const { id } = req.params;
         try{
-            const post = await Post.findById(req.params.id);
-            console.log()
+            const post = await Post.findById(id);
             // const artist = await User.findById({ _id: post.user})
         // res.render('post.ejs', { post: post, user: req.user, artist: artist })
-        res.status(200).json(post)
+            res.status(202).json(post)
         }catch(err){
-            console.error(err)
+            res.status(404).json({error: err.message})
         }
     },
     addPost: async (req, res) => {
@@ -75,8 +75,9 @@ module.exports = {
         }
     },
     deletePost: async (req, res) => {
+        const { id } = req.params;
         try{
-            let post = await Post.findById({ _id: req.params.id })
+            let post = await Post.findById({ _id: id })
             await cloudinary.uploader.destroy(post.cloudinaryId)
             await Post.deleteOne({ _id: req.params.id })
             console.log('Post Deleted')
