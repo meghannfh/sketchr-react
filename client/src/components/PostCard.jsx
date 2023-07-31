@@ -34,27 +34,31 @@ export default function PostCard ({ prompt, image, description, title, createdAt
 
   return (
     <div className={isExpanded ? 'postcard expand' : 'postcard'}>
-      <div className='absolute right-0 bottom-0'>
-      	<div className={isExpanded ? 'chevron up' : 'chevron'} onClick={handleClick}> <BsChevronDoubleDown /></div>
-      	</div>
-      	<div className='absolute right-0 top-0 text-2xl'>
-					<span onClick={handleTrashClick}>
-						<BsTrash />
-					</span>
-      	  
-      	  <BsPencilSquare />
-      	</div>
-		
-      	<div className="w-1/3 h-full">
-      	  <img className="object-cover h-full w-full rounded-md" src={image} alt={prompt}/>
-      	</div>
-      	<div className="p-4 h-full w-2/3">
-      		<div className='w-full'>
-      	  	<h1 className='text-2xl uppercase font-raleway font-bold'>{title}</h1>
-      	    <h3>{createdAt}</h3>
-      	  </div>
-      	  <p className='font-raleway'>{description}</p>
+      <div className='absolute right-0 bottom-0 z-50'>
+      	<div className={isExpanded ? 'chevron up' : 'chevron'} onClick={handleClick}>
+          <BsChevronDoubleDown />
+        </div>
       </div>
+
+      <div className='absolute right-0 top-0 text-2xl'>
+				<span onClick={handleTrashClick}>
+					<BsTrash />
+				</span>
+        <BsPencilSquare />
+      </div>
+		
+      <div className="w-full h-full">
+      	<img className="object-cover h-full w-full rounded-md" src={image} alt={prompt}/>
+      </div>
+
+      <div className="absolute p-4 h-full w-full backdrop-grayscale bg-black/50 text-white z-10">
+      	<div className='w-full'>
+        	<h1 className='text-2xl uppercase font-raleway font-bold'>{title}</h1>
+          <h3>{createdAt}</h3>
+        </div>
+        <p className='font-raleway'>{description}</p>
+      </div>
+
     </div>
   )
 };

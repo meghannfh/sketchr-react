@@ -1,5 +1,5 @@
 const Post = require('../models/Post');
-const User = require('../models/User');
+// const User = require('../models/User');
 const mongoose = require('mongoose');
 const cloudinary = require('../middleware/cloudinary');
 
@@ -44,32 +44,19 @@ module.exports = {
     },
     addPost: async (req, res) => {
 
-        //instead of generating cloudinaryURL and ID in frontend,
-        //I'll set the uploaded file.name to the image property in the body
-        //destructure the body and then send a post request to cloudinary before
-        //creating new post also change the name to 'file' instead of 'image
-        //for incoming form data
-        //ex: const cloudinaryData = await cloudinary.uploader.upload(file)
-        //after getting cloudinaryData we need to add it to the post Schema like so:
-        //cloudinaryUrl: cloudinaryData.secure_url
-        //cloudinaryId: cloudinaryData.publid_id
-        //this means the Schema also needs to be updated
-        //remove the
-
-
-
-         const { prompt, media, size, canvas, file, description } = req.body
-         //took care of generating cloudinaryURL in frontend.
-         //heard it's not the best for security but it's the only way I could
-         //get it to work
+        /*the file in the formData in the request is already encoded 
+        correctly but all other input fields will come through as req.body.whatever
+        and only the file will come through as req.file.path so you need to separate
+        these two diff types of fields when grabbing them from the request*/
+         const { prompt, media, size, canvas, description } = req.body
          let emptyFields = [];
 
          if (!prompt) {
             emptyFields.push('title')
          }
-         if (!file) {
+         if (!req.file) {
             emptyFields.push('file')
-         }
+         } 
          if (!description) {
             emptyFields.push('description')
          }
@@ -78,13 +65,18 @@ module.exports = {
             return res.status(400).json({err: 'Please fill out all fields', emptyFields})
         }
 
+        const { path } = req.file;
+
         try{
+            const result = await cloudinary.uploader.upload(path);
+
             let newPost = await Post.create({
                 prompt: prompt,
                 media: media,
                 size: size,
                 canvas: canvas,
-                file: file,
+                file: result.secure_url,//don't forget to append secure_url to the result from cloudinary
+                cloudinaryId: result.public_id,//append publit_id to this one you need it to delete later
                 description: description,
                 user: req.user.id,
             });
@@ -101,10 +93,6 @@ module.exports = {
         if(!mongoose.Types.ObjectId.isValid(id)){
             return res.status(404).json({error: 'no such workout'})
         }
-
-        //needd to know if I need to find a post by the id first
-        //in order to get the cloudinaryId and delete it from cloudinary
-        //and then delete the post from the DB
         try{
             let post = await Post.findById({ _id: id })
 

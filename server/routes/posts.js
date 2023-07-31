@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const postsController =  require('../controllers/posts')
-const auth = require('../middleware/auth')
+const postsController =  require("../controllers/posts")
+const auth = require("../middleware/auth")
+const upload = require("../middleware/multer")
 
 //if you need to test routes on Postman without auth comment out 
 //router.use(auth) here and in the controllers, remove the user params
@@ -20,7 +21,7 @@ router.get('/feed', postsController.getFeed)
 router.get('/:id', postsController.getPost)
 
 //added route to frontend
-router.post("/addPost", postsController.addPost) //removed multer's upload.single("file")
+router.post("/addPost", upload.single("file"), postsController.addPost)
 
 //not yet added route
 router.delete("/deletePost/:id", postsController.deletePost);
