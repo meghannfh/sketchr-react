@@ -18,9 +18,17 @@ const PostSchema = new mongoose.Schema({
         type: String,
         required: false,
     },
-    image: {
+    file: {
         type: String,
         required: true,
+    },
+    // cloudinaryUrl: {
+    //     type: String,
+    //     required: true
+    // },
+    cloudinaryId: {
+        type: String,
+        required: true
     },
     description: {
         type: String,

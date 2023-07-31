@@ -1,19 +1,21 @@
 const Post = require('../models/Post');
-const User = require('../models/User');
+// const User = require('../models/User');
+const mongoose = require('mongoose');
+const cloudinary = require('../middleware/cloudinary');
 
 //we're wrapping all of our functions in an object so
 //when we import these functions in our routers
 //we need to use dot notation to access each individual function
 //in their respective routes
 module.exports = {
-    getProfile: async (req, res) => {
-        try {
-            const posts = await Post.find({ user: req.user.id }).sort({ createdAt: 'desc' }).lean();
-            res.render('profile.ejs', { posts: posts, user: req.user })
-        } catch (err) {
-            console.log(err)
-        }
-    },
+    // getProfile: async (req, res) => {
+    //     try {
+    //         const posts = await Post.find({ user: req.user.id }).sort({ createdAt: 'desc' }).lean();
+    //         res.render('profile.ejs', { posts: posts, user: req.user })
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+    // },
     getFeed: async (req, res) => {
         try{
             // const posts = await Post.find({}).sort({ createdAt: 'desc' }).lean()
@@ -26,29 +28,35 @@ module.exports = {
         }
     },
     getPost: async (req, res) => {
+        const { id } = req.params;
+
+        if(!mongoose.Types.ObjectId.isValid(id)){
+            return res.status(404).json({error: 'no such workout'})
+        }
         try{
-            const post = await Post.findById(req.params.id);
-            console.log()
+            const post = await Post.findById(id);
             // const artist = await User.findById({ _id: post.user})
         // res.render('post.ejs', { post: post, user: req.user, artist: artist })
-        res.status(200).json(post)
+            res.status(202).json(post)
         }catch(err){
-            console.error(err)
+            res.status(404).json({error: err.message})
         }
     },
     addPost: async (req, res) => {
-         const { prompt, media, size, canvas, image, description } = req.body
-         //took care of generating cloudinaryURL in frontend.
-         //heard it's not the best for security but it's the only way I could
-         //get it to work
+
+        /*the file in the formData in the request is already encoded 
+        correctly but all other input fields will come through as req.body.whatever
+        and only the file will come through as req.file.path so you need to separate
+        these two diff types of fields when grabbing them from the request*/
+         const { prompt, media, size, canvas, description } = req.body
          let emptyFields = [];
 
          if (!prompt) {
             emptyFields.push('title')
          }
-         if (!image) {
-            emptyFields.push('image')
-         }
+         if (!req.file) {
+            emptyFields.push('file')
+         } 
          if (!description) {
             emptyFields.push('description')
          }
@@ -57,13 +65,18 @@ module.exports = {
             return res.status(400).json({err: 'Please fill out all fields', emptyFields})
         }
 
+        const { path } = req.file;
+
         try{
+            const result = await cloudinary.uploader.upload(path);
+
             let newPost = await Post.create({
                 prompt: prompt,
                 media: media,
                 size: size,
                 canvas: canvas,
-                image: image,
+                file: result.secure_url,//don't forget to append secure_url to the result from cloudinary
+                cloudinaryId: result.public_id,//append publit_id to this one you need it to delete later
                 description: description,
                 user: req.user.id,
             });
@@ -75,10 +88,19 @@ module.exports = {
         }
     },
     deletePost: async (req, res) => {
+        const { id } = req.params;
+
+        if(!mongoose.Types.ObjectId.isValid(id)){
+            return res.status(404).json({error: 'no such workout'})
+        }
         try{
-            let post = await Post.findById({ _id: req.params.id })
+            let post = await Post.findById({ _id: id })
+
+            if(!post){
+                return res.status(404).json({ error: 'no such workout'})
+            }
             await cloudinary.uploader.destroy(post.cloudinaryId)
-            await Post.deleteOne({ _id: req.params.id })
+            await Post.deleteOne({ _id: id })
             console.log('Post Deleted')
             res.redirect('/profile')
         }catch(err){
