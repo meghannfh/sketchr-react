@@ -33,7 +33,7 @@ const AddPostForm = () => {
 
   /*This will run as soon as the user hits submit
   passing in the file saved in file's state*/
-  const handleCloudinaryUrl = async (file) => {
+  const handleGetFileName = async (file) => {
     if(!file){
       setError("Please select a file!") 
     }
@@ -45,6 +45,10 @@ const AddPostForm = () => {
     formData.append('file', file);
 
     formData.append('upload_preset', preset)
+    //need to send POST request to DB with formData because the FormData API
+    //already has an encoding of multipart/form-data which is necessary for multer to parse
+    //for the file data in the form
+  
     try {
       /*you need to grab the upload endpoint from cloudinary.
       by default, the cloudinary API endpoints use this format: 
@@ -53,6 +57,7 @@ const AddPostForm = () => {
       your cloud name is on the dashboard of your cloudinary acct*/
       const res = await axios.post(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, formData)
 
+  
       return res.data.secure_url//need to append .secure_url
 
     }catch(err){
@@ -62,18 +67,18 @@ const AddPostForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-
     if(user){
       try {
-        const cloudinaryUrl = await handleCloudinaryUrl(file) //wait for cloudinary to return the generated url
+        const fileName = await handleGetFileName(file) //wait for cloudinary to return the generated url
 
         const formData = new FormData(formRef.current)//grab the form data using useRef
 
         const body = {} //we're going to organize our formdata into body and return that
 
+        // console.log(cloudinaryData);
         formData.forEach((value, key) => {
-          if(key === "image"){
-            body[key] = cloudinaryUrl // setting the cloudinaryURL for image
+          if(key === "file"){
+            body[key] = fileName // setting the cloudinaryURL for image
           } else {
             body[key] = value
           }
@@ -83,8 +88,6 @@ const AddPostForm = () => {
         console.log(body)
         console.log(res.data)
 
-
-        //reset the emptyFields arr
         dispatch({type: 'CREATE_POST', payload: res.data})
 
         //reset the input fields
@@ -205,8 +208,8 @@ const AddPostForm = () => {
           <div className="form-layout">
             <input 
               type="file" 
-              name="image"
-              className={emptyFields && emptyFields.includes('image') ? 'error' : 'border-2'}
+              name="file"
+              className={emptyFields && emptyFields.includes('file') ? 'error' : 'border-2'}
               onChange={handleOnChange}
               />
           </div>

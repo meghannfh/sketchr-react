@@ -20,7 +20,7 @@ router.get('/feed', postsController.getFeed)
 router.get('/:id', postsController.getPost)
 
 //added route to frontend
-router.post("/addPost", postsController.addPost) //removed multer's upload.single("image")
+router.post("/addPost", postsController.addPost) //removed multer's upload.single("file")
 
 //not yet added route
 router.delete("/deletePost/:id", postsController.deletePost);

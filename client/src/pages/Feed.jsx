@@ -10,7 +10,7 @@ const Feed = ({ posts, showForm, handleShowForm }) => {
         <div className='relative border-4 mt-20'>
             <div className="flex flex-row flex-wrap gap-2 p-3">
                 {posts.length > 0 ? posts.map((post) => (
-                    <PostCard key={post._id} prompt={post.prompt} image={post.image} description={post.description} title={post.prompt} createdAt={post.createdAt} id={post._id}/>
+                    <PostCard key={post._id} prompt={post.prompt} image={post.file} description={post.description} title={post.prompt} createdAt={post.createdAt} id={post._id}/>
                 )) : 'no posts to show'}
             </div>
             <div className={showForm ? 'addpost-form' : 'addpost-form show'}>

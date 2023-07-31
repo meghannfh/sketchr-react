@@ -1,6 +1,6 @@
 //this is the post component for the feed
 import { BsChevronDoubleDown, BsTrash, BsPencilSquare } from 'react-icons/bs';
-import { useAuthContext } from '../hooks/useAuthContext';
+// import { useAuthContext } from '../hooks/useAuthContext';
 import { usePostsContext } from '../hooks/usePostsContext';
 
 import { useState } from 'react';

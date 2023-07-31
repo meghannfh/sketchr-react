@@ -43,7 +43,22 @@ module.exports = {
         }
     },
     addPost: async (req, res) => {
-         const { prompt, media, size, canvas, image, description } = req.body
+
+        //instead of generating cloudinaryURL and ID in frontend,
+        //I'll set the uploaded file.name to the image property in the body
+        //destructure the body and then send a post request to cloudinary before
+        //creating new post also change the name to 'file' instead of 'image
+        //for incoming form data
+        //ex: const cloudinaryData = await cloudinary.uploader.upload(file)
+        //after getting cloudinaryData we need to add it to the post Schema like so:
+        //cloudinaryUrl: cloudinaryData.secure_url
+        //cloudinaryId: cloudinaryData.publid_id
+        //this means the Schema also needs to be updated
+        //remove the
+
+
+
+         const { prompt, media, size, canvas, file, description } = req.body
          //took care of generating cloudinaryURL in frontend.
          //heard it's not the best for security but it's the only way I could
          //get it to work
@@ -52,8 +67,8 @@ module.exports = {
          if (!prompt) {
             emptyFields.push('title')
          }
-         if (!image) {
-            emptyFields.push('image')
+         if (!file) {
+            emptyFields.push('file')
          }
          if (!description) {
             emptyFields.push('description')
@@ -69,7 +84,7 @@ module.exports = {
                 media: media,
                 size: size,
                 canvas: canvas,
-                image: image,
+                file: file,
                 description: description,
                 user: req.user.id,
             });
@@ -87,10 +102,17 @@ module.exports = {
             return res.status(404).json({error: 'no such workout'})
         }
 
+        //needd to know if I need to find a post by the id first
+        //in order to get the cloudinaryId and delete it from cloudinary
+        //and then delete the post from the DB
         try{
             let post = await Post.findById({ _id: id })
+
+            if(!post){
+                return res.status(404).json({ error: 'no such workout'})
+            }
             await cloudinary.uploader.destroy(post.cloudinaryId)
-            await Post.deleteOne({ _id: req.params.id })
+            await Post.deleteOne({ _id: id })
             console.log('Post Deleted')
             res.redirect('/profile')
         }catch(err){
