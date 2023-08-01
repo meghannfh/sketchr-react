@@ -1,6 +1,5 @@
 //this is the post component for the feed
-import { BsChevronDoubleDown, BsTrash, BsPencilSquare } from 'react-icons/bs';
-// import { useAuthContext } from '../hooks/useAuthContext';
+import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import { usePostsContext } from '../hooks/usePostsContext';
 
 import { useState } from 'react';
@@ -33,30 +32,25 @@ export default function PostCard ({ prompt, image, description, title, createdAt
   //bg-gradient-to-t from-black
 
   return (
-    <div className={isExpanded ? 'postcard expand' : 'postcard'}>
-      <div className='absolute right-0 bottom-0 z-50'>
-      	<div className={isExpanded ? 'chevron up' : 'chevron'} onClick={handleClick}>
-          <BsChevronDoubleDown />
-        </div>
-      </div>
-
-      <div className='absolute right-0 top-0 text-2xl'>
-				<span onClick={handleTrashClick}>
-					<BsTrash />
-				</span>
-        <BsPencilSquare />
-      </div>
-		
+    <div className={isExpanded ? 'postcard expand' : 'postcard'} onClick={handleClick}>
       <div className="w-full h-full">
       	<img className="object-cover h-full w-full rounded-md" src={image} alt={prompt}/>
       </div>
 
-      <div className="absolute p-4 h-full w-full backdrop-grayscale bg-black/50 text-white z-10">
-      	<div className='w-full'>
+      <div className="absolute p-4 h-full w-full text-white z-10 image-filter remove-filter">
+      	<div className='w-full card-text card-text-disappear'>
         	<h1 className='text-2xl uppercase font-raleway font-bold'>{title}</h1>
           <h3>{createdAt}</h3>
+          <p className='font-raleway'>{description}</p>
         </div>
-        <p className='font-raleway'>{description}</p>
+        <div className='absolute right-2 bottom-2 text-2xl flex flex-row gap-1'>
+				<span onClick={handleTrashClick} className='transition-colors ease-in-out duration-500 rounded-full p-2 bg-white text-pink-500 hover:bg-pink-500 hover:text-white hover:cursor-pointer'>
+					<FiTrash2 />
+				</span>
+        <span className='transition-colors ease-in-out duration-500 rounded-full p-2 bg-white text-pink-500 hover:bg-pink-500 hover:text-white hover:cursor-pointer'>
+          <FiEdit />
+        </span>
+      </div>
       </div>
 
     </div>

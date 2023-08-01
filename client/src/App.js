@@ -59,10 +59,10 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-      <div className='fixed left-0 top-0 z-20'>
+      <div className='fixed left-0 top-0 z-40'>
         <Navbar handleShowForm={handleShowForm}/>
       </div>
-        <div className="p-4">
+        <div>
           <Routes>
             <Route
               path="/"
