@@ -14,6 +14,7 @@ body {
   min-width: 100vw;
   background-color: #FFDEE9;
   background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+  background-repeat: no-repeat;
 }
 
 .home-login-signup-w-h {
@@ -64,12 +65,35 @@ input, select, textarea {
   height: 300px;
   width: 22%;
   border-radius: .5rem;
-  transition: height .5s ease;
+  transition: width .5s ease;
 }
 
 .postcard.expand {
-  height: 375px;
+  width: 450px;
 }
+
+.image-filter{
+  cursor: pointer;
+  backdrop-filter: grayscale(100%);
+  background-color: rgba(0, 0, 0, .5);
+  transition: background-color .3s ease-in-out;
+}
+
+.card-text {
+  opacity: 100%;
+  transition: opacity .3s ease-in-out;
+}
+
+.postcard:hover .image-filter.remove-filter{
+  backdrop-filter: grayscale(0%);
+  background-color: transparent;
+}
+
+.postcard:hover .card-text.card-text-disappear{
+  opacity: 0%;
+}
+
+
 
 /*CHEVRON ANIMATION*/
 .chevron {
@@ -92,15 +116,17 @@ input, select, textarea {
 /*ADDPOST FORM ANIMATION*/
 
 .addpost-form {
-  position: absolute;
-  top: 0;
-  right: -30rem;
-  margin-bottom: 1rem;
-  margin-right:1rem;
+  position: fixed;
+  display: none;
+  bottom: 0rem;
+  opacity: 0%;
+  right:0;
   z-index: 30;
-  transition: right .3s ease-in-out;
+  transition: bottom .5s ease-in-out;
 }
 
 .addpost-form.show {
-  right: 0;
+  bottom: 10rem;
+  opacity: 100%;
+  display: block;
 }
