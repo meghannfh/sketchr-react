@@ -18,8 +18,6 @@ module.exports = {
     // },
     getFeed: async (req, res) => {
         try{
-            // const posts = await Post.find({}).sort({ createdAt: 'desc' }).lean()
-
             const posts = await Post.find({ user: req.user.id }).sort({ createdAt: 'desc' }).lean();
 
             res.json(posts)
@@ -82,14 +80,12 @@ module.exports = {
             });
             res.status(200).json(newPost)
         }catch(err){
-
             res.status(400).json({err: err.message})
             console.error(err)
         }
     },
     deletePost: async (req, res) => {
         const { id } = req.params;
-
         if(!mongoose.Types.ObjectId.isValid(id)){
             return res.status(404).json({error: 'no such workout'})
         }
@@ -101,10 +97,11 @@ module.exports = {
             }
             await cloudinary.uploader.destroy(post.cloudinaryId)
             await Post.deleteOne({ _id: id })
+            res.status(200).json(post)
             console.log('Post Deleted')
-            res.redirect('/profile')
         }catch(err){
-            res.redirect('/profile')
+            res.status(400).json({err: err.message})
+            console.error(err)
         }
     },
     updatePost: async (req, res) => {
@@ -119,9 +116,9 @@ module.exports = {
                  }
               );
             console.log('Post updated')
-            res.redirect(`/post/${req.params.id}`)
+
         }catch(err){
-            res.redirect('/profile')
+
         }
     },
 }

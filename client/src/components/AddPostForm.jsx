@@ -161,7 +161,6 @@ const AddPostForm = () => {
               type="file" 
               name="file"
               className={emptyFields && emptyFields.includes('file') ? 'error' : 'border-2'}
-              // onChange={handleOnChange}
               />
           </div>
           <button className='transition-color ease-in-out border-2 p-2 rounded-md font-bold uppercase hover:outline-none'>submit</button>

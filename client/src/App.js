@@ -5,6 +5,7 @@ import Feed from './pages/Feed';
 import Post from './pages/Post';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
+import AddPostForm from './components/AddPostForm';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 // import { useEffect, useState } from 'react';
@@ -38,10 +39,10 @@ function App() {
    }
   }
 
+  console.log(posts)
   useEffect(()=> {
     const fetchPosts = async () => {
       const res = await axios.get('/post/feed', headerConfig)
-      console.log(res.data)
       dispatch({type: 'SET_POSTS', payload: res.data})
     }
 
@@ -52,10 +53,6 @@ function App() {
   }, [dispatch, user])
   //empty dependencies arr means compnent only renders once
 
-  //figure out where I need to put state for the add posst form
-  //if I add the state at this lvl and pass it thru the navbar
-  //component will I be able to get the info for the state back
-  //and then pass it into the feed page as well?
   return (
     <div>
       <BrowserRouter>
@@ -88,6 +85,10 @@ function App() {
           </Routes>  
         </div>
       </BrowserRouter>
+      {user && showForm && 
+      <div className='fixed top-20 z-40'>
+        <AddPostForm />
+      </div>}
     </div>
   );
 }
