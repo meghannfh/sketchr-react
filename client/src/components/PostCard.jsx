@@ -1,6 +1,7 @@
 //this is the post component for the feed
 import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import { usePostsContext } from '../hooks/usePostsContext';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 import { useState } from 'react';
 
@@ -9,30 +10,29 @@ import axios from 'axios';
 
 export default function PostCard ({ prompt, image, description, title, createdAt, id }) {
   const { dispatch } = usePostsContext();
+  const { user } = useAuthContext();
+
+  const headerConfig = {
+    headers: {
+      Authorization: `Bearer ${user && user.token}` 
+   }
+  }
 
   const [isExpanded, setIsExpanded] = useState(false)
 
-  const handleClick = () => {
-    setIsExpanded(prevIsExpanded => !prevIsExpanded)
-  }
-
+  // const handleClick = () => {
+  //   setIsExpanded(prevIsExpanded => !prevIsExpanded)
+  // }
+ 
   const handleTrashClick = async () => {
-    try{
-      
-      const res = await axios.delete(`/post/deletePost/${id}`)
+    console.log('clicked')
+    const res = await axios.delete('/post/deletePost/'+id, headerConfig)
 
-      if(res.ok) {
-        dispatch({ type: 'DELETE_WORKOUT', payload: res.data })
-      }
-    }catch(err){
-
-    }
+    console.log(res.data)
+    dispatch({ type: 'DELETE_POST', payload: res.data })
   }
-
-  //bg-gradient-to-t from-black
-
   return (
-    <div className={isExpanded ? 'postcard expand' : 'postcard'} onClick={handleClick}>
+    <div className={isExpanded ? 'postcard expand' : 'postcard'}>
       <div className="w-full h-full">
       	<img className="object-cover h-full w-full rounded-md" src={image} alt={prompt}/>
       </div>

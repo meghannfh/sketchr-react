@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -10,15 +10,13 @@
 }
 
 body {
-  min-height: 100vh;
-  min-width: 100vw;
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  align-content: center;
   background-color: #FFDEE9;
   background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
   background-repeat: no-repeat;
-}
-
-.home-login-signup-w-h {
-  min-height: 100vh;
 }
 
 code {

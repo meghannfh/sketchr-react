@@ -13,6 +13,36 @@ const Navbar = ({ handleShowForm }) => {
     logout();
   }
 
+  const morningGreetings = [
+    'おはようございます',
+    '잘 주무셨어요?',
+    'buenos días',
+    '早上好',
+    'bom dia',
+    'God morgon',
+    'สวัสดีตอนเช้า',
+    'सुप्रभात',
+    'صباح الخير',
+    'bonjour',
+    'С добрым утром',
+    'Chúc ngủ ngon',
+    'Magandang umaga',
+    'goeie more',
+  ]
+
+  const afternoonGreetings = [
+    'こんにちは',
+    '안녕',
+    'hola',
+    '你好',
+    'olá',
+    'hej',
+    'สวัสดี',
+    'नमस्ते',
+    'السلام عليكم',
+    'Привет',
+  ]
+
   return(
     <header>
       <div className="flex flex-row items-center justify-between w-screen p-4">
@@ -23,7 +53,7 @@ const Navbar = ({ handleShowForm }) => {
         </Link>
         <nav className="w-[70%] flex flex-row justfy-end items-center">
             {user && <div className="w-full flex flex-row justify-end gap-6 items-center">
-              <span>{user.email}</span>
+              <span>{user.username}</span>
               <Link to="/feed">
                 <h3>feed</h3>
               </Link>
