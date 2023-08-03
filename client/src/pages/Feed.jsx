@@ -1,5 +1,4 @@
 import PostCard from '../components/PostCard'
-import AddPostForm from '../components/AddPostForm';
 // import { Link } from 'react-router-dom';
 
 const Feed = ({ posts }) => {
