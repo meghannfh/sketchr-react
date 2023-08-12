@@ -1,34 +1,12 @@
-import { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useSignupContext } from '../hooks/useSignupContext';
+import { useState } from 'react';
 import { BsEyeSlash, BsEye } from 'react-icons/bs'
 
-const SignupForm = () => {
+const SignupForm = ({ handleSubmit, error, isLoading, formRef }) => {
   const [showEye, setShowEye] = useState(false)
-  //set reference to form element
-  const formRef = useRef();
-  const { signup, error, isLoading } = useSignupContext();
 
   const handleToggleEye = () => {
     setShowEye(prevShowEye => !prevShowEye)
   }
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(formRef.current)//grab the form data using useRef
-    const body = {} //we're going to organize our formdata into body and return that
-    console.log(formData)
-
-    formData.forEach((value, key) => {
-      body[key] = value
-    }, {})
-
-    console.log(body)
-
-    await signup(body)
-
-  };
     return (
     <div className="grid h-screen place-content-center">
       <div className="forms-styles">
