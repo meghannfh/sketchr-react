@@ -1,4 +1,6 @@
-const cloudinary = require("cloudinary").v2;
+const cloudinary = require("cloudinary");
+//adding the .v2 resulted in an error in the uploader
+//was returning undefined
 
 require("dotenv").config({ path: "./config/.env" });
 

@@ -1,23 +1,4 @@
-import { useRef } from 'react';
-import { useLogin } from '../hooks/useLogin';
-
-const LoginForm = () => {
-  //set reference to form element
-  const formRef = useRef();
-  const { login, error, isLoading } = useLogin();
-  
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(formRef.current)//grab the form data using useRef
-    const body = {} //we're going to organize our formdata into body and return that
-    formData.forEach((value, key) => {
-      body[key] = value
-    }, {})
-
-    await login(body)
-
-  };
+const LoginForm = ({ handleSubmit, error, isLoading, formRef }) => {
     return (
       <div className="grid h-screen place-content-center">
       <div className="forms-styles">

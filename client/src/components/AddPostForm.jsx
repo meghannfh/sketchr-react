@@ -13,30 +13,21 @@ const AddPostForm = () => {
       Authorization: `Bearer ${user && user.token}` 
    }
   }
-
-  // const [file, setFile] = useState('')
+  
   const [error, setError] = useState(null)
   const [emptyFields, setEmptyFields] = useState([])
   //set reference to form element
   const formRef = useRef()
-  
-  // const handleOnChange = e => {
-  //   e.preventDefault()
-  //   //grab the file as soon as the user selects it
-  //   setFile(e.target.files[0]);
-  // }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setEmptyFields([]);
+    const formData = new FormData(formRef.current)//grab the form data using useRef
 
     if(user){
       try {
-
-        const formData = new FormData(formRef.current)//grab the form data using useRef
-
         const res = await axios.post('/post/addPost', formData, headerConfig)
-        // console.log(body)
+
         console.log(res.data)
 
         dispatch({type: 'CREATE_POST', payload: res.data})
@@ -96,7 +87,7 @@ const AddPostForm = () => {
 
     return(
       <div className="p-6 border-2 border-pink-400 w-96 rounded-lg bg-white">
-        <form className="flex flex-col gap-2" onSubmit={handleSubmit} ref={formRef} encType="multipart/form-data">
+        <form className="flex flex-col gap-2" onSubmit={handleSubmit} ref={formRef}>
           <div className="form-layout">
             <label htmlFor="prompt">title</label>
             <input 

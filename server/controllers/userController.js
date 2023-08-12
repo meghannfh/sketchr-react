@@ -14,7 +14,6 @@ const createToken = (_id, ) => {
     process.env.SECRET, 
     { expiresIn: '3d' }
     )
-
 }
 
 module.exports = {
@@ -25,14 +24,20 @@ module.exports = {
     console.log(req.body)
     const { email, password } = req.body
 
+    if(!email || !password){
+      return res.status(400).json({error: 'Please fill out all fields'})
+    }
+
     try{
 
       const user = await User.login(email, password)
-
+      //login needs to search db for User and return the username as well otherwise it won't be displayed
       //create token
+      const userData = await User.findById({ _id: user._id })
+      const username = userData.username
       const token = createToken(user._id)
 
-      res.status(200).json({email, token})
+      res.status(200).json({ email, token, username })
 
     } catch(error) {
 

@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { useAuthContext } from './useAuthContext';
-//trying to redirect to /feed after login
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export const useLogin = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsloading] = useState(null);
   const { dispatch } = useAuthContext();
+  const navigate = useNavigate();
 
   const login = async (data) =>  {
     setIsloading(true)
@@ -21,7 +22,7 @@ export const useLogin = () => {
       //update the auth context
       dispatch({type: 'LOGIN', payload: output})
       setIsloading(false)
-      //trying to redirect to feed
+      navigate("/feed")
 
     } catch(err){
       

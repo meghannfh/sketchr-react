@@ -26,7 +26,7 @@ function App() {
 
 
   const handleShowForm = () => {
-      setShowForm(preveShowForm => !preveShowForm)
+      setShowForm(prevShowForm => !prevShowForm)
   }
 
   //adding authorization to headers in the request
@@ -39,7 +39,6 @@ function App() {
    }
   }
 
-  console.log(posts)
   useEffect(()=> {
     const fetchPosts = async () => {
       const res = await axios.get('/post/feed', headerConfig)
@@ -51,7 +50,6 @@ function App() {
       handleShowForm(false);
     }
   }, [dispatch, user])
-  //empty dependencies arr means compnent only renders once
 
   return (
     <div>
@@ -68,11 +66,11 @@ function App() {
             />
             <Route
               path="/signup"
-              element={<Signup />}
+              element={<Signup path="/feed" />}
             />
             <Route
               path="/login"
-              element={<Login />}
+              element={<Login path="/feed" />}
             />
             <Route 
               path="/feed"
