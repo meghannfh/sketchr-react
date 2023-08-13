@@ -1,4 +1,14 @@
+import { useState } from 'react';
+import { BsEyeSlash, BsEye } from 'react-icons/bs';
+
 const LoginForm = ({ handleSubmit, error, isLoading, formRef }) => {
+
+  const [showEye, setShowEye] = useState(false)
+
+  const handleToggleEye = () => {
+    setShowEye(prevShowEye => !prevShowEye)
+  }
+
     return (
       <div className="grid h-screen place-content-center">
       <div className="forms-styles">
@@ -12,13 +22,14 @@ const LoginForm = ({ handleSubmit, error, isLoading, formRef }) => {
               placeholder="email" 
             />
           </div>
-          <div className="form-layout">
+          <div className="form-layout relative">
             <input 
-              type="password" 
+              type={showEye ? "text" : "password"} 
               name="password"
               className='border-2'
               placeholder="password" 
             />
+            <i className="absolute right-3 top-2 text-2xl hover:cursor-pointer" onClick={handleToggleEye}>{showEye ? <BsEye /> : <BsEyeSlash />}</i>
           </div>
           <button disabled={isLoading} className='w-full transition-color ease-in-out bg-pink-400 p-2 text-white rounded-md uppercase transition-colors hover:bg-pink-200 hover:text-pink-800'>login</button>
         </form>

@@ -21,12 +21,7 @@ module.exports = {
   postLogin: async (req, res, next) => {
     /*grab the email and password from the request coming in from the
     login form */
-    console.log(req.body)
     const { email, password } = req.body
-
-    if(!email || !password){
-      return res.status(400).json({error: 'Please fill out all fields'})
-    }
 
     try{
 

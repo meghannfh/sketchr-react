@@ -92,25 +92,6 @@ input, select, textarea {
 }
 
 
-
-/*CHEVRON ANIMATION*/
-.chevron {
-  padding: 2px;
-  font-size: 2rem;
-  color: white;
-  width: fit-content;
-  transition: transform 0.3s ease-in-out;
-}
-
-.chevron:hover {
-  cursor: pointer;
-}
-
-.chevron.up {
-  transform: rotate(180deg);
-}
-
-
 /*ADDPOST FORM ANIMATION*/
 
 .addpost-form {
@@ -127,4 +108,74 @@ input, select, textarea {
   bottom: 10rem;
   opacity: 100%;
   display: block;
+}
+
+/*HOME PAGE FADEINUP TEST ANIMATION*/
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-delayed {
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  opacity: 0;
+  animation-fill-mode: forwards; /* Keep the final state of the animation */
+}
+
+.animate-delayed.fadeInUp1 {
+  animation-name: fadeInUp;
+  animation-delay: 0.2s; /* Adjust the delay as needed */
+}
+
+.animate-delayed.fadeInUp2 {
+  animation-name: fadeInUp;
+  animation-delay: 0.4s; /* Adjust the delay as needed */
+}
+
+.animate-delayed.fadeInUp3 {
+  animation-name: fadeInUp;
+  animation-delay: 0.6s; /* Adjust the delay as needed */
+}
+
+.animate-delayed.fadeInUp4 {
+  animation-name: fadeInUp;
+  animation-delay: 0.8s; /* Adjust the delay as needed */
+}
+
+/*HOME PAGE EXPLORE BTN*/
+@keyframes moveElementsOnHover {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-5px); /* Adjust the value to move the elements up */
+  }
+}
+
+.explore-btn-animated {
+  position: relative; /* Ensure proper stacking of child elements */
+  animation-name: moveElementsOnHover;
+  animation-duration: 0.2s; /* Adjust the duration as needed */
+  animation-timing-function: ease-in-out;
+}
+
+.explore-btn-animated p,
+.explore-btn-animated i {
+  transition: transform 0.2s ease-in-out; /* Apply a smooth transition effect */
+}
+
+.explore-btn-animated:hover p {
+  transform: translateY(-5px); /* Move the text up */
+}
+
+.explore-btn-animated:hover i {
+  transform: translateY(5px); /* Move the icon down */
 }
