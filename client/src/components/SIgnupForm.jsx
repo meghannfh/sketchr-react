@@ -17,7 +17,7 @@ const SignupForm = ({ handleSubmit, error, isLoading, formRef }) => {
               type="text" 
               name="username"
               className='border-2'
-              placeholder="choose a username" 
+              placeholder="username" 
             />
           </div>
           <div className="form-layout">
