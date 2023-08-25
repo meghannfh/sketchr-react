@@ -1,11 +1,11 @@
 const User = require('../models/User');
 const mongoose = require("mongoose");
 
-const PostSchema = new mongoose.Schema({
-    prompt: {
+const RequestSchema = new mongoose.Schema({
+    requestType: {
         type: String,
         required: false,
-        default: "untitled"
+        default: untitled
     },
     media: {
         type: String,
@@ -27,18 +27,18 @@ const PostSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    description: {
+    requestDetails: {
         type: String,
         required: true,
     },
-    user: {
+    requester: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     },
-    createdAt: {
+    requestedOnDate: {
         type: Date,
         default: new Date,
     },
 })
 
-module.exports = mongoose.model("Post", PostSchema)
+module.exports = mongoose.model("Request", RequestSchema)

@@ -16,6 +16,25 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String, 
     required: true
+  },
+  openToCommissions: {
+    type: Boolean,
+    required: false,
+    default: false
+  },
+  acceptedRequestTypes: {
+    type: Array,
+    required: false,
+  },
+  currentRequestCount: {
+    type: Number,
+    required: false,
+    default: 0
+  },
+  completedRequestCount: {
+    type: Number,
+    required: false,
+    default: 0
   }
 });
  
@@ -24,7 +43,7 @@ UserSchema.statics.signup = async function(username, email, password) {
   
   //validation
   if (!email || !password || !username) {
-    throw Error('all fields must be filled')
+    throw Error('All fields must be filled')
   }
 
   if (!validator.isEmail(email)) {
