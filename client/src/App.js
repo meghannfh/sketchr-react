@@ -8,7 +8,6 @@ import Login from './pages/Login';
 import AddPostForm from './components/AddPostForm';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-// import { useEffect, useState } from 'react';
 import { useEffect, useState } from 'react';
 import { usePostsContext } from './hooks/usePostsContext';
 import { useAuthContext } from './hooks/useAuthContext';
@@ -83,8 +82,8 @@ function App() {
           </Routes>  
         </div>
       </BrowserRouter>
-      {user && showForm && 
-      <div className='fixed top-20 z-40'>
+      {showForm && 
+      <div className='absolute top-0 z-40'>
         <AddPostForm />
       </div>}
     </div>

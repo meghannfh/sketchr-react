@@ -56,8 +56,9 @@ const Navbar = ({ handleShowForm }) => {
           </h1>
         </Link>
         <nav className="w-[70%] flex flex-row justfy-end items-center">
-            {user && <div className="w-full flex flex-row justify-end gap-6 items-center">
-              <span>{now.getHours() > 12 ? `${afternoonGreetings[Math.floor(Math.random() * afternoonGreetings.length)]}, ${user.username}`: `${morningGreetings[Math.floor(Math.random() * morningGreetings.length)]}, ${user.username}`}</span>
+            {<div className="w-full flex flex-row justify-end gap-6 items-center">
+              {/* <span>{now.getHours() > 12 ? `${afternoonGreetings[Math.floor(Math.random() * afternoonGreetings.length)]}, ${user.username}`: `${morningGreetings[Math.floor(Math.random() * morningGreetings.length)]}, ${user.username}`}</span> */}
+              <span>{now.getHours() > 12 ? `${afternoonGreetings[Math.floor(Math.random() * afternoonGreetings.length)]}`: `${morningGreetings[Math.floor(Math.random() * morningGreetings.length)]}`}</span>
               <Link to="/feed">
                 <h3>feed</h3>
               </Link>
