@@ -46,7 +46,6 @@ function App() {
 
     if(user){
       fetchPosts()
-      handleShowForm(false);
     }
   }, [dispatch, user])
 
