@@ -32,14 +32,19 @@ function App() {
   //we need this in order for the request to check if a user is logged in
   //using the token in the user object
 
-  const headerConfig = {
-    headers: {
-      Authorization: `Bearer ${user && user.token}` 
-   }
-  }
+  // const headerConfig = {
+  //   headers: {
+  //     Authorization: `Bearer ${user && user.token}` 
+  //  }
+  // }
 
   useEffect(()=> {
     const fetchPosts = async () => {
+      const headerConfig = {
+        headers: {
+          Authorization: `Bearer ${user && user.token}`
+        }
+      };
       const res = await axios.get('/post/feed', headerConfig)
       dispatch({type: 'SET_POSTS', payload: res.data})
     }
@@ -47,7 +52,7 @@ function App() {
     if(user){
       fetchPosts()
     }
-  }, [dispatch, user, headerConfig])
+  }, [dispatch, user])
 
   return (
     <div>
