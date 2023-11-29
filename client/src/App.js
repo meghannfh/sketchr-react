@@ -47,7 +47,7 @@ function App() {
     if(user){
       fetchPosts()
     }
-  }, [dispatch, user])
+  }, [dispatch, user, headerConfig])
 
   return (
     <div>
