@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { FiLogOut } from 'react-icons/fi';
-import { useMemo } from 'react';
 import AddPostBtn from './AddPostBtn';
 import Button from './Button';
 
