@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { FiLogOut } from 'react-icons/fi';
+import { useMemo } from 'react';
 import AddPostBtn from './AddPostBtn';
 import Button from './Button';
 
@@ -56,8 +57,7 @@ const Navbar = ({ handleShowForm }) => {
           </h1>
         </Link>
         <nav className="w-[70%] flex flex-row justfy-end items-center">
-            {<div className="w-full flex flex-row justify-end gap-6 items-center">
-              {/* <span>{now.getHours() > 12 ? `${afternoonGreetings[Math.floor(Math.random() * afternoonGreetings.length)]}, ${user.username}`: `${morningGreetings[Math.floor(Math.random() * morningGreetings.length)]}, ${user.username}`}</span> */}
+            {user && <div className="w-full flex flex-row justify-end gap-6 items-center">
               <span>{now.getHours() > 12 ? `${afternoonGreetings[Math.floor(Math.random() * afternoonGreetings.length)]}`: `${morningGreetings[Math.floor(Math.random() * morningGreetings.length)]}`}</span>
               <Link to="/feed">
                 <h3>feed</h3>
@@ -65,7 +65,6 @@ const Navbar = ({ handleShowForm }) => {
               <AddPostBtn handleShowForm={handleShowForm}/>
               <Link to="/">
                 <Button handleClick={handleClick} text={'logout'} icon={<FiLogOut/>}/>
-                {/* <button className="flex flex-row gap-2 items-center transition-colors rounded-full py-1 px-4 bg-white text-pink-500 hover:bg-pink-500 hover:text-white hover:cursor-pointer" onClick={handleClick}>logout <span></span></button> */}
               </Link>
             </div>}
             

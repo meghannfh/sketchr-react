@@ -83,13 +83,13 @@ module.exports = {
     deletePost: async (req, res) => {
         const { id } = req.params;
         if(!mongoose.Types.ObjectId.isValid(id)){
-            return res.status(404).json({error: 'no such workout'})
+            return res.status(404).json({error: 'no such post'})
         }
         try{
             let post = await Post.findById({ _id: id })
 
             if(!post){
-                return res.status(404).json({ error: 'no such workout'})
+                return res.status(404).json({ error: 'no such post'})
             }
             await cloudinary.uploader.destroy(post.cloudinaryId)
             await Post.deleteOne({ _id: id })
