@@ -1,4 +1,4 @@
-import LoginForm from "../components/LoginForm"
+import LoginForm from "../components/LoginForm";
 import { useRef } from 'react';
 import { useLogin } from '../hooks/useLogin';
 

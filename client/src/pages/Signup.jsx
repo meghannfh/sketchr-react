@@ -1,4 +1,3 @@
-import SignupForm from "../components/SignupForm";
 import { useRef } from 'react';
 import { useSignupContext } from '../hooks/useSignupContext';
 
@@ -25,7 +24,7 @@ const Signup = () => {
 
     return (
         <div className="home-login-signup-w-h grid relative place-content-center">
-            <SignupForm handleSubmit={handleSubmit} error={error} isLoading={isLoading} formRef={formRef}/>
+            <h1>test</h1>
         </div>
     )
 }
