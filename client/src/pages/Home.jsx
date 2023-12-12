@@ -8,7 +8,7 @@ const Home = () => {
               <h1 className="animate-delayed fadeInUp1">Consistency <span className="font-lobster text-teal-500">first</span></h1>
               <h2 className="animate-delayed fadeInUp2">Motivation <span className="font-lobster text-pink-500">later</span></h2>
           </div>
-          <p className="animate-delayed fadeInUp3 px-4 md:text-xl font-extralight text-center mb-5"><span className="font-bold">Sketchr</span> is your online art journal meant to help you form the habit of drawing consistently and looking back at your progress.</p>
+          <p className="animate-delayed fadeInUp3 px-4 md:text-xl font-extralight text-center mb-5"><span className="font-bold">Mindstroke</span> is your online art journal meant to help you form the habit of drawing consistently and looking back at your progress.</p>
           <h3 className="animate-delayed fadeInUp4 text-lg md:text-2xl text-center font-semibold">No pressure. No obligations. No distractions.</h3>
         </div>
 

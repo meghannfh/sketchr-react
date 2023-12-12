@@ -17,7 +17,7 @@ const Navbar = ({ handleShowForm, randomGreeting }) => {
       <div className="flex flex-row items-center justify-between w-screen p-4">
         <Link to="/">
           <h1 className="title font-lobster text-lg">
-            Sketchr.io
+            mindstroke
           </h1>
         </Link>
         <nav className="w-[70%] flex flex-row justfy-end items-center">

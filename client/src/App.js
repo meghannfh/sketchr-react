@@ -17,8 +17,8 @@ import { useAuthContext } from './hooks/useAuthContext';
 //axios for HTTP requests
 import axios from 'axios';
 //default port for all requests
-// axios.defaults.baseURL = 'https://sketchr-react-production.up.railway.app/'
-axios.defaults.baseURL = 'http://127.0.0.1:8002'
+axios.defaults.baseURL = 'https://sketchr-react-production.up.railway.app/'
+// axios.defaults.baseURL = 'http://127.0.0.1:8002'
 
 
 function App() {
