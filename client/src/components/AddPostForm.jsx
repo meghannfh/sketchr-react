@@ -4,7 +4,7 @@ import { useAuthContext } from '../hooks/useAuthContext';
 import axios from 'axios'
 axios.defaults.baseURL = 'http://127.0.0.1:8002'
 
-const AddPostForm = () => {
+const AddPostForm = ({ handleShowForm }) => {
   const { dispatch } = usePostsContext();
   const { user } = useAuthContext();
 
@@ -86,14 +86,14 @@ const AddPostForm = () => {
     ]
 
     return(
-      <div className="p-6 border-2 border-pink-400 w-96 rounded-lg bg-white">
+      <div className="p-6 border border-pink-400 w-auto mx-2 xsm:mx-0 xsm:w-96 rounded-lg bg-white">
         <form className="flex flex-col gap-2" onSubmit={handleSubmit} ref={formRef}>
           <div className="form-layout">
             <label htmlFor="prompt">title</label>
             <input 
               type="text" 
               name="prompt"
-              className={emptyFields && emptyFields.includes('title') ? 'error' : 'border-2'}  
+              className={(emptyFields && emptyFields.includes('title')) && 'error'}  
               placeholder="title..." 
             />
           </div>
@@ -103,7 +103,7 @@ const AddPostForm = () => {
             <div>
               <select 
                 name="media"
-                className='border-2'
+                className='border'
                 >
                 {mediaList.map((medium, idx) => (
                   <option key={idx} value={medium}>{medium}</option>
@@ -116,7 +116,7 @@ const AddPostForm = () => {
             <label htmlFor="size">size</label>
             <div>
               <select
-                className='border-2'
+                className='border'
                 name="size"
                 >
                 {sizesList.map((size, idx) => (
@@ -129,7 +129,7 @@ const AddPostForm = () => {
             <label htmlFor="canvas">canvas</label>
             <div>
               <select
-                className="border-2"
+                className="border"
                 name="canvas"
                 >
                 {canvasList.map((canvas, idx) => (
@@ -143,7 +143,7 @@ const AddPostForm = () => {
             <textarea
               type="textarea"
               name="description"
-              className={emptyFields && emptyFields.includes('description') ? 'error' : 'border-2'}
+              className={(emptyFields && emptyFields.includes('description')) && 'error'}
               placeholder='Tell us about this piece.'
               ></textarea>
           </div>
@@ -151,10 +151,13 @@ const AddPostForm = () => {
             <input 
               type="file" 
               name="file"
-              className={emptyFields && emptyFields.includes('file') ? 'error' : 'border-2'}
+              className={(emptyFields && emptyFields.includes('file')) && 'error'}
               />
           </div>
-          <button className='transition-color ease-in-out border-2 p-2 rounded-md font-bold uppercase hover:outline-none'>submit</button>
+          <div className="flex flex-row gap-2">
+            <button className='grow form-btns transition-colors ease-in-out' type="submit">submit</button>
+            <button className='grow form-btns transition-colors ease-in-out' type="button" onClick={handleShowForm}>cancel</button>
+          </div>
         </form>
         {error && <div className='border-2 border-red-600 rounded-md p-4 mt-3 bg-red-300/25 text-red-600 text-center'>{error}</div>}
       </div>

@@ -10,7 +10,10 @@ module.exports = {
         lobster: ['"Lobster"', ...defaultTheme.fontFamily.sans],
         poppins: ['"Poppins"', ...defaultTheme.fontFamily.sans],
         raleway: ['"Raleway"', ...defaultTheme.fontFamily.sans]
-      }
+      },
+      screens: {
+        'xsm': '425px',
+      },
     },
   },
   plugins: [],

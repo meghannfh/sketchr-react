@@ -15,7 +15,8 @@ import { useAuthContext } from './hooks/useAuthContext';
 //axios for HTTP requests
 import axios from 'axios';
 //default port for all requests
-axios.defaults.baseURL = 'http://127.0.0.1:8002'
+axios.defaults.baseURL = 'https://sketchr-react-production.up.railway.app/'
+// axios.defaults.baseURL = 'http://127.0.0.1:8002'
 
 
 function App() {
@@ -28,18 +29,11 @@ function App() {
       setShowForm(prevShowForm => !prevShowForm)
   }
 
-  //adding authorization to headers in the request
-  //we need this in order for the request to check if a user is logged in
-  //using the token in the user object
-
-  // const headerConfig = {
-  //   headers: {
-  //     Authorization: `Bearer ${user && user.token}` 
-  //  }
-  // }
-
   useEffect(()=> {
     const fetchPosts = async () => {
+      //adding authorization to headers in the request
+      //we need this in order for the request to check if a user is logged in
+      //using the token in the user object
       const headerConfig = {
         headers: {
           Authorization: `Bearer ${user && user.token}`
@@ -87,8 +81,8 @@ function App() {
         </div>
       </BrowserRouter>
       {showForm && 
-      <div className='absolute top-0 z-40'>
-        <AddPostForm />
+      <div className='fixed w-screen h-screen top-0 z-40 grid place-content-center border border-red-500 backdrop-blur-sm bg-white/30'>
+        <AddPostForm handleShowForm={handleShowForm}/>
       </div>}
     </div>
   );
