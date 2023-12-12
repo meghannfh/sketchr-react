@@ -3,7 +3,8 @@ import { useAuthContext } from '../hooks/useAuthContext';
 import { useNavigate } from 'react-router-dom';
 //trying to redirect to /feed after login
 import axios from 'axios';
-axios.defaults.baseURL = 'http://127.0.0.1:8002'
+axios.defaults.baseURL = 'https://sketchr-react-production.up.railway.app/'
+// axios.defaults.baseURL = 'http://127.0.0.1:8002'
 
 export const useSignupContext = () => {
   const [error, setError] = useState(null);
