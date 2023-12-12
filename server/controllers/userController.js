@@ -43,7 +43,6 @@ module.exports = {
   //signup user
   postSignup: async (req, res, next) => {
     const { email, username, password } = req.body
-    console.log(req.body)
 
     try {
       const user = await User.signup(username, email, password)
