@@ -7,6 +7,8 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import AddPostForm from './components/AddPostForm';
 
+import greeting from '../src/functions/generateGreeting';
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 import { usePostsContext } from './hooks/usePostsContext';
@@ -15,18 +17,23 @@ import { useAuthContext } from './hooks/useAuthContext';
 //axios for HTTP requests
 import axios from 'axios';
 //default port for all requests
-axios.defaults.baseURL = 'https://sketchr-react-production.up.railway.app/'
-// axios.defaults.baseURL = 'http://127.0.0.1:8002'
+// axios.defaults.baseURL = 'https://sketchr-react-production.up.railway.app/'
+axios.defaults.baseURL = 'http://127.0.0.1:8002'
 
 
 function App() {
   const { posts, dispatch } = usePostsContext();
   const { user } = useAuthContext();
   const [showForm, setShowForm] = useState(false);
+  const [randomGreeting, setRandomGreeting] = useState()
 
 
   const handleShowForm = () => {
       setShowForm(prevShowForm => !prevShowForm)
+  }
+
+  const handleSetGreeting = () => {
+    setRandomGreeting(greeting());
   }
 
   useEffect(()=> {
@@ -52,7 +59,7 @@ function App() {
     <div>
       <BrowserRouter>
       <div className='fixed left-0 top-0 z-40'>
-        <Navbar handleShowForm={handleShowForm}/>
+        <Navbar handleShowForm={handleShowForm} randomGreeting={randomGreeting}/>
       </div>
         <div>
           <Routes>
@@ -63,11 +70,11 @@ function App() {
             />
             <Route
               path="/signup"
-              element={<Signup path="/feed" />}
+              element={<Signup path="/feed" handleSetGreeting={handleSetGreeting}/>}
             />
             <Route
               path="/login"
-              element={<Login path="/feed" />}
+              element={<Login path="/feed" handleSetGreeting={handleSetGreeting} />}
             />
             <Route 
               path="/feed"

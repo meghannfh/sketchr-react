@@ -10,39 +10,20 @@ const UserSchema = new mongoose.Schema({
   },
   username: { 
     type: String, 
-    required: true,
+    required: false,
     unique: true
   },
   password: {
     type: String, 
     required: true
   },
-  openToCommissions: {
-    type: Boolean,
-    required: false,
-    default: false
-  },
-  acceptedRequestTypes: {
-    type: Array,
-    required: false,
-  },
-  currentRequestCount: {
-    type: Number,
-    required: false,
-    default: 0
-  },
-  completedRequestCount: {
-    type: Number,
-    required: false,
-    default: 0
-  }
 });
  
 //Static signup method
-UserSchema.statics.signup = async function(username, email, password) {
+UserSchema.statics.signup = async function(email, password) {
   
   //validation
-  if (!email || !password || !username) {
+  if (!email || !password) {
     throw Error('All fields must be filled')
   }
 
@@ -58,14 +39,14 @@ UserSchema.statics.signup = async function(username, email, password) {
   //to the UserSchema and using this required a regular function and not 
   //an arrow function
   const emailExists = await this.findOne({ email })
-  const usernameExists = await this.findOne({ username })
+  // const usernameExists = await this.findOne({ username })
   if(emailExists) {
     throw Error('Email already in use')
   }
 
-  if(usernameExists) {
-    throw Error('Username is already in use')
-  }
+  // if(usernameExists) {
+  //   throw Error('Username is already in use')
+  // }
 
   //we use await because this step takes time to complete
   //the argument is the number of rounds default val is 10
@@ -74,7 +55,10 @@ UserSchema.statics.signup = async function(username, email, password) {
   //this allows bcrypt to hash the password
   const hash = await bcrypt.hash(password, salt)
 
-  const user = await this.create({ username, email, password: hash })
+  // const user = await this.create({ username, email, password: hash })
+  //for now, remove the username. when a user signs up with their email
+  //a random username will be generated for them 
+  const user = await this.create({ email, password: hash })
   console.log(`this is the user sent to the db after hashing pw`, user)
 
   return user

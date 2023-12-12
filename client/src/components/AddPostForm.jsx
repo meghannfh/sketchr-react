@@ -19,20 +19,23 @@ const AddPostForm = ({ handleShowForm }) => {
   //set reference to form element
   const formRef = useRef()
 
+  console.log(`emptyFields arr in frontend: ${emptyFields}`)
+  console.log(error)
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setEmptyFields([]);
+    setError(""); // Clear the error state
     const formData = new FormData(formRef.current)//grab the form data using useRef
 
     if(user){
       try {
         const res = await axios.post('/post/addPost', formData, headerConfig)
-
-        console.log(res.data)
-
+        handleShowForm();
+        
         dispatch({type: 'CREATE_POST', payload: res.data})
 
-        //reset the input fields
+        //reset form fields
         formRef.current.reset();
       }catch (err){
         setEmptyFields(err.response.data.emptyFields)
@@ -92,8 +95,8 @@ const AddPostForm = ({ handleShowForm }) => {
             <label htmlFor="prompt">title</label>
             <input 
               type="text" 
-              name="prompt"
-              className={(emptyFields && emptyFields.includes('title')) && 'error'}  
+              name="title"
+              className={(emptyFields && emptyFields.includes('title')) ? 'error' : ''}  
               placeholder="title..." 
             />
           </div>
@@ -143,7 +146,7 @@ const AddPostForm = ({ handleShowForm }) => {
             <textarea
               type="textarea"
               name="description"
-              className={(emptyFields && emptyFields.includes('description')) && 'error'}
+              className={(emptyFields && emptyFields.includes('description')) ? 'error' : ''}
               placeholder='Tell us about this piece.'
               ></textarea>
           </div>
@@ -151,7 +154,7 @@ const AddPostForm = ({ handleShowForm }) => {
             <input 
               type="file" 
               name="file"
-              className={(emptyFields && emptyFields.includes('file')) && 'error'}
+              className={(emptyFields && emptyFields.includes('file')) ? 'error' : ''}
               />
           </div>
           <div className="flex flex-row gap-2">

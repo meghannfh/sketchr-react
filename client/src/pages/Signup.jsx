@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { useSignupContext } from '../hooks/useSignupContext';
 import SignupForm from "../components/SignupForm";
 
-const Signup = () => {
+const Signup = ({ handleSetGreeting }) => {
       //set reference to form element
     const formRef = useRef();
     const { signup, error, isLoading } = useSignupContext();
@@ -20,7 +20,7 @@ const Signup = () => {
         console.log(body)
 
         await signup(body)
-
+        handleSetGreeting();
       };
 
     return (

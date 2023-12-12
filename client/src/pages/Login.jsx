@@ -2,7 +2,8 @@ import LoginForm from "../components/LoginForm";
 import { useRef } from 'react';
 import { useLogin } from '../hooks/useLogin';
 
-const Login = () => {
+const Login = ({ handleSetGreeting }) => {
+    
     const formRef = useRef();
     const { login, error, isLoading } = useLogin();
   
@@ -16,6 +17,7 @@ const Login = () => {
     }, {})
 
     await login(body)
+    handleSetGreeting();
   };
 
 

@@ -42,10 +42,10 @@ module.exports = {
         correctly but all other input fields will come through as req.body.whatever
         and only the file will come through as req.file.path so you need to separate
         these two diff types of fields when grabbing them from the request*/
-         const { prompt, media, size, canvas, description } = req.body
+         const { title, media, size, canvas, description } = req.body
          let emptyFields = [];
 
-         if (!prompt) {
+         if (!title) {
             emptyFields.push('title')
          }
          if (!req.file) {
@@ -55,7 +55,10 @@ module.exports = {
             emptyFields.push('description')
          }
 
-         if (emptyFields.length > 0) {
+         console.log(emptyFields.length)
+
+         if (emptyFields.length !== 0) {
+
             return res.status(400).json({err: 'Please fill out all fields', emptyFields})
         }
 
@@ -65,7 +68,7 @@ module.exports = {
             const result = await cloudinary.uploader.upload(path);
 
             let newPost = await Post.create({
-                prompt: prompt,
+                title: title,
                 media: media,
                 size: size,
                 canvas: canvas,

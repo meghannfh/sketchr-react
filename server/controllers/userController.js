@@ -29,10 +29,11 @@ module.exports = {
       //login needs to search db for User and return the username as well otherwise it won't be displayed
       //create token
       const userData = await User.findById({ _id: user._id })
-      const username = userData.username
+      // const username = userData.username
+      //don't need username until we finish logic to randomly generate one
       const token = createToken(user._id)
 
-      res.status(200).json({ email, token, username })
+      res.status(200).json({ email, token })
 
     } catch(error) {
 
@@ -42,16 +43,20 @@ module.exports = {
 
   //signup user
   postSignup: async (req, res, next) => {
-    const { email, username, password } = req.body
+    const { email, password } = req.body
+    //const { email, username, password } = req.body
+    //for now we are not taking the username entered by user
 
     try {
-      const user = await User.signup(username, email, password)
+      const user = await User.signup(email, password)
+      //const user = await User.signup(username, email, password)
+      //we don't need username entered by user
       console.log(`this is the user data returned in the controller`, user)
 
       //create a token using the function we created
       const token = createToken(user._id) //need the id of the user
 
-      res.status(200).json({ username, email, token })
+      res.status(200).json({ email, token })
     } catch(error) {
       res.status(400).json({ error: error.message })
       console.log(error)

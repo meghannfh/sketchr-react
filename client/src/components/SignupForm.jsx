@@ -12,14 +12,14 @@ const SignupForm = ({ handleSubmit, error, isLoading, formRef }) => {
       <div className="forms-styles">
         <form className="flex flex-col gap-2" onSubmit={handleSubmit} ref={formRef} encType="multipart/form-data">
           <h3 className="font-bold text-xl">Sign Up</h3>
-          <div className="form-layout">
+          {/* <div className="form-layout">
             <input 
               type="text" 
               name="username"
               className='border-2'
               placeholder="username" 
             />
-          </div>
+          </div> */}
           <div className="form-layout">
             <input 
               type="text" 

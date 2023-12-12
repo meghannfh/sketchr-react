@@ -2,7 +2,7 @@ const User = require('../models/User');
 const mongoose = require("mongoose");
 
 const PostSchema = new mongoose.Schema({
-    prompt: {
+    title: {
         type: String,
         required: false,
         default: "untitled"
