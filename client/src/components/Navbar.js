@@ -32,7 +32,7 @@ const Navbar = ({ handleShowForm, randomGreeting }) => {
               </Link>
             </div>}
             
-            {!user && <div className="w-full flex flex-row justify-end gap-4 items-center">
+            {!user && <div className="w-full flex flex-row justify-end gap-2 items-center">
             <Link to="/login">
               <Button text={'login'} bgLight={true} textLight={false}/>
             </Link>

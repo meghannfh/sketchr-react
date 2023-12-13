@@ -60,7 +60,7 @@ input, select, textarea {
 /*ERROR STYLES FOR FORM*/
 
 .error {
-  border: 2px solid rgb(226, 50, 50);
+  border: 1.5px solid rgb(226, 50, 50);
 }
 
 /*login and signup form*/
@@ -68,23 +68,24 @@ input, select, textarea {
   width: 400px;
 }
 
-/*POST CARD ANIMATION*/
+/*POST CARD EXPAND ONCLICK*/
 .postcard {
   color: #262626;
   background-color: white;
   display: flex;
   position: relative;
   overflow: hidden;
-  height: 300px;
-  width: 22%;
-  border-radius: .5rem;
+  height: 200px;
+  width: 200px;
+  border-radius: 1rem;
   transition: width .5s ease;
 }
 
 .postcard.expand {
-  width: 450px;
+  width: 400px;
 }
 
+/*POST CARD HIDE FILTER & TEXT ON HOVER*/
 .image-filter{
   cursor: pointer;
   backdrop-filter: grayscale(100%);
@@ -106,24 +107,25 @@ input, select, textarea {
   opacity: 0%;
 }
 
+/*POST CARD DESCRIPTION ON CLICK STYLES*/
 
-/*ADDPOST FORM ANIMATION*/
-
-.addpost-form {
-  position: fixed;
-  display: none;
-  bottom: 0rem;
+.description-styles {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 10;
+  background-image: linear-gradient(to top, #1e293b, rgb(30 41 59 / 0), transparent);
+  color: white;
   opacity: 0%;
-  right:0;
-  z-index: 30;
-  transition: bottom .5s ease-in-out;
+  transition: opacity .3s ease-in-out;
 }
 
-.addpost-form.show {
-  bottom: 10rem;
+.description-styles.show-description-styles {
   opacity: 100%;
-  display: block;
 }
+
+
+
 
 /*HOME PAGE FADEINUP TEST ANIMATION*/
 
