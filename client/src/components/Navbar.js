@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { FiLogOut, FiFilePlus } from 'react-icons/fi';
+import { TbBrandFeedly } from "react-icons/tb";
 import Button from './Button';
 
 const Navbar = ({ handleShowForm, randomGreeting }) => {
@@ -20,11 +21,11 @@ const Navbar = ({ handleShowForm, randomGreeting }) => {
             mindstroke
           </h1>
         </Link>
-        <nav className="w-[70%] flex flex-row justfy-end items-center">
-            {user && <div className="w-full flex flex-row justify-end gap-6 items-center">
+        <nav className="w-[70%] flex flex-row justfy-end items-center border border-red-500">
+            {user && <div className="w-full flex flex-row justify-end gap-2 items-center">
               <span className="hidden sm:flex">{randomGreeting}</span>
               <Link to="/feed">
-                <h3>feed</h3>
+              <Button text={'feed'} icon={<TbBrandFeedly />} bgLight={true} textLight={false} />
               </Link>
               <Button handleClick={handleShowForm} text={'new'} icon={<FiFilePlus/>} bgLight={true} textLight={false} />
               <Link to="/">

@@ -1,5 +1,7 @@
-import { render, fireEvent } from '@testing-library/react'
-import AddPostForm from './AddPostForm'
+import { render, fireEvent } from '@testing-library/react';
+import React from 'react';
+global.React = React;
+import AddPostForm from '../src/components/AddPostForm';
 
 describe('AddPostForm', () => {
   it('updates file state when a file is selected', () => {
