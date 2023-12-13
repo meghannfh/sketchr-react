@@ -4,6 +4,7 @@ import { useAuthContext } from '../hooks/useAuthContext';
 import { FiLogOut, FiFilePlus } from 'react-icons/fi';
 import { TbBrandFeedly } from "react-icons/tb";
 import Button from './Button';
+import SmScreenNavBtns from './SmScreenNavBtns';
 
 const Navbar = ({ handleShowForm, randomGreeting }) => {
   const { logout } = useLogout();
@@ -21,15 +22,27 @@ const Navbar = ({ handleShowForm, randomGreeting }) => {
             mindstroke
           </h1>
         </Link>
-        <nav className="w-[70%] flex flex-row justfy-end items-center border border-red-500">
-            {user && <div className="w-full flex flex-row justify-end gap-2 items-center">
+        <nav className="w-[70%] flex flex-row justfy-end items-center">
+            {user && <div className="w-full flex flex-row justify-end gap-4 md:gap-2 items-center">
               <span className="hidden sm:flex">{randomGreeting}</span>
+
               <Link to="/feed">
-              <Button text={'feed'} icon={<TbBrandFeedly />} bgLight={true} textLight={false} />
+                <span className="hidden md:flex">
+                  <Button text={'feed'} icon={<TbBrandFeedly />} bgLight={true} textLight={false} />
+                </span>
+                  <SmScreenNavBtns text={"feed"}/>
               </Link>
-              <Button handleClick={handleShowForm} text={'new'} icon={<FiFilePlus/>} bgLight={true} textLight={false} />
+
+              <span className="hidden md:flex">
+                <Button handleClick={handleShowForm} text={'new'} icon={<FiFilePlus/>} bgLight={true} textLight={false} />
+              </span>
+                <SmScreenNavBtns text={"new"}/>
+              
               <Link to="/">
-                <Button handleClick={handleClick} text={'logout'} icon={<FiLogOut/>} bgLight={true} textLight={false}/>
+                <span className="hidden md:flex">
+                  <Button handleClick={handleClick} text={'logout'} icon={<FiLogOut/>} bgLight={true} textLight={false}/>
+                </span>
+                  <SmScreenNavBtns text={"logout"}/>
               </Link>
             </div>}
             
