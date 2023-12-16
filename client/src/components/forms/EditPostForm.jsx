@@ -1,10 +1,10 @@
 import { useState, useRef } from 'react';
-import { usePostsContext } from '../hooks/usePostsContext';
-import { useAuthContext } from '../hooks/useAuthContext';
+import { usePostsContext } from '../../hooks/usePostsContext';
+import { useAuthContext } from '../../hooks/useAuthContext';
 import axios from 'axios'
 axios.defaults.baseURL = 'http://127.0.0.1:8002'
 
-const AddPostForm = ({ handleShowForm }) => {
+const EditPostForm = ({ handleShowForm }) => {
   const { dispatch } = usePostsContext();
   const { user } = useAuthContext();
 
@@ -18,9 +18,6 @@ const AddPostForm = ({ handleShowForm }) => {
   const [emptyFields, setEmptyFields] = useState([])
   //set reference to form element
   const formRef = useRef()
-
-  console.log(`emptyFields arr in frontend: ${emptyFields}`)
-  console.log(error)
 
   const handleSubmit = async (e) => {
     e.preventDefault()

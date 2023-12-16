@@ -3,14 +3,14 @@ import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { FiLogOut, FiFilePlus } from 'react-icons/fi';
 import { TbBrandFeedly } from "react-icons/tb";
-import Button from './Button';
-import SmScreenNavBtns from './SmScreenNavBtns';
+import Button from './buttons/Button';
+import SmScreenNavBtns from './buttons/SmScreenNavBtns';
 
-const Navbar = ({ handleShowForm, randomGreeting }) => {
+const Navbar = ({ handleShowAddPostForm, randomGreeting }) => {
   const { logout } = useLogout();
   const { user } = useAuthContext();
 
-  const handleClick = () => {
+  const handleLogout = () => {
     logout();
   };
 
@@ -34,13 +34,13 @@ const Navbar = ({ handleShowForm, randomGreeting }) => {
               </Link>
 
               <span className="hidden md:flex">
-                <Button handleClick={handleShowForm} text={'new'} icon={<FiFilePlus/>} bgLight={true} textLight={false} />
+                <Button handleClick={handleShowAddPostForm} text={'new'} icon={<FiFilePlus/>} bgLight={true} textLight={false} btnId={"addPost"} />
               </span>
                 <SmScreenNavBtns text={"new"}/>
               
               <Link to="/">
                 <span className="hidden md:flex">
-                  <Button handleClick={handleClick} text={'logout'} icon={<FiLogOut/>} bgLight={true} textLight={false}/>
+                  <Button handleClick={handleLogout} text={'logout'} icon={<FiLogOut/>} bgLight={true} textLight={false}/>
                 </span>
                   <SmScreenNavBtns text={"logout"}/>
               </Link>

@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useSignupContext } from '../hooks/useSignupContext';
-import SignupForm from "../components/SignupForm";
+import SignupForm from "../components/forms/SignupForm";
 
 const Signup = ({ handleSetGreeting }) => {
       //set reference to form element
