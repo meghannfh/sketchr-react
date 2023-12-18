@@ -5,7 +5,7 @@ import Feed from './pages/Feed';
 import Post from './pages/Post';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
-import AddPostForm from './components/AddPostForm';
+import AddPostForm from './components/forms/AddPostForm';
 
 import greeting from '../src/functions/generateGreeting';
 
@@ -17,19 +17,21 @@ import { useAuthContext } from './hooks/useAuthContext';
 //axios for HTTP requests
 import axios from 'axios';
 //default port for all requests
-axios.defaults.baseURL = 'https://sketchr-react-production.up.railway.app/'
-// axios.defaults.baseURL = 'http://127.0.0.1:8002'
+// axios.defaults.baseURL = 'https://sketchr-react-production.up.railway.app/'
+axios.defaults.baseURL = 'http://127.0.0.1:8002'
 
 
 function App() {
-  const { posts, dispatch } = usePostsContext();
+  const { dispatch } = usePostsContext();
   const { user } = useAuthContext();
-  const [showForm, setShowForm] = useState(false);
+  const [showAddPostForm, setShowAddPostForm] = useState(false);
   const [randomGreeting, setRandomGreeting] = useState()
 
 
-  const handleShowForm = () => {
-      setShowForm(prevShowForm => !prevShowForm)
+  const handleShowAddPostForm = (e) => {
+    const target = e.target.id;
+    console.log(target)
+      setShowAddPostForm(prevShowAddPostForm => !prevShowAddPostForm)
   }
 
   const handleSetGreeting = () => {
@@ -59,7 +61,7 @@ function App() {
     <div>
       <BrowserRouter>
       <div className='fixed left-0 top-0 z-40'>
-        <Navbar handleShowForm={handleShowForm} randomGreeting={randomGreeting}/>
+        <Navbar handleShowAddPostForm={handleShowAddPostForm} randomGreeting={randomGreeting}/>
       </div>
         <div>
           <Routes>
@@ -78,7 +80,7 @@ function App() {
             />
             <Route 
               path="/feed"
-              element={<Feed posts={posts} showForm={showForm}/>}
+              element={<Feed handleshowAddPostForm={handleShowAddPostForm}/>}
             />
             <Route
               path="/post/:id"
@@ -87,9 +89,9 @@ function App() {
           </Routes>  
         </div>
       </BrowserRouter>
-      {showForm && 
+      {showAddPostForm && 
       <div className='fixed w-screen h-screen top-0 z-40 grid place-content-center border border-red-500 backdrop-blur-sm bg-white/30'>
-        <AddPostForm handleShowForm={handleShowForm}/>
+        <AddPostForm handleShowAddPostForm={handleShowAddPostForm}/>
       </div>}
     </div>
   );

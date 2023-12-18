@@ -1,10 +1,10 @@
 import { useState, useRef } from 'react';
-import { usePostsContext } from '../hooks/usePostsContext';
-import { useAuthContext } from '../hooks/useAuthContext';
+import { usePostsContext } from '../../hooks/usePostsContext';
+import { useAuthContext } from '../../hooks/useAuthContext';
 import axios from 'axios'
 axios.defaults.baseURL = 'http://127.0.0.1:8002'
 
-const AddPostForm = ({ handleShowForm }) => {
+const AddPostForm = ({ handleShowAddPostForm }) => {
   const { dispatch } = usePostsContext();
   const { user } = useAuthContext();
 
@@ -19,9 +19,6 @@ const AddPostForm = ({ handleShowForm }) => {
   //set reference to form element
   const formRef = useRef()
 
-  console.log(`emptyFields arr in frontend: ${emptyFields}`)
-  console.log(error)
-
   const handleSubmit = async (e) => {
     e.preventDefault()
     setEmptyFields([]);
@@ -31,7 +28,7 @@ const AddPostForm = ({ handleShowForm }) => {
     if(user){
       try {
         const res = await axios.post('/post/addPost', formData, headerConfig)
-        handleShowForm();
+        handleShowAddPostForm();
         
         dispatch({type: 'CREATE_POST', payload: res.data})
 
@@ -159,7 +156,7 @@ const AddPostForm = ({ handleShowForm }) => {
           </div>
           <div className="flex flex-row gap-2">
             <button className='grow form-btns transition-colors ease-in-out' type="submit">submit</button>
-            <button className='grow form-btns transition-colors ease-in-out' type="button" onClick={handleShowForm}>cancel</button>
+            <button className='grow form-btns transition-colors ease-in-out' type="button" onClick={handleShowAddPostForm} id="cancelPost">cancel</button>
           </div>
         </form>
         {error && <div className='border-2 border-red-600 rounded-md p-4 mt-3 bg-red-300/25 text-red-600 text-center'>{error}</div>}

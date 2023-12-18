@@ -5,10 +5,12 @@ import { useAuthContext } from '../hooks/useAuthContext';
 
 import { useState } from 'react';
 
+import IconBtn from './buttons/IconBtn';
+
 import axios from 'axios';
 
 
-export default function PostCard ({ image, description, title, createdAt, id }) {
+export default function PostCard ({ image, description, title, id }) {
   const { dispatch } = usePostsContext();
   const { user } = useAuthContext();
 
@@ -27,14 +29,19 @@ export default function PostCard ({ image, description, title, createdAt, id }) 
   }
  
   const handleTrashClick = async () => {
-    console.log('clicked')
+
     const res = await axios.delete('/post/deletePost/'+id, headerConfig)
 
     console.log(res.data)
     dispatch({ type: 'DELETE_POST', payload: res.data })
   }
+
+  //for edit click first redisplay AddPostForm
+  // const handleEditClick() {
+
+  // }
+
   return (
-    // <div className={isExpanded ? 'postcard expand' : 'postcard'}>
     <div className={isExpanded ? 'postcard expand' : 'postcard'} onClick={handleExpandClick}>
       <div className="w-full h-full">
       	<img className="object-cover h-full w-full" src={image} alt={prompt}/>
@@ -45,12 +52,8 @@ export default function PostCard ({ image, description, title, createdAt, id }) 
         	<h1 className='text-2xl uppercase font-raleway font-bold'>{title}</h1>
         </div>
         <div className='absolute right-2 bottom-2 text-2xl flex flex-row gap-1'>
-				  <span onClick={handleTrashClick} className='transition-colors ease-in-out duration-500 rounded-full p-2 bg-white text-pink-500 hover:bg-pink-500 hover:text-white hover:cursor-pointer'>
-					  <FiTrash2 />
-				  </span>
-          <span className='transition-colors ease-in-out duration-500 rounded-full p-2 bg-white text-pink-500 hover:bg-pink-500 hover:text-white hover:cursor-pointer'>
-            <FiEdit />
-          </span>
+          <IconBtn icon={<FiTrash2 />} handleClick={handleTrashClick}/>
+          <IconBtn icon={<FiEdit />} handleClick={handleTrashClick} btnId={"edit"}/>
         </div>
       </div>
 
