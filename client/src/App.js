@@ -22,7 +22,7 @@ axios.defaults.baseURL = 'http://127.0.0.1:8002'
 
 
 function App() {
-  const { posts, dispatch } = usePostsContext();
+  const { dispatch } = usePostsContext();
   const { user } = useAuthContext();
   const [showAddPostForm, setShowAddPostForm] = useState(false);
   const [randomGreeting, setRandomGreeting] = useState()
@@ -80,7 +80,7 @@ function App() {
             />
             <Route 
               path="/feed"
-              element={<Feed posts={posts} handleshowAddPostForm={handleShowAddPostForm}/>}
+              element={<Feed handleshowAddPostForm={handleShowAddPostForm}/>}
             />
             <Route
               path="/post/:id"

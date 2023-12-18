@@ -1,9 +1,12 @@
+import { usePostsContext } from '../hooks/usePostsContext';
 import PostCard from '../components/PostCard'
 // import { Link } from 'react-router-dom';
 
 //maybe add show post form on feed page. add another outer div?
 
-const Feed = ({ posts }) => {
+const Feed = () => {
+    const { posts } = usePostsContext();
+    
     return (
         <div className='feed-container'>
             <div className="flex flex-row flex-wrap p-3 justify-center">

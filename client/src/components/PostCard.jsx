@@ -37,12 +37,11 @@ export default function PostCard ({ image, description, title, id }) {
   }
 
   //for edit click first redisplay AddPostForm
-  // const handleEditClick = async () => {
+  // const handleEditClick() {
 
   // }
 
   return (
-    // <div className={isExpanded ? 'postcard expand' : 'postcard'}>
     <div className={isExpanded ? 'postcard expand' : 'postcard'} onClick={handleExpandClick}>
       <div className="w-full h-full">
       	<img className="object-cover h-full w-full" src={image} alt={prompt}/>
