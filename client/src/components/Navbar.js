@@ -1,17 +1,21 @@
 import { Link } from 'react-router-dom';
 import { useLogout } from '../hooks/useLogout';
-import { useAuthContext } from '../hooks/useAuthContext';
+import { useSelector } from 'react-redux';
+// import { useAuthContext } from '../hooks/useAuthContext';
+// import { useDispatch } from 'react-redux';
+// import { logoutUser } from '../reducers/authSlice';
 import { FiLogOut, FiFilePlus } from 'react-icons/fi';
 import { TbBrandFeedly } from "react-icons/tb";
 import Button from './buttons/Button';
 import SmScreenNavBtns from './buttons/SmScreenNavBtns';
 
 const Navbar = ({ handleShowAddPostForm, randomGreeting }) => {
-  const { logout } = useLogout();
-  const { user } = useAuthContext();
+  const { logoutUser } = useLogout();
+  const user = useSelector((state) => state.auth.user);
+  // const { user } = useAuthContext();
 
   const handleLogout = () => {
-    logout();
+    logoutUser()
   };
 
   return(

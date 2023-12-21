@@ -1,13 +1,13 @@
 import { useRef } from 'react';
-import { useSignupContext } from '../hooks/useSignupContext';
+import { useSignup } from '../hooks/useSignup';
 import SignupForm from "../components/forms/SignupForm";
 
 const Signup = ({ handleSetGreeting }) => {
       //set reference to form element
     const formRef = useRef();
-    const { signup, error, isLoading } = useSignupContext();
+    const { signupUser, error, isLoading } = useSignup();
 
-    const handleSubmit = async (e) => {
+    const handleSignup = async (e) => {
         e.preventDefault();
 
         const formData = new FormData(formRef.current)//grab the form data using useRef
@@ -19,13 +19,13 @@ const Signup = ({ handleSetGreeting }) => {
 
         console.log(body)
 
-        await signup(body)
+        await signupUser(body)
         handleSetGreeting();
       };
 
     return (
         <div className="home-login-signup-w-h grid relative place-content-center">
-            <SignupForm handleSubmit={handleSubmit} error={error} isLoading={isLoading} formRef={formRef}/>
+            <SignupForm handleSignup={handleSignup} error={error} isLoading={isLoading} formRef={formRef}/>
         </div>
     )
 }

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { BsEyeSlash, BsEye } from 'react-icons/bs'
 
-const SignupForm = ({ handleSubmit, error, isLoading, formRef }) => {
+const SignupForm = ({ handleSignup, error, isLoading, formRef }) => {
   const [showEye, setShowEye] = useState(false)
 
   const handleToggleEye = () => {
@@ -10,7 +10,7 @@ const SignupForm = ({ handleSubmit, error, isLoading, formRef }) => {
     return (
     <div className="grid h-screen place-content-center">
       <div className="forms-styles">
-        <form className="flex flex-col gap-2" onSubmit={handleSubmit} ref={formRef} encType="multipart/form-data">
+        <form className="flex flex-col gap-2" onSubmit={handleSignup} ref={formRef} encType="multipart/form-data">
           <h3 className="font-bold text-xl">Sign Up</h3>
           {/* <div className="form-layout">
             <input 

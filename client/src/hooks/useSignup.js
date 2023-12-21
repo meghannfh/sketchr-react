@@ -1,18 +1,20 @@
 import { useState } from 'react';
-import { useAuthContext } from '../hooks/useAuthContext';
+import { useDispatch } from 'react-redux';
+// import { useAuthContext } from './useAuthContext';
 import { useNavigate } from 'react-router-dom';
-//trying to redirect to /feed after login
+import { login } from '../reducers/authSlice';
+
 import axios from 'axios';
 axios.defaults.baseURL = 'https://sketchr-react-production.up.railway.app/'
 // axios.defaults.baseURL = 'http://127.0.0.1:8002'
 
-export const useSignupContext = () => {
+export const useSignup = () => {
   const [error, setError] = useState(null);
   const [isloading, setIsloading] = useState(null);
   const navigate = useNavigate();
-  const { dispatch } = useAuthContext();
+  const dispatch = useDispatch();
 
-  const signup = async (data) =>  {
+  const signupUser = async (data) =>  {
     console.log(`this is the incoming request:`, data)
     setIsloading(true)
     setError(null)
@@ -26,7 +28,7 @@ export const useSignupContext = () => {
       localStorage.setItem('user', JSON.stringify(output))
 
       //update the auth context
-      dispatch({type: 'LOGIN', payload: output});
+      dispatch(login());
       setIsloading(false);
       navigate("/feed")
     } catch(err){
@@ -37,5 +39,5 @@ export const useSignupContext = () => {
 
     }
   }
-  return { signup, isloading, error }
+  return { signupUser, isloading, error }
 }

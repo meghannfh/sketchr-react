@@ -1,15 +1,18 @@
 import { useState } from 'react';
-import { useAuthContext } from './useAuthContext';
+// import { useAuthContext } from './useAuthContext';
+import { useDispatch } from 'react-redux';
+import { login } from '../reducers/authSlice';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export const useLogin = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsloading] = useState(null);
-  const { dispatch } = useAuthContext();
+  // const { dispatch } = useAuthContext();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const login = async (data) =>  {
+  const loginUser = async (data) =>  {
     setIsloading(true)
     setError(null)
     try {
@@ -20,7 +23,7 @@ export const useLogin = () => {
       localStorage.setItem('user', JSON.stringify(output))
 
       //update the auth context
-      dispatch({type: 'LOGIN', payload: output})
+      dispatch(login())
       setIsloading(false)
       navigate("/feed")
 
@@ -32,5 +35,5 @@ export const useLogin = () => {
 
     }
   }
-  return { login, isLoading, error }
+  return { loginUser, isLoading, error }
 }
