@@ -16,9 +16,10 @@ const LoginForm = ({ handleLogin, error, isLoading, formRef }) => {
           <h3 className="font-bold text-xl">Login</h3>
           <div className="form-layout">
             <input 
-              type="text" 
+              type="email" 
               name="email"
               placeholder="email" 
+              required
             />
           </div>
           <div className="form-layout relative">
@@ -26,6 +27,7 @@ const LoginForm = ({ handleLogin, error, isLoading, formRef }) => {
               type={showEye ? "text" : "password"} 
               name="password"
               placeholder="password" 
+              required
             />
             <i className="absolute right-3 top-2 text-2xl hover:cursor-pointer" onClick={handleToggleEye}>{showEye ? <BsEye /> : <BsEyeSlash />}</i>
           </div>

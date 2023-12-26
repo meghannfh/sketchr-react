@@ -11,8 +11,10 @@ import greeting from '../src/functions/generateGreeting';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { useEffect, useState } from 'react';
-import { usePostsContext } from './hooks/usePostsContext';
-import { useAuthContext } from './hooks/useAuthContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPosts } from './reducers/postsSlice';
+// import { usePostsContext } from './hooks/usePostsContext';
+// import { useAuthContext } from './hooks/useAuthContext';
 
 //axios for HTTP requests
 import axios from 'axios';
@@ -22,8 +24,10 @@ axios.defaults.baseURL = 'http://127.0.0.1:8002'
 
 
 function App() {
-  const { dispatch } = usePostsContext();
-  const { user } = useAuthContext();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
+  // const { dispatch } = usePostsContext();
+  // const { user } = useAuthContext();
   const [showAddPostForm, setShowAddPostForm] = useState(false);
   const [randomGreeting, setRandomGreeting] = useState()
 
@@ -49,7 +53,8 @@ function App() {
         }
       };
       const res = await axios.get('/post/feed', headerConfig)
-      dispatch({type: 'SET_POSTS', payload: res.data})
+      dispatch(setPosts(res.data))
+      // dispatch({type: 'SET_POSTS', payload: res.data})
     }
 
     if(user){

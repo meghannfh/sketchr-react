@@ -16,14 +16,18 @@ const Login = ({ handleSetGreeting }) => {
         body[key] = value
     }, {})
 
-    await loginUser(body)
+    console.log(`${body} info sent to login`)
+
+    const output = await loginUser(body)
+
+    console.log(`${output} output sent to loginUser`)
     handleSetGreeting();
   };
 
 
     return (
         <div className="home-login-signup-w-h grid relative place-content-center">
-            <LoginForm handleLogint={handleLogin} error={error} isLoading={isLoading} formRef={formRef} />
+            <LoginForm handleLogin={handleLogin} error={error} isLoading={isLoading} formRef={formRef} />
         </div>
     )
 }

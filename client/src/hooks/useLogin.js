@@ -13,6 +13,8 @@ export const useLogin = () => {
   const navigate = useNavigate();
 
   const loginUser = async (data) =>  {
+
+    console.log(`${data} coming through loginUser func`)
     setIsloading(true)
     setError(null)
     try {
@@ -23,7 +25,7 @@ export const useLogin = () => {
       localStorage.setItem('user', JSON.stringify(output))
 
       //update the auth context
-      dispatch(login())
+      dispatch(login(output))
       setIsloading(false)
       navigate("/feed")
 

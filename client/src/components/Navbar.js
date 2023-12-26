@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
-import { useLogout } from '../hooks/useLogout';
-import { useSelector } from 'react-redux';
 // import { useAuthContext } from '../hooks/useAuthContext';
 // import { useDispatch } from 'react-redux';
 // import { logoutUser } from '../reducers/authSlice';
+import { useLogout } from '../hooks/useLogout';
+import { useSelector } from 'react-redux';
 import { FiLogOut, FiFilePlus } from 'react-icons/fi';
 import { TbBrandFeedly } from "react-icons/tb";
 import Button from './buttons/Button';
@@ -13,6 +13,8 @@ const Navbar = ({ handleShowAddPostForm, randomGreeting }) => {
   const { logoutUser } = useLogout();
   const user = useSelector((state) => state.auth.user);
   // const { user } = useAuthContext();
+
+  console.log(user)
 
   const handleLogout = () => {
     logoutUser()

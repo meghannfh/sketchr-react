@@ -28,7 +28,7 @@ export const useSignup = () => {
       localStorage.setItem('user', JSON.stringify(output))
 
       //update the auth context
-      dispatch(login());
+      dispatch(login(output));
       setIsloading(false);
       navigate("/feed")
     } catch(err){
