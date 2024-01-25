@@ -4,7 +4,7 @@ import { BsEyeSlash, BsEye } from 'react-icons/bs'
 const SignupForm = ({ handleSignup, error, isLoading, formRef }) => {
   const [showEye, setShowEye] = useState(false)
   const [isPassingPwd, setIsPassingPwd] = useState(false);
-  const [pwdNotMatchingCriteria, setPwdNotMatchingCriteria] = useState([]);
+  const [pwdNotMatchingCriteria, setPwdNotMatchingCriteria] = useState("none");
   console.log(pwdNotMatchingCriteria)
 
   const handleToggleEye = () => {
@@ -12,35 +12,35 @@ const SignupForm = ({ handleSignup, error, isLoading, formRef }) => {
   }
 
   const checkPwdRequirements = (pwd) => {
-    console.log(`the value coming in for pwd ${pwd}`)
     const uppercase = /[A-Z]/;
     const lowercase = /[a-z]/;
     const number = /\d+/;
     const special = /[!@#$%^&*(),.?":{}|<>]/;
+    const lengthOK = pwd.length >= 8;
     const notPassingCriteria = [];
 
-    if(pwd.length < 8 && !pwdNotMatchingCriteria.includes("length")){
-      console.log(`pwd is 8 or more characters`)
+    if(!lengthOK){
+      console.log(`pwd is not 8 or more characters`)
       notPassingCriteria.push("length")
     }
 
-    if(!uppercase.test(pwd) && !pwdNotMatchingCriteria.includes("uppercase")) {
-      console.log(`there is an uppercase`)
+    if(!uppercase.test(pwd)) {
+      console.log(`there is not an uppercase`)
       notPassingCriteria.push("uppercase")
     } 
     
-    if (!lowercase.test(pwd) && !pwdNotMatchingCriteria.includes("lowercase")) {
-      console.log(`there is a lowercase`)
+    if (!lowercase.test(pwd)) {
+      console.log(`there is not a lowercase`)
       notPassingCriteria.push("lowercase")
     } 
     
-    if (!number.test(pwd) && !pwdNotMatchingCriteria.includes("number")) {
-      console.log(`there is a number`)
+    if (!number.test(pwd)) {
+      console.log(`there is not a number`)
       notPassingCriteria.push("number")
     } 
     
-    if (!special.test(pwd) && !pwdNotMatchingCriteria.includes("special")) {
-      console.log(`there is a special character`)
+    if (!special.test(pwd)) {
+      console.log(`there is a not special character`)
       notPassingCriteria.push("special")
     }
 
@@ -73,13 +73,13 @@ const SignupForm = ({ handleSignup, error, isLoading, formRef }) => {
               placeholder="password" 
               onInput={(e) => checkPwdRequirements(e.target.value)}
             />
-            <i className="absolute right-3 top-2 text-2xl hover:cursor-pointer" onClick={handleToggleEye}>{showEye ? <BsEye /> : <BsEyeSlash />}</i>
-            <ul className="lowercase text-xs text-red-500 p-3">
-              {pwdNotMatchingCriteria.includes("length") || pwdNotMatchingCriteria.length === 0 ? <li>✗ password is not 8-12 characters</li> : <li className="text-green-500">✓ password is 8 characters or longer</li>}
-              {pwdNotMatchingCriteria.includes("number") || pwdNotMatchingCriteria.length === 0 ? <li>✗ password needs at least one (1) number</li> : <li className="text-green-500">✓ password includes at least one (1) number</li>}
-              {pwdNotMatchingCriteria.includes("lowercase") || pwdNotMatchingCriteria.length === 0 ? <li>✗ password needs at least one (1) lowercase letter</li> : <li className="text-green-500">✓ password includes at least one (1) lowercase letter</li>}
-              {pwdNotMatchingCriteria.includes("uppercase") || pwdNotMatchingCriteria.length === 0 ? <li>✗ password needs at least one (1) uppercase letter</li> : <li className="text-green-500">✓ password includes at least one (1) uppercase letter</li>}
-              {pwdNotMatchingCriteria.includes("special") || pwdNotMatchingCriteria.length === 0 ? <li>✗ password needs at least one (1) special character</li> : <li className="text-green-500">✓ password includes at least one (1) special character</li>}
+            <i className="absolute right-3 top-1 text-2xl hover:cursor-pointer" onClick={handleToggleEye}>{showEye ? <BsEye /> : <BsEyeSlash />}</i>
+            <ul className="lowercase text-xs text-red-500 py-3 flex flex-col gap-1">
+              {pwdNotMatchingCriteria.includes("length") || pwdNotMatchingCriteria === "none" ? <li className="p-2 bg-rose-200/75 border border-red-500 rounded">✗ password is not 8-12 characters</li> : <li className="text-emerald-600 bg-green-200/50 p-2 border rounded border-green-500">✓ password is 8 characters or longer</li>}
+              {pwdNotMatchingCriteria.includes("number") || pwdNotMatchingCriteria === "none" ? <li className="p-2 bg-rose-400/25 border border-red-500 rounded">✗ password needs at least one (1) number</li> : <li className="text-emerald-600 bg-green-200/50 p-2 border rounded border-green-500">✓ password includes at least one (1) number</li>}
+              {pwdNotMatchingCriteria.includes("lowercase") || pwdNotMatchingCriteria === "none" ? <li className="p-2 bg-rose-400/25 border border-red-500 rounded">✗ password needs at least one (1) lowercase letter</li> : <li className="text-emerald-600 bg-green-200/50 p-2 border rounded border-green-500">✓ password includes at least one (1) lowercase letter</li>}
+              {pwdNotMatchingCriteria.includes("uppercase") || pwdNotMatchingCriteria === "none" ? <li className="p-2 bg-rose-400/25 border border-red-500 rounded">✗ password needs at least one (1) uppercase letter</li> : <li className="text-emerald-600 bg-green-200/50 p-2 border rounded border-green-500">✓ password includes at least one (1) uppercase letter</li>}
+              {pwdNotMatchingCriteria.includes("special") || pwdNotMatchingCriteria === "none" ? <li className="p-2 bg-rose-400/25 border border-red-500 rounded">✗ password needs at least one (1) special character</li> : <li className="text-emerald-600 bg-green-200/50 p-2 border rounded border-green-500">✓ password includes at least one (1) special character</li>}
             </ul>
           </div>
           <button disabled={isLoading} className='transition-color ease-in-out bg-pink-400 p-2 text-white rounded-md font-bold uppercase transition-colors hover:bg-pink-200 hover:text-pink-800'>sign up</button>
