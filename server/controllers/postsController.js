@@ -1,5 +1,5 @@
 const Post = require('../models/Post');
-// const User = require('../models/User');
+const User = require('../models/User');
 const mongoose = require('mongoose');
 const cloudinary = require('../middleware/cloudinary').v2;
 
@@ -62,9 +62,14 @@ module.exports = {
             return res.status(400).json({err: 'Please fill out all fields', emptyFields})
         }
 
+        const user = await User.findById(req.user.id);
+        user.postCount += 1;
+
         const { path } = req.file;
 
         try{
+            await user.save();
+
             const result = await cloudinary.uploader.upload(path);
 
             let newPost = await Post.create({
@@ -104,9 +109,11 @@ module.exports = {
         }
     },
     updatePost: async (req, res) => {
+        const { id } = req.params;
+
         try{
             await Post.findOneAndUpdate(
-                { _id: req.params.id },
+                { _id: id },
                 { 
                     media: req.body.media,
                     size: req.body.size,
@@ -117,7 +124,8 @@ module.exports = {
             console.log('Post updated')
 
         }catch(err){
-
+            res.status(400).json({err: err.message})
+            console.error(err)
         }
     },
 }

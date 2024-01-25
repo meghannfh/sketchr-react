@@ -8,15 +8,14 @@ const UserSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  username: { 
-    type: String, 
-    required: false,
-    unique: true
-  },
   password: {
     type: String, 
     required: true
   },
+  postCount: {
+    type: Number,
+    default: 0 // Initial post count is set to 0
+  }
 });
  
 //Static signup method
